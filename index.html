@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glimmer — Catálogo de Cosméticos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:      #FDF0F3;
+  --bg2:     #FAE4EA;
+  --bg3:     #F5D0DC;
+  --rose:    #C9758A;
+  --rose2:   #A8506A;
+  --rosepale:#F2B8C8;
+  --gold:    #B8864A;
+  --gold2:   #D4A870;
+  --nude:    #EDD5C0;
+  --dark:    #3D2030;
+  --mid:     #8A5068;
+  --soft:    #C4A0B0;
+  --border:  rgba(180,100,130,0.18);
+  --border2: rgba(180,100,130,0.35);
+  --ff-d:'Playfair Display',Georgia,serif;
+  --ff-b:'DM Sans',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--dark);font-family:var(--ff-b);font-weight:300;line-height:1.7;overflow-x:hidden}
+
+/* ── PÉTALOS FLOTANTES ── */
+#petals{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.petal{
+  position:absolute;width:8px;height:12px;
+  background:var(--rosepale);border-radius:50% 0 50% 0;
+  opacity:0;animation:fallpetal linear infinite;
+}
+@keyframes fallpetal{
+  0%  {transform:translateY(-40px) rotate(0deg);opacity:0}
+  8%  {opacity:.45}
+  90% {opacity:.15}
+  100%{transform:translateY(110vh) rotate(540deg);opacity:0}
+}
+
+/* ── HEADER ── */
+.hdr{
+  position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 40px;height:62px;
+  background:rgba(253,240,243,0.88);
+  backdrop-filter:blur(14px);
+  border-bottom:0.5px solid var(--border);
+}
+.hdr-logo{
+  font-family:var(--ff-d);font-size:20px;letter-spacing:.16em;
+  color:var(--rose2);
+}
+.hdr-logo span{color:var(--gold);font-style:italic}
+.hdr-nav{display:flex;gap:26px}
+.hdr-nav a{
+  font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--mid);text-decoration:none;cursor:pointer;transition:color .2s;
+}
+.hdr-nav a:hover{color:var(--rose2)}
+.hdr-pill{
+  font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--gold);border:0.5px solid rgba(180,130,70,.4);
+  padding:5px 14px;border-radius:999px;background:rgba(212,168,112,.08);
+}
+
+/* ── HERO — imagen de portada ── */
+.hero{
+  position:relative;z-index:1;
+  width:100%;
+  border-bottom:0.5px solid var(--border);
+  overflow:hidden;
+  background:var(--bg2);
+}
+.hero img{
+  width:100%;
+  display:block;
+  max-height:600px;
+  object-fit:cover;
+  object-position:center top;
+}
+.hero-overlay{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:32px 40px;
+  background:linear-gradient(to top,rgba(253,240,243,.95) 0%,transparent 100%);
+  display:flex;align-items:flex-end;justify-content:space-between;
+}
+.hero-tagline{
+  font-family:var(--ff-d);font-style:italic;
+  font-size:clamp(16px,2.5vw,24px);color:var(--rose2);
+}
+.hero-scroll{
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+}
+.hero-scroll span{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--soft)}
+.scroll-bar{width:1px;height:36px;background:linear-gradient(to bottom,var(--rose),transparent);animation:sp 2s ease-in-out infinite}
+@keyframes sp{0%,100%{opacity:.3}50%{opacity:1}}
+
+/* ── SELLOS ── */
+.sellos{
+  position:relative;z-index:1;
+  display:flex;justify-content:center;
+  border-bottom:0.5px solid var(--border);
+  background:var(--bg);
+}
+.sello{
+  flex:1;display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:16px 10px;border-right:0.5px solid var(--border);
+  max-width:260px;
+}
+.sello:last-child{border-right:none}
+.sello-icon{
+  width:32px;height:32px;border-radius:50%;
+  background:var(--bg2);border:0.5px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;flex-shrink:0;
+}
+.sello-text p{font-size:11px;font-weight:500;color:var(--rose2);letter-spacing:.04em}
+.sello-text span{font-size:10px;color:var(--soft)}
+
+/* ── SECCIÓN ── */
+.sec{padding:64px 32px;position:relative;z-index:1}
+.sec-hdr{text-align:center;margin-bottom:48px}
+.sec-eye{
+  font-size:10px;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--rose);margin-bottom:12px;
+  display:flex;align-items:center;justify-content:center;gap:14px;
+}
+.sec-eye::before,.sec-eye::after{content:'';display:inline-block;width:28px;height:.5px;background:var(--border2)}
+.sec-title{
+  font-family:var(--ff-d);font-size:clamp(24px,4vw,36px);
+  font-weight:400;color:var(--dark);margin-bottom:8px;
+}
+.sec-sub{font-size:13px;color:var(--mid)}
+
+/* ── CARRUSEL ── */
+.carousel-wrap{position:relative}
+.carousel-track{
+  display:flex;gap:20px;
+  padding:8px 48px 28px;
+  overflow-x:auto;scroll-snap-type:x mandatory;
+  scrollbar-width:none;cursor:grab;user-select:none;
+  -webkit-overflow-scrolling:touch;
+}
+.carousel-track:active{cursor:grabbing}
+.carousel-track::-webkit-scrollbar{display:none}
+.carousel-wrap::before,.carousel-wrap::after{
+  content:'';position:absolute;top:0;width:48px;height:100%;z-index:2;pointer-events:none;
+}
+.carousel-wrap::before{left:0;background:linear-gradient(to right,var(--bg),transparent)}
+.carousel-wrap::after{right:0;background:linear-gradient(to left,var(--bg),transparent)}
+
+/* Tarjeta */
+.c-card{
+  scroll-snap-align:center;flex-shrink:0;width:290px;
+  background:#fff;border:0.5px solid var(--border);
+  border-radius:20px;overflow:hidden;
+  transition:border-color .25s,transform .25s,box-shadow .25s;
+}
+.c-card:hover{border-color:var(--rose);transform:translateY(-6px);box-shadow:0 16px 48px rgba(180,100,130,.12)}
+.c-card.active{border-color:var(--rose);box-shadow:0 8px 40px rgba(180,100,130,.18)}
+
+.c-visual{
+  height:240px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:12px;
+  position:relative;overflow:hidden;
+}
+.c-visual-bg{position:absolute;inset:0}
+.c-ring{
+  position:relative;z-index:2;
+  width:96px;height:96px;border-radius:50%;
+  border:0.5px solid rgba(180,100,130,.3);
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(253,240,243,.7);
+  transition:transform .4s ease;
+}
+.c-card:hover .c-ring{transform:scale(1.1) rotate(6deg)}
+.c-ring svg{width:44px;height:44px}
+.c-photo{
+  position:relative;z-index:2;
+  font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(100,50,70,.5);
+  border:0.5px solid rgba(180,100,130,.2);
+  padding:4px 12px;border-radius:999px;
+  background:rgba(253,240,243,.7);
+}
+.c-badge{
+  position:absolute;top:12px;left:12px;z-index:3;
+  font-size:9px;letter-spacing:.1em;text-transform:uppercase;
+  background:var(--rose2);color:#fff;
+  padding:4px 12px;border-radius:999px;
+}
+.c-ghost{
+  position:absolute;bottom:-10px;right:6px;z-index:1;
+  font-family:var(--ff-d);font-size:100px;font-weight:400;
+  color:rgba(180,100,130,.06);line-height:1;pointer-events:none;user-select:none;
+}
+
+.c-body{padding:20px 20px 24px}
+.c-cat{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft);margin-bottom:5px}
+.c-name{font-family:var(--ff-d);font-size:21px;color:var(--dark);margin-bottom:8px;line-height:1.2}
+.c-line{width:28px;height:.5px;background:var(--gold);margin-bottom:10px}
+.c-desc{font-size:12px;color:var(--mid);line-height:1.75;margin-bottom:14px}
+.c-benefits{display:flex;flex-direction:column;gap:6px}
+.c-b{display:flex;align-items:center;gap:8px}
+.c-dot{width:5px;height:5px;border-radius:50%;background:var(--rose);flex-shrink:0}
+.c-btext{font-size:11px;color:var(--rose2)}
+
+/* Controles */
+.c-controls{
+  display:flex;align-items:center;justify-content:center;gap:18px;
+  margin-top:32px;padding:0 32px;
+}
+.c-btn{
+  width:42px;height:42px;border-radius:50%;
+  border:0.5px solid var(--border2);background:#fff;
+  color:var(--rose2);font-size:18px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:all .2s;
+}
+.c-btn:hover{background:var(--bg2);border-color:var(--rose)}
+.c-btn:active{transform:scale(.95)}
+.c-dots{display:flex;gap:7px}
+.c-dot-btn{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--border2);cursor:pointer;transition:all .25s;
+}
+.c-dot-btn.on{background:var(--rose);transform:scale(1.4)}
+
+/* ── CHART ── */
+.chart-sec{
+  position:relative;z-index:1;
+  background:var(--bg2);
+  border-top:0.5px solid var(--border);
+  border-bottom:0.5px solid var(--border);
+  padding:64px 32px;
+}
+.chart-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:24px;max-width:800px;margin:0 auto;
+}
+.chart-card{
+  background:#fff;border:0.5px solid var(--border);
+  border-radius:16px;padding:26px 22px;
+}
+.chart-card-title{font-family:var(--ff-d);font-size:17px;color:var(--rose2);margin-bottom:3px}
+.chart-card-sub{font-size:11px;color:var(--soft);letter-spacing:.05em;margin-bottom:18px}
+.chart-wrap{position:relative;height:188px}
+
+/* ── CIERRE ── */
+.closing{
+  position:relative;z-index:1;
+  text-align:center;
+  padding:72px 32px 90px;
+  background:var(--bg);
+}
+.closing-label{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--soft);margin-bottom:24px}
+.closing-title{
+  font-family:var(--ff-d);
+  font-size:clamp(48px,10vw,86px);
+  font-weight:400;letter-spacing:.18em;
+  color:var(--rose2);line-height:1;margin-bottom:10px;
+}
+.closing-em{
+  font-family:var(--ff-d);font-style:italic;
+  font-size:clamp(14px,2vw,20px);color:var(--gold);
+  display:block;margin-bottom:28px;letter-spacing:.06em;
+}
+.closing-line{width:36px;height:.5px;background:var(--border2);margin:0 auto 22px}
+.closing-tagline{
+  font-family:var(--ff-d);font-style:italic;
+  font-size:17px;color:var(--mid);
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:660px){
+  .hdr-nav{display:none}
+  .hdr{padding:0 20px}
+  .sellos{flex-wrap:wrap}
+  .sello{max-width:50%;border-bottom:0.5px solid var(--border)}
+  .c-card{width:260px}
+  .carousel-track{padding:8px 28px 24px;gap:14px}
+  .chart-grid{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){
+  .petal,.scroll-bar{animation:none}
+}
+</style>
+</head>
+<body>
+
+<div id="petals"></div>
+
+<!-- HEADER -->
+<header class="hdr">
+  <div class="hdr-logo">GLI<span>M</span>MER</div>
+  <nav class="hdr-nav">
+    <a href="#productos">Productos</a>
+    <a href="#nosotras">Nosotras</a>
+  </nav>
+  <span class="hdr-pill">Catálogo 2026</span>
+</header>
+
+<!-- HERO — tu imagen de portada -->
+<section class="hero" id="hero">
+  <img src="1781996948826_image.png" alt="Glimmer — Catálogo de Cosméticos 2026" id="hero-img">
+  <div class="hero-overlay">
+    <p class="hero-tagline" id="h-tl">Belleza que inspira, confianza que brilla.</p>
+    <div class="hero-scroll">
+      <span>Explorar</span>
+      <div class="scroll-bar"></div>
+    </div>
+  </div>
+</section>
+
+<!-- SELLOS -->
+<div class="sellos">
+  <div class="sello">
+    <div class="sello-icon">✓</div>
+    <div class="sello-text"><p>Seleccionados con amor</p><span>Calidad en cada detalle</span></div>
+  </div>
+  <div class="sello">
+    <div class="sello-icon">🐰</div>
+    <div class="sello-text"><p>Cruelty free</p><span>Responsables con el planeta</span></div>
+  </div>
+  <div class="sello">
+    <div class="sello-icon">✦</div>
+    <div class="sello-text"><p>Variedad para vos</p><span>Para cada estilo y ocasión</span></div>
+  </div>
+</div>
+
+<!-- CARRUSEL -->
+<section class="sec" id="productos">
+  <div class="sec-hdr">
+    <p class="sec-eye">Nuestra colección</p>
+    <h2 class="sec-title">Productos cosméticos</h2>
+    <p class="sec-sub">Deslizá para explorar todos los productos</p>
+  </div>
+
+  <div class="carousel-wrap">
+    <div class="carousel-track" id="track">
+
+      <!-- 01 Polvos de Hadas -->
+      <div class="c-card active" data-idx="0">
+        <div class="c-visual">
+          <div class="c-visual-bg" style="background:radial-gradient(ellipse at 50% 60%,#F5D0DC,#FAE4EA)"></div>
+          <span class="c-badge">✦ Favorita</span>
+          <div class="c-ring">
+            <svg viewBox="0 0 44 44" fill="none">
+              <circle cx="22" cy="22" r="15" stroke="#C9758A" stroke-width=".8"/>
+              <circle cx="22" cy="22" r="9" stroke="#B8864A" stroke-width=".6" stroke-dasharray="2 2"/>
+              <circle cx="22" cy="22" r="4" fill="#C9758A" opacity=".5"/>
+              <path d="M22 7v4M22 33v4M7 22h4M33 22h4" stroke="#B8864A" stroke-width=".8" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span class="c-photo">📷 Tu foto aquí</span>
+          <span class="c-ghost">01</span>
+        </div>
+        <div class="c-body">
+          <p class="c-cat">Maquillaje · Fijador</p>
+          <h3 class="c-name">Polvos de Hadas</h3>
+          <div class="c-line"></div>
+          <p class="c-desc">Polvo ultrafino que fija el maquillaje todo el día y deja la piel con un acabado sedoso y luminoso. Sin pesadez.</p>
+          <div class="c-benefits">
+            <div class="c-b"><div class="c-dot"></div><span class="c-btext">Fija el maquillaje todo el día</span></div>
+            <div class="c-b"><div class="c-dot"></div><span class="c-btext">Acabado luminoso y sedoso</span></div>
+            <div class="c-b"><div class="c-dot"></div><span class="c-btext">Textura ultrafina, sin peso</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 02 Enchinador -->
+      <div class="c-card" data-idx="1">
+        <div class="c-visual">
+          <div class="c-visual-bg" style="background:radial-gradient(ellipse at 50% 60%,#EDD5C0,#FAE4EA)"></div>
+          <div class="c-ring">
+            <svg viewBox="0 0 44 44" fill="none">
+              <path d="M15 36 Q15 26 19 18 Q22 11 26 6" stroke="#C9758A" stroke-width="1.2" stroke-linecap="round"/>
+              <path d="M19 36 Q19 26 23 18 Q26 11 30 6" stroke="#B8864A" stroke-width=".8" stroke-linecap="round" stroke-dasharray="2 3"/>
+              <ellipse cx="16" cy="38" rx="4" ry="2.5" stroke="#C9758A" stroke-width=".7" fill="none"/>
+              <ellipse cx="20" cy="39" rx="4" ry="2.5" stroke="#B8864A" stroke-width=".7" fill="none"/>
+              <circle cx="26" cy="5" r="2" fill="#B8864A" opacity=".6"/>
+            </svg>
+          </div>
+          <span class="c-photo">📷 Tu foto aquí</span>
+          <span class="c-ghost">02</span>
+        </div>
+        <div class="c-body">
+          <p class="c-cat">Herramientas · Pestañas</p>
+          <h3 class="c-name">Enchinador</h3>
+          <div class="c-line"></div>
+          <p class="c-desc">Rizos perfectos y definidos en segundos. Diseño ergonómico que cuida tus pestañas sin jalón ni dolor.</p>
+          <div class="c-benefits">
+            <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Rizo que dura todo el día</span></div>
+            <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Sin jalón ni dolor</span></div>
+            <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Apto para todo tipo de pestaña</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 03 Esponjas -->
+      <div class="c-card" data-idx="2">
+        <div class="c-visual">
+          <div class="c-visual-bg" style="background:radial-gradient(ellipse at 50% 60%,#F5D0DC,#FDF0F3)"></div>
+          <div class="c-ring">
+            <svg viewBox="0 0 44 44" fill="none">
+              <ellipse cx="22" cy="27" rx="13" ry="11" stroke="#C9758A" stroke-width=".7"/>
+              <ellipse cx="22" cy="25" rx="13" ry="11" stroke="#A8506A" stroke-width=".5" stroke-dasharray="3 3" fill="none"/>
+              <path d="M9 25 Q17 19 22 21 Q27 19 35 25" stroke="#C9758A" stroke-width=".7" fill="none"/>
+              <path d="M22 12v6" stroke="#B8864A" stroke-width=".7" stroke-linecap="round"/>
+              <circle cx="22" cy="10" r="2.5" fill="none" stroke="#B8864A" stroke-width=".7"/>
+              <circle cx="17" cy="29" r="1.5" fill="#C9758A" opacity=".35"/>
+              <circle cx="27" cy="27" r="1" fill="#C9758A" opacity=".3"/>
+            </svg>
+          </div>
+          <span class="c-photo">📷 Tu foto aquí</span>
+          <span class="c-ghost">03</span>
+        </div>
+        <div class="c-body">
+          <p class="c-cat">Aplicadores · Base</p>
+          <h3 class="c-name">Esponjas</h3>
+          <div class="c-line"></div>
+          <p class="c-desc">Difuminado suave y sin marcas. Húmeda para acabado natural o seca para cobertura total — vos elegís.</p>
+          <div class="c-benefits">
+            <div class="c-b"><div class="c-dot"></div><span class="c-btext">Sin marcas ni bordes visibles</span></div>
+            <div class="c-b"><div class="c-dot"></div><span class="c-btext">Dos acabados: natural o total</span></div>
+            <div class="c-b"><div class="c-dot"></div><span class="c-btext">Suave con todo tipo de piel</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 04 Rimel -->
+      <div class="c-card" data-idx="3">
+        <div class="c-visual">
+          <div class="c-visual-bg" style="background:radial-gradient(ellipse at 50% 60%,#EDD5C0,#FAE4EA)"></div>
+          <div class="c-ring">
+            <svg viewBox="0 0 44 44" fill="none">
+              <ellipse cx="22" cy="22" rx="6" ry="17" stroke="#C9758A" stroke-width=".7"/>
+              <path d="M17 13 C17 13 11 11 7 13" stroke="#C9758A" stroke-width="1" stroke-linecap="round"/>
+              <path d="M17 18 C17 18 10 16 6 19" stroke="#C9758A" stroke-width="1" stroke-linecap="round"/>
+              <path d="M17 23 C17 23 9 22 5 26" stroke="#A8506A" stroke-width=".8" stroke-linecap="round"/>
+              <path d="M27 13 C27 13 33 11 37 13" stroke="#C9758A" stroke-width="1" stroke-linecap="round"/>
+              <path d="M27 18 C27 18 34 16 38 19" stroke="#C9758A" stroke-width="1" stroke-linecap="round"/>
+              <path d="M27 23 C27 23 35 22 39 26" stroke="#A8506A" stroke-width=".8" stroke-linecap="round"/>
+              <circle cx="22" cy="9" r="2.5" fill="#B8864A" opacity=".7"/>
+            </svg>
+          </div>
+          <span class="c-photo">📷 Tu foto aquí</span>
+          <span class="c-ghost">04</span>
+        </div>
+        <div class="c-body">
+          <p class="c-cat">Ojos · Volumen</p>
+          <h3 class="c-name">Rimel</h3>
+          <div class="c-line"></div>
+          <p class="c-desc">Pestañas largas y voluminosas desde la primera pasada. Sin grumos, sin manchas, resistente todo el día.</p>
+          <div class="c-benefits">
+            <div class="c-b"><div class="c-dot" style="background:#A8506A"></div><span class="c-btext">Volumen y longitud notables</span></div>
+            <div class="c-b"><div class="c-dot" style="background:#A8506A"></div><span class="c-btext">No se corre ni mancha</span></div>
+            <div class="c-b"><div class="c-dot" style="background:#A8506A"></div><span class="c-btext">Aplicación limpia, sin grumos</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 05 Espejos -->
+      <div class="c-card" data-idx="4">
+        <div class="c-visual">
+          <div class="c-visual-bg" style="background:radial-gradient(ellipse at 50% 60%,#F5D0DC,#FDF0F3)"></div>
+          <div class="c-ring">
+            <svg viewBox="0 0 44 44" fill="none">
+              <rect x="10" y="8" width="24" height="28" rx="12" stroke="#B8864A" stroke-width=".7"/>
+              <rect x="14" y="12" width="16" height="20" rx="8" stroke="#C9758A" stroke-width=".5"/>
+              <ellipse cx="22" cy="22" rx="5" ry="6" fill="none" stroke="#B8864A" stroke-width=".4" stroke-dasharray="2 2"/>
+              <circle cx="22" cy="6" r="1.8" fill="#B8864A" opacity=".5"/>
+              <path d="M10 22H6M38 22h-4" stroke="#B8864A" stroke-width=".5" stroke-linecap="round" opacity=".4"/>
+            </svg>
+          </div>
+          <span class="c-photo">📷 Tu foto aquí</span>
+          <span class="c-ghost">05</span>
+        </div>
+        <div class="c-body">
+          <p class="c-cat">Accesorios · Portátil</p>
+          <h3 class="c-name">Espejos</h3>
+          <div class="c-line"></div>
+          <p class="c-desc">Reflexión nítida sin distorsión. Compacto y liviano para llevar siempre en la cartera y retocar donde estés.</p>
+          <div class="c-benefits">
+            <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Imagen nítida, sin distorsión</span></div>
+            <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Compacto, entra en cualquier cartera</span></div>
+            <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Ideal para retoques al instante</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="c-controls">
+    <button class="c-btn" id="prev" aria-label="Anterior">&#8592;</button>
+    <div class="c-dots" id="dots"></div>
+    <button class="c-btn" id="next" aria-label="Siguiente">&#8594;</button>
+  </div>
+</section>
+
+<!-- CHARTS -->
+<section class="chart-sec" id="nosotras">
+  <div class="sec-hdr">
+    <p class="sec-eye">¿Por qué Glimmer?</p>
+    <h2 class="sec-title">Calidad que se siente</h2>
+    <p class="sec-sub">Cada producto elegido por sus resultados reales</p>
+  </div>
+  <div class="chart-grid">
+    <div class="chart-card">
+      <p class="chart-card-title">Satisfacción por producto</p>
+      <p class="chart-card-sub">Basado en feedback de clientas</p>
+      <div class="chart-wrap"><canvas id="cRadar"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <p class="chart-card-title">Lo más valorado</p>
+      <p class="chart-card-sub">Beneficios que más importan al usar</p>
+      <div class="chart-wrap"><canvas id="cDoughnut"></canvas></div>
+    </div>
+  </div>
+</section>
+
+<!-- CIERRE -->
+<section class="closing">
+  <p class="closing-label">— catálogo de belleza 2026 —</p>
+  <h2 class="closing-title">GLIMMER</h2>
+  <em class="closing-em">cosmética &amp; belleza</em>
+  <div class="closing-line"></div>
+  <p class="closing-tagline">Porque cada día es una oportunidad de brillar</p>
+</section>
+
+<script>
+/* ── Pétalos ── */
+const pc = document.getElementById('petals');
+for(let i=0;i<22;i++){
+  const p=document.createElement('div');
+  p.className='petal';
+  const s=6+Math.random()*8;
+  p.style.cssText=`width:${s}px;height:${s*1.4}px;left:${Math.random()*100}%;animation-duration:${10+Math.random()*16}s;animation-delay:${Math.random()*14}s;opacity:0;background:hsl(${340+Math.random()*20},${60+Math.random()*20}%,${80+Math.random()*10}%)`;
+  pc.appendChild(p);
+}
+
+/* ── GSAP ── */
+gsap.registerPlugin(ScrollTrigger);
+
+gsap.from('#hero-img',{opacity:0,scale:1.04,duration:1.2,ease:'power3.out',delay:.2});
+gsap.from('#h-tl',{opacity:0,y:20,duration:.8,ease:'power3.out',delay:.8});
+
+gsap.from('.sellos',{
+  scrollTrigger:{trigger:'.sellos',start:'top 85%'},
+  opacity:0,y:24,duration:.8,ease:'power3.out'
+});
+gsap.from('.sec',{
+  scrollTrigger:{trigger:'.sec',start:'top 82%'},
+  opacity:0,y:36,duration:.9,ease:'power3.out'
+});
+gsap.from('.chart-sec',{
+  scrollTrigger:{trigger:'.chart-sec',start:'top 82%'},
+  opacity:0,y:36,duration:.9,ease:'power3.out'
+});
+gsap.from('.closing',{
+  scrollTrigger:{trigger:'.closing',start:'top 85%'},
+  opacity:0,y:28,duration:.9,ease:'power3.out'
+});
+
+document.querySelectorAll('.c-ring').forEach((el,i)=>{
+  gsap.to(el,{y:-6,duration:2.2+i*.2,repeat:-1,yoyo:true,ease:'sine.inOut',delay:i*.3});
+});
+
+/* ── CARRUSEL ── */
+const track=document.getElementById('track');
+const cards=Array.from(track.querySelectorAll('.c-card'));
+const dotsW=document.getElementById('dots');
+let cur=0;
+
+cards.forEach((_,i)=>{
+  const d=document.createElement('div');
+  d.className='c-dot-btn'+(i===0?' on':'');
+  d.addEventListener('click',()=>goTo(i));
+  dotsW.appendChild(d);
+});
+
+function goTo(idx){
+  cur=(idx+cards.length)%cards.length;
+  cards.forEach((c,i)=>c.classList.toggle('active',i===cur));
+  dotsW.querySelectorAll('.c-dot-btn').forEach((d,i)=>d.classList.toggle('on',i===cur));
+  const cw=cards[0].offsetWidth+20;
+  const offset=cur*cw-(track.offsetWidth/2-cards[0].offsetWidth/2);
+  track.scrollTo({left:Math.max(0,offset),behavior:'smooth'});
+}
+
+document.getElementById('prev').addEventListener('click',()=>goTo(cur-1));
+document.getElementById('next').addEventListener('click',()=>goTo(cur+1));
+
+let isDown=false,startX,scrollLeft;
+track.addEventListener('mousedown',e=>{isDown=true;startX=e.pageX-track.offsetLeft;scrollLeft=track.scrollLeft;track.style.cursor='grabbing'});
+track.addEventListener('mouseleave',()=>{isDown=false;track.style.cursor='grab'});
+track.addEventListener('mouseup',()=>{isDown=false;track.style.cursor='grab'});
+track.addEventListener('mousemove',e=>{
+  if(!isDown)return;e.preventDefault();
+  track.scrollLeft=scrollLeft-(e.pageX-track.offsetLeft-startX)*1.4;
+});
+track.addEventListener('scroll',()=>{
+  const cw=cards[0].offsetWidth+20;
+  const idx=Math.round(track.scrollLeft/cw);
+  if(idx!==cur&&idx>=0&&idx<cards.length){
+    cur=idx;
+    cards.forEach((c,i)=>c.classList.toggle('active',i===cur));
+    dotsW.querySelectorAll('.c-dot-btn').forEach((d,i)=>d.classList.toggle('on',i===cur));
+  }
+},{passive:true});
+
+/* ── CHARTS ── */
+const r='rgba(201,117,138,';
+const g='rgba(184,134,74,';
+const p='rgba(168,80,106,';
+const n='rgba(212,168,112,';
+const s='rgba(196,160,176,';
+
+new Chart(document.getElementById('cRadar'),{
+  type:'radar',
+  data:{
+    labels:['Polvos de Hadas','Enchinador','Esponjas','Rimel','Espejos'],
+    datasets:[{
+      label:'Satisfacción %',
+      data:[95,90,88,93,85],
+      backgroundColor:r+'0.12)',
+      borderColor:r+'0.8)',
+      pointBackgroundColor:'#C9758A',
+      pointBorderColor:'#F2B8C8',
+      pointRadius:4,borderWidth:1.5,
+    }]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false}},
+    scales:{r:{
+      min:70,max:100,
+      ticks:{color:'rgba(138,80,104,.55)',font:{size:10,family:'DM Sans'},stepSize:10,backdropColor:'transparent'},
+      grid:{color:'rgba(201,117,138,.12)'},
+      angleLines:{color:'rgba(201,117,138,.12)'},
+      pointLabels:{color:'#8A5068',font:{size:11,family:'DM Sans'}}
+    }}
+  }
+});
+
+new Chart(document.getElementById('cDoughnut'),{
+  type:'doughnut',
+  data:{
+    labels:['Larga duración','Fácil de usar','Resultado visible','Comodidad','Calidad'],
+    datasets:[{
+      data:[30,22,25,12,11],
+      backgroundColor:[r+'.82)',g+'.8)',p+'.78)',n+'.76)',s+'.78)'],
+      borderColor:'#FDF0F3',
+      borderWidth:2,hoverOffset:6
+    }]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    cutout:'65%',
+    plugins:{legend:{
+      position:'bottom',
+      labels:{color:'#8A5068',font:{size:11,family:'DM Sans'},padding:11,boxWidth:9,usePointStyle:true}
+    }}
+  }
+});
+</script>
+</body>
+</html>
