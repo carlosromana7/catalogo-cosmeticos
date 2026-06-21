@@ -1,643 +1,1403 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Glimmer — Catálogo de Cosméticos</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#FDF0F3;--bg2:#FAE4EA;--bg3:#F5D0DC;--bg4:#EDD5C0;
-  --rose:#C9758A;--rose2:#A8506A;--rosep:#F2B8C8;
-  --gold:#B8864A;--gold2:#D4A870;
-  --dark:#3D2030;--mid:#8A5068;--soft:#C4A0B0;
-  --border:rgba(180,100,130,.18);--border2:rgba(180,100,130,.35);
-  --ff-d:'Playfair Display',Georgia,serif;
-  --ff-b:'DM Sans',system-ui,sans-serif;
-}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--dark);font-family:var(--ff-b);font-weight:300;line-height:1.7;overflow-x:hidden}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Glimmer — Catálogo de cosméticos premium seleccionados con amor para tu rutina de belleza diaria">
+  <meta name="theme-color" content="#C9758A">
+  <title>Glimmer — Catálogo de Cosméticos Premium 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js" defer></script>
+  <style>
+    *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    :root {
+      --bg: #FDF0F3;
+      --bg2: #FAE4EA;
+      --bg3: #F5D0DC;
+      --bg4: #EDD5C0;
+      --rose: #C9758A;
+      --rose2: #A8506A;
+      --rosep: #F2B8C8;
+      --gold: #B8864A;
+      --gold2: #D4A870;
+      --dark: #3D2030;
+      --mid: #8A5068;
+      --soft: #C4A0B0;
+      --border: rgba(180, 100, 130, 0.18);
+      --border2: rgba(180, 100, 130, 0.35);
+      --ff-d: 'Playfair Display', Georgia, serif;
+      --ff-b: 'DM Sans', system-ui, sans-serif;
+    }
 
-/* ── PÉTALOS ── */
-#petals{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
-.petal{position:absolute;border-radius:50% 0 50% 0;opacity:0;animation:fp linear infinite}
-@keyframes fp{
-  0%  {transform:translateY(-30px) rotate(0deg);opacity:0}
-  8%  {opacity:.4}90%{opacity:.1}
-  100%{transform:translateY(110vh) rotate(520deg);opacity:0}
-}
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 60px;
+    }
 
-/* ── HEADER ── */
-.hdr{
-  position:sticky;top:0;z-index:100;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 40px;height:60px;
-  background:rgba(253,240,243,.92);backdrop-filter:blur(14px);
-  border-bottom:0.5px solid var(--border);
-}
-.hdr-logo{font-family:var(--ff-d);font-size:20px;letter-spacing:.14em;color:var(--rose2)}
-.hdr-logo span{color:var(--gold);font-style:italic}
-.hdr-nav{display:flex;gap:28px}
-.hdr-nav a{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);text-decoration:none;cursor:pointer;transition:color .2s}
-.hdr-nav a:hover{color:var(--rose2)}
-.hdr-pill{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);border:0.5px solid rgba(184,134,74,.4);padding:5px 14px;border-radius:999px}
+    body {
+      background: var(--bg);
+      color: var(--dark);
+      font-family: var(--ff-b);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
 
-/* ── HERO — imagen ajustada ── */
-.hero{
-  position:relative;z-index:1;
-  width:100%;overflow:hidden;
-  border-bottom:0.5px solid var(--border);
-  line-height:0;
-}
-.hero img{
-  width:100%;display:block;
-  max-height:420px;
-  object-fit:cover;object-position:center 20%;
-}
-/* flecha de scroll sutil */
-.hero-arrow{
-  position:absolute;bottom:16px;left:50%;transform:translateX(-50%);
-  display:flex;flex-direction:column;align-items:center;gap:5px;z-index:3;
-}
-.hero-arrow span{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--rose2);font-family:var(--ff-b)}
-.arrow-bar{width:1px;height:32px;background:linear-gradient(to bottom,var(--rose2),transparent);animation:ab 2s ease-in-out infinite}
-@keyframes ab{0%,100%{opacity:.3}50%{opacity:1}}
+    /* Pétalos decorativos */
+    #petals {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
 
-/* ── INTRO STRIP ── */
-.intro-strip{
-  position:relative;z-index:1;
-  background:linear-gradient(135deg,#FAE4EA 0%,#F5D0DC 50%,#EDD5C0 100%);
-  border-bottom:0.5px solid var(--border);
-  padding:40px 32px;
-  display:flex;align-items:center;justify-content:space-between;gap:32px;
-  overflow:hidden;
-}
-.intro-strip::before{
-  content:'✦';position:absolute;font-size:220px;
-  color:rgba(201,117,138,.06);right:-20px;top:-60px;
-  font-family:var(--ff-d);pointer-events:none;
-}
-.intro-left{flex:1;max-width:480px}
-.intro-tag{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--rose);margin-bottom:10px;display:flex;align-items:center;gap:10px}
-.intro-tag::before{content:'';display:inline-block;width:24px;height:.5px;background:var(--rose)}
-.intro-title{font-family:var(--ff-d);font-size:clamp(22px,3.5vw,34px);color:var(--dark);line-height:1.25;margin-bottom:12px}
-.intro-title em{color:var(--rose2);font-style:italic}
-.intro-desc{font-size:13px;color:var(--mid);line-height:1.85}
-.intro-right{display:flex;flex-direction:column;gap:14px;flex-shrink:0}
-.intro-stat{
-  background:rgba(255,255,255,.7);border:0.5px solid var(--border2);
-  border-radius:14px;padding:14px 20px;text-align:center;min-width:110px;
-}
-.intro-stat-n{font-family:var(--ff-d);font-size:28px;color:var(--rose2);line-height:1}
-.intro-stat-l{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-top:3px}
+    .petal {
+      position: absolute;
+      border-radius: 50% 0 50% 0;
+      opacity: 0;
+      animation: fp linear infinite;
+    }
 
-/* ── SECCIÓN BASE ── */
-.sec{padding:60px 32px;position:relative;z-index:1}
-.sec.alt{background:var(--bg2)}
-.sec-hdr{text-align:center;margin-bottom:48px}
-.sec-eye{
-  font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--rose);margin-bottom:12px;
-  display:flex;align-items:center;justify-content:center;gap:14px;
-}
-.sec-eye::before,.sec-eye::after{content:'';display:inline-block;width:28px;height:.5px;background:var(--border2)}
-.sec-title{font-family:var(--ff-d);font-size:clamp(24px,4vw,36px);color:var(--dark);margin-bottom:8px}
-.sec-sub{font-size:13px;color:var(--mid)}
+    @keyframes fp {
+      0% { transform: translateY(-30px) rotate(0deg); opacity: 0; }
+      8% { opacity: 0.4; }
+      90% { opacity: 0.1; }
+      100% { transform: translateY(110vh) rotate(520deg); opacity: 0; }
+    }
 
-/* ── CARRUSEL ── */
-.carousel-wrap{position:relative}
-.carousel-track{
-  display:flex;gap:20px;padding:8px 52px 28px;
-  overflow-x:auto;scroll-snap-type:x mandatory;
-  scrollbar-width:none;cursor:grab;user-select:none;
-  -webkit-overflow-scrolling:touch;
-}
-.carousel-track:active{cursor:grabbing}
-.carousel-track::-webkit-scrollbar{display:none}
-.carousel-wrap::before,.carousel-wrap::after{
-  content:'';position:absolute;top:0;width:52px;height:100%;z-index:2;pointer-events:none;
-}
-.carousel-wrap::before{left:0;background:linear-gradient(to right,var(--bg),transparent)}
-.carousel-wrap::after{right:0;background:linear-gradient(to left,var(--bg),transparent)}
+    /* Header */
+    .hdr {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(16px, 5vw, 40px);
+      height: 60px;
+      background: rgba(253, 240, 243, 0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 0.5px solid var(--border);
+      gap: 20px;
+    }
 
-.c-card{
-  scroll-snap-align:center;flex-shrink:0;width:288px;
-  background:#fff;border:0.5px solid var(--border);
-  border-radius:22px;overflow:hidden;
-  transition:border-color .25s,transform .25s,box-shadow .25s;
-}
-.c-card:hover{border-color:var(--rose);transform:translateY(-7px);box-shadow:0 20px 50px rgba(180,100,130,.13)}
-.c-card.active{border-color:var(--rose);box-shadow:0 10px 40px rgba(180,100,130,.18)}
+    .hdr-logo {
+      font-family: var(--ff-d);
+      font-size: clamp(16px, 3vw, 20px);
+      letter-spacing: 0.14em;
+      color: var(--rose2);
+      white-space: nowrap;
+    }
 
-.c-visual{
-  height:230px;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;gap:12px;
-  position:relative;overflow:hidden;
-}
-.c-vbg{position:absolute;inset:0}
-.c-ring{
-  position:relative;z-index:2;width:94px;height:94px;border-radius:50%;
-  border:0.5px solid rgba(180,100,130,.3);
-  display:flex;align-items:center;justify-content:center;
-  background:rgba(253,240,243,.75);transition:transform .4s ease;
-}
-.c-card:hover .c-ring{transform:scale(1.1) rotate(6deg)}
-.c-ring svg{width:42px;height:42px}
-.c-photo{
-  position:relative;z-index:2;font-size:9px;letter-spacing:.13em;text-transform:uppercase;
-  color:rgba(100,50,70,.45);border:0.5px solid rgba(180,100,130,.18);
-  padding:4px 12px;border-radius:999px;background:rgba(253,240,243,.7);
-}
-.c-badge{
-  position:absolute;top:12px;left:12px;z-index:3;
-  font-size:9px;letter-spacing:.1em;text-transform:uppercase;
-  background:var(--rose2);color:#fff;padding:4px 12px;border-radius:999px;
-}
-.c-ghost{
-  position:absolute;bottom:-12px;right:4px;z-index:1;
-  font-family:var(--ff-d);font-size:96px;font-weight:400;
-  color:rgba(180,100,130,.05);line-height:1;pointer-events:none;user-select:none;
-}
-.c-body{padding:20px 20px 24px}
-.c-cat{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft);margin-bottom:5px}
-.c-name{font-family:var(--ff-d);font-size:21px;color:var(--dark);margin-bottom:8px;line-height:1.2}
-.c-line{width:28px;height:.5px;background:var(--gold);margin-bottom:10px}
-.c-desc{font-size:12px;color:var(--mid);line-height:1.75;margin-bottom:14px}
-.c-benefits{display:flex;flex-direction:column;gap:6px}
-.c-b{display:flex;align-items:center;gap:8px}
-.c-dot{width:5px;height:5px;border-radius:50%;background:var(--rose);flex-shrink:0}
-.c-btext{font-size:11px;color:var(--rose2)}
+    .hdr-logo span {
+      color: var(--gold);
+      font-style: italic;
+    }
 
-.c-controls{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:30px}
-.c-btn{
-  width:40px;height:40px;border-radius:50%;
-  border:0.5px solid var(--border2);background:#fff;
-  color:var(--rose2);font-size:18px;
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;transition:all .2s;
-}
-.c-btn:hover{background:var(--bg2);border-color:var(--rose)}
-.c-btn:active{transform:scale(.95)}
-.c-dots{display:flex;gap:7px}
-.c-dot-btn{width:6px;height:6px;border-radius:50%;background:var(--border2);cursor:pointer;transition:all .25s}
-.c-dot-btn.on{background:var(--rose);transform:scale(1.4)}
+    .hdr-nav {
+      display: flex;
+      gap: clamp(16px, 4vw, 28px);
+      flex: 1;
+    }
 
-/* ── RITUAL / PASOS ── */
-.ritual{
-  position:relative;z-index:1;
-  background:linear-gradient(135deg,#FDF0F3 0%,#FAE4EA 100%);
-  border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border);
-  padding:60px 32px;
-}
-.ritual-grid{
-  display:grid;grid-template-columns:repeat(4,1fr);
-  gap:20px;max-width:900px;margin:40px auto 0;
-}
-.ritual-step{text-align:center;padding:24px 16px}
-.ritual-num{
-  font-family:var(--ff-d);font-size:40px;color:var(--rosep);
-  line-height:1;margin-bottom:10px;
-}
-.ritual-icon{
-  width:52px;height:52px;border-radius:50%;
-  background:#fff;border:0.5px solid var(--border2);
-  display:flex;align-items:center;justify-content:center;
-  margin:0 auto 12px;font-size:20px;
-}
-.ritual-name{font-family:var(--ff-d);font-size:15px;color:var(--dark);margin-bottom:6px}
-.ritual-desc{font-size:11px;color:var(--mid);line-height:1.6}
+    .hdr-nav a {
+      font-size: clamp(10px, 1.5vw, 11px);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--mid);
+      text-decoration: none;
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
 
-/* ── CHART ── */
-.chart-sec{
-  position:relative;z-index:1;
-  background:var(--bg2);
-  border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border);
-  padding:60px 32px;
-}
-.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:800px;margin:0 auto}
-.chart-card{background:#fff;border:0.5px solid var(--border);border-radius:16px;padding:26px 22px}
-.chart-card-title{font-family:var(--ff-d);font-size:17px;color:var(--rose2);margin-bottom:3px}
-.chart-card-sub{font-size:11px;color:var(--soft);letter-spacing:.05em;margin-bottom:18px}
-.chart-wrap{position:relative;height:186px}
+    .hdr-nav a:hover,
+    .hdr-nav a:focus {
+      color: var(--rose2);
+      outline: none;
+    }
 
-/* ── FRASE DESTACADA ── */
-.quote-sec{
-  position:relative;z-index:1;
-  text-align:center;padding:60px 32px;
-  background:var(--bg);
-  border-top:0.5px solid var(--border);
-}
-.quote-mark{font-family:var(--ff-d);font-size:72px;color:var(--rosep);line-height:.6;margin-bottom:8px}
-.quote-text{
-  font-family:var(--ff-d);font-style:italic;
-  font-size:clamp(18px,3vw,28px);color:var(--rose2);
-  max-width:600px;margin:0 auto 16px;line-height:1.5;
-}
-.quote-author{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--soft)}
+    .hdr-pill {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 0.5px solid rgba(184, 134, 74, 0.4);
+      padding: 5px 14px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
 
-/* ── CIERRE ── */
-.closing{
-  position:relative;z-index:1;text-align:center;
-  padding:70px 32px 90px;
-  background:linear-gradient(180deg,var(--bg2) 0%,var(--bg) 100%);
-}
-.closing-label{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--soft);margin-bottom:24px}
-.closing-title{
-  font-family:var(--ff-d);font-size:clamp(46px,10vw,82px);
-  font-weight:400;letter-spacing:.18em;color:var(--rose2);
-  line-height:1;margin-bottom:10px;
-}
-.closing-em{
-  font-family:var(--ff-d);font-style:italic;
-  font-size:clamp(14px,2vw,20px);color:var(--gold);
-  display:block;margin-bottom:28px;letter-spacing:.06em;
-}
-.closing-line{width:36px;height:.5px;background:var(--border2);margin:0 auto 22px}
-.closing-tagline{font-family:var(--ff-d);font-style:italic;font-size:16px;color:var(--mid)}
+    @media (max-width: 640px) {
+      .hdr-nav {
+        display: none;
+      }
+    }
 
-/* ── RESPONSIVE ── */
-@media(max-width:700px){
-  .hdr-nav{display:none}.hdr{padding:0 20px}
-  .intro-strip{flex-direction:column}
-  .intro-right{flex-direction:row;justify-content:center}
-  .c-card{width:262px}.carousel-track{padding:8px 28px 24px;gap:14px}
-  .ritual-grid{grid-template-columns:1fr 1fr}
-  .chart-grid{grid-template-columns:1fr}
-}
-@media(prefers-reduced-motion:reduce){.petal,.arrow-bar{animation:none}}
-</style>
+    /* Hero */
+    .hero {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      overflow: hidden;
+      border-bottom: 0.5px solid var(--border);
+      line-height: 0;
+      background: var(--bg3);
+      min-height: 300px;
+    }
+
+    .hero img {
+      width: 100%;
+      display: block;
+      max-height: 420px;
+      object-fit: cover;
+      object-position: center 20%;
+    }
+
+    .hero-arrow {
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      z-index: 3;
+    }
+
+    .hero-arrow span {
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--rose2);
+      font-family: var(--ff-b);
+    }
+
+    .arrow-bar {
+      width: 1px;
+      height: 32px;
+      background: linear-gradient(to bottom, var(--rose2), transparent);
+      animation: ab 2s ease-in-out infinite;
+    }
+
+    @keyframes ab {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    /* Intro Strip */
+    .intro-strip {
+      position: relative;
+      z-index: 1;
+      background: linear-gradient(135deg, #FAE4EA 0%, #F5D0DC 50%, #EDD5C0 100%);
+      border-bottom: 0.5px solid var(--border);
+      padding: clamp(32px, 8vw, 40px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: clamp(20px, 5vw, 32px);
+      overflow: hidden;
+      flex-wrap: wrap;
+    }
+
+    .intro-strip::before {
+      content: '✦';
+      position: absolute;
+      font-size: clamp(120px, 20vw, 220px);
+      color: rgba(201, 117, 138, 0.06);
+      right: -5%;
+      top: -10%;
+      font-family: var(--ff-d);
+      pointer-events: none;
+    }
+
+    .intro-left {
+      flex: 1;
+      min-width: 280px;
+      max-width: 480px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .intro-tag {
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--rose);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .intro-tag::before {
+      content: '';
+      display: inline-block;
+      width: 24px;
+      height: 0.5px;
+      background: var(--rose);
+    }
+
+    .intro-title {
+      font-family: var(--ff-d);
+      font-size: clamp(22px, 3.5vw, 34px);
+      color: var(--dark);
+      line-height: 1.25;
+      margin-bottom: 12px;
+      font-weight: 400;
+    }
+
+    .intro-title em {
+      color: var(--rose2);
+      font-style: italic;
+      font-weight: 500;
+    }
+
+    .intro-desc {
+      font-size: clamp(12px, 2vw, 13px);
+      color: var(--mid);
+      line-height: 1.85;
+    }
+
+    .intro-right {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .intro-stat {
+      background: rgba(255, 255, 255, 0.7);
+      border: 0.5px solid var(--border2);
+      border-radius: 14px;
+      padding: 14px 20px;
+      text-align: center;
+      min-width: 110px;
+      backdrop-filter: blur(4px);
+    }
+
+    .intro-stat-n {
+      font-family: var(--ff-d);
+      font-size: 28px;
+      color: var(--rose2);
+      line-height: 1;
+      font-weight: 400;
+    }
+
+    .intro-stat-l {
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-top: 3px;
+    }
+
+    @media (max-width: 768px) {
+      .intro-strip {
+        flex-direction: column;
+      }
+
+      .intro-right {
+        flex-direction: row;
+        justify-content: center;
+        width: 100%;
+      }
+    }
+
+    /* Secciones base */
+    .sec {
+      padding: clamp(40px, 8vw, 60px) clamp(20px, 5vw, 32px);
+      position: relative;
+      z-index: 1;
+    }
+
+    .sec.alt {
+      background: var(--bg2);
+    }
+
+    .sec-hdr {
+      text-align: center;
+      margin-bottom: clamp(32px, 8vw, 48px);
+    }
+
+    .sec-eye {
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--rose);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    .sec-eye::before,
+    .sec-eye::after {
+      content: '';
+      display: inline-block;
+      width: 28px;
+      height: 0.5px;
+      background: var(--border2);
+    }
+
+    .sec-title {
+      font-family: var(--ff-d);
+      font-size: clamp(24px, 4vw, 36px);
+      color: var(--dark);
+      margin-bottom: 8px;
+      font-weight: 400;
+    }
+
+    .sec-sub {
+      font-size: clamp(12px, 2vw, 13px);
+      color: var(--mid);
+    }
+
+    /* Carrusel mejorado */
+    .carousel-wrap {
+      position: relative;
+    }
+
+    .carousel-track {
+      display: flex;
+      gap: 20px;
+      padding: 8px clamp(28px, 5vw, 52px) 28px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border2) transparent;
+      cursor: grab;
+      user-select: none;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+    }
+
+    .carousel-track:active {
+      cursor: grabbing;
+    }
+
+    .carousel-track::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    .carousel-track::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .carousel-track::-webkit-scrollbar-thumb {
+      background: var(--border2);
+      border-radius: 2px;
+    }
+
+    .carousel-wrap::before,
+    .carousel-wrap::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      width: clamp(28px, 5vw, 52px);
+      height: 100%;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .carousel-wrap::before {
+      left: 0;
+      background: linear-gradient(to right, var(--bg), transparent);
+    }
+
+    .carousel-wrap::after {
+      right: 0;
+      background: linear-gradient(to left, var(--bg), transparent);
+    }
+
+    .c-card {
+      scroll-snap-align: center;
+      flex-shrink: 0;
+      width: clamp(240px, 70vw, 288px);
+      background: #fff;
+      border: 0.5px solid var(--border);
+      border-radius: 22px;
+      overflow: hidden;
+      transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .c-card:hover {
+      border-color: var(--rose);
+      transform: translateY(-7px);
+      box-shadow: 0 20px 50px rgba(180, 100, 130, 0.13);
+    }
+
+    .c-card.active {
+      border-color: var(--rose);
+      box-shadow: 0 10px 40px rgba(180, 100, 130, 0.18);
+    }
+
+    .c-visual {
+      height: 230px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+      background: var(--bg3);
+    }
+
+    .c-vbg {
+      position: absolute;
+      inset: 0;
+    }
+
+    .c-ring {
+      position: relative;
+      z-index: 2;
+      width: 94px;
+      height: 94px;
+      border-radius: 50%;
+      border: 0.5px solid rgba(180, 100, 130, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(253, 240, 243, 0.75);
+      transition: transform 0.4s ease;
+    }
+
+    .c-card:hover .c-ring {
+      transform: scale(1.1) rotate(6deg);
+    }
+
+    .c-ring svg {
+      width: 42px;
+      height: 42px;
+    }
+
+    .c-photo {
+      position: relative;
+      z-index: 2;
+      font-size: 9px;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: rgba(100, 50, 70, 0.45);
+      border: 0.5px solid rgba(180, 100, 130, 0.18);
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: rgba(253, 240, 243, 0.7);
+    }
+
+    .c-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      z-index: 3;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: var(--rose2);
+      color: #fff;
+      padding: 4px 12px;
+      border-radius: 999px;
+    }
+
+    .c-ghost {
+      position: absolute;
+      bottom: -12px;
+      right: 4px;
+      z-index: 1;
+      font-family: var(--ff-d);
+      font-size: 96px;
+      font-weight: 400;
+      color: rgba(180, 100, 130, 0.05);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .c-body {
+      padding: 20px;
+    }
+
+    .c-cat {
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--soft);
+      margin-bottom: 5px;
+    }
+
+    .c-name {
+      font-family: var(--ff-d);
+      font-size: 21px;
+      color: var(--dark);
+      margin-bottom: 8px;
+      line-height: 1.2;
+      font-weight: 400;
+    }
+
+    .c-line {
+      width: 28px;
+      height: 0.5px;
+      background: var(--gold);
+      margin-bottom: 10px;
+    }
+
+    .c-desc {
+      font-size: 12px;
+      color: var(--mid);
+      line-height: 1.75;
+      margin-bottom: 14px;
+    }
+
+    .c-benefits {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .c-b {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .c-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--rose);
+      flex-shrink: 0;
+      margin-top: 5px;
+    }
+
+    .c-btext {
+      font-size: 11px;
+      color: var(--rose2);
+    }
+
+    .c-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      margin-top: 30px;
+    }
+
+    .c-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 0.5px solid var(--border2);
+      background: #fff;
+      color: var(--rose2);
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .c-btn:hover,
+    .c-btn:focus {
+      background: var(--bg2);
+      border-color: var(--rose);
+      outline: none;
+    }
+
+    .c-btn:active {
+      transform: scale(0.95);
+    }
+
+    .c-dots {
+      display: flex;
+      gap: 7px;
+    }
+
+    .c-dot-btn {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--border2);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      border: none;
+      padding: 0;
+    }
+
+    .c-dot-btn.on {
+      background: var(--rose);
+      transform: scale(1.4);
+    }
+
+    @media (max-width: 768px) {
+      .c-card {
+        width: 262px;
+      }
+
+      .carousel-track {
+        padding: 8px 20px 24px;
+        gap: 14px;
+      }
+    }
+
+    /* Ritual */
+    .ritual {
+      position: relative;
+      z-index: 1;
+      background: linear-gradient(135deg, #FDF0F3 0%, #FAE4EA 100%);
+      border-top: 0.5px solid var(--border);
+      border-bottom: 0.5px solid var(--border);
+      padding: clamp(40px, 8vw, 60px) clamp(20px, 5vw, 32px);
+    }
+
+    .ritual-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: clamp(16px, 3vw, 20px);
+      max-width: 900px;
+      margin: 40px auto 0;
+    }
+
+    .ritual-step {
+      text-align: center;
+      padding: 24px 16px;
+    }
+
+    .ritual-num {
+      font-family: var(--ff-d);
+      font-size: 40px;
+      color: var(--rosep);
+      line-height: 1;
+      margin-bottom: 10px;
+      font-weight: 400;
+    }
+
+    .ritual-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: #fff;
+      border: 0.5px solid var(--border2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px;
+      font-size: 20px;
+    }
+
+    .ritual-name {
+      font-family: var(--ff-d);
+      font-size: 15px;
+      color: var(--dark);
+      margin-bottom: 6px;
+      font-weight: 400;
+    }
+
+    .ritual-desc {
+      font-size: 11px;
+      color: var(--mid);
+      line-height: 1.6;
+    }
+
+    /* Chart Section */
+    .chart-sec {
+      position: relative;
+      z-index: 1;
+      background: var(--bg2);
+      border-top: 0.5px solid var(--border);
+      border-bottom: 0.5px solid var(--border);
+      padding: clamp(40px, 8vw, 60px) clamp(20px, 5vw, 32px);
+    }
+
+    .chart-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .chart-card {
+      background: #fff;
+      border: 0.5px solid var(--border);
+      border-radius: 16px;
+      padding: 26px 22px;
+    }
+
+    .chart-card-title {
+      font-family: var(--ff-d);
+      font-size: 17px;
+      color: var(--rose2);
+      margin-bottom: 3px;
+      font-weight: 400;
+    }
+
+    .chart-card-sub {
+      font-size: 11px;
+      color: var(--soft);
+      letter-spacing: 0.05em;
+      margin-bottom: 18px;
+    }
+
+    .chart-wrap {
+      position: relative;
+      height: 186px;
+    }
+
+    /* Quote */
+    .quote-sec {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: clamp(40px, 8vw, 60px) clamp(20px, 5vw, 32px);
+      background: var(--bg);
+      border-top: 0.5px solid var(--border);
+    }
+
+    .quote-mark {
+      font-family: var(--ff-d);
+      font-size: clamp(48px, 10vw, 72px);
+      color: var(--rosep);
+      line-height: 0.6;
+      margin-bottom: 8px;
+      font-weight: 400;
+    }
+
+    .quote-text {
+      font-family: var(--ff-d);
+      font-style: italic;
+      font-size: clamp(18px, 3vw, 28px);
+      color: var(--rose2);
+      max-width: 600px;
+      margin: 0 auto 16px;
+      line-height: 1.5;
+      font-weight: 400;
+    }
+
+    .quote-author {
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--soft);
+    }
+
+    /* Closing */
+    .closing {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: clamp(50px, 10vw, 70px) clamp(20px, 5vw, 32px) clamp(70px, 15vw, 90px);
+      background: linear-gradient(180deg, var(--bg2) 0%, var(--bg) 100%);
+    }
+
+    .closing-label {
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--soft);
+      margin-bottom: 24px;
+    }
+
+    .closing-title {
+      font-family: var(--ff-d);
+      font-size: clamp(46px, 10vw, 82px);
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      color: var(--rose2);
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .closing-em {
+      font-family: var(--ff-d);
+      font-style: italic;
+      font-size: clamp(14px, 2vw, 20px);
+      color: var(--gold);
+      display: block;
+      margin-bottom: 28px;
+      letter-spacing: 0.06em;
+      font-weight: 400;
+    }
+
+    .closing-line {
+      width: 36px;
+      height: 0.5px;
+      background: var(--border2);
+      margin: 0 auto 22px;
+    }
+
+    .closing-tagline {
+      font-family: var(--ff-d);
+      font-style: italic;
+      font-size: 16px;
+      color: var(--mid);
+      font-weight: 400;
+    }
+
+    /* Accessibility */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
+
+    /* Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    /* Mobile */
+    @media (max-width: 640px) {
+      .hdr {
+        height: 56px;
+      }
+
+      .sec-eye::before,
+      .sec-eye::after {
+        display: none;
+      }
+
+      .ritual-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .chart-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div id="petals" aria-hidden="true"></div>
 
-<div id="petals"></div>
+  <!-- HEADER -->
+  <header class="hdr" role="banner">
+    <div class="hdr-logo">GLI<span>M</span>MER</div>
+    <nav class="hdr-nav" role="navigation" aria-label="Navegación principal">
+      <a href="#productos">Productos</a>
+      <a href="#ritual">Ritual</a>
+      <a href="#nosotras">Nosotras</a>
+    </nav>
+    <span class="hdr-pill">Catálogo 2026</span>
+  </header>
 
-<!-- HEADER -->
-<header class="hdr">
-  <div class="hdr-logo">GLI<span>M</span>MER</div>
-  <nav class="hdr-nav">
-    <a href="#productos">Productos</a>
-    <a href="#ritual">Ritual</a>
-    <a href="#nosotras">Nosotras</a>
-  </nav>
-  <span class="hdr-pill">Catálogo 2026</span>
-</header>
-
-<!-- HERO — solo la imagen, bien recortada -->
-<section class="hero" id="hero">
-  <img src="1781996948826_image.png" alt="Glimmer — Catálogo de Cosméticos 2026" id="hero-img">
-  <div class="hero-arrow">
-    <span>Explorar</span>
-    <div class="arrow-bar"></div>
-  </div>
-</section>
-
-<!-- INTRO STRIP -->
-<div class="intro-strip" id="intro">
-  <div class="intro-left">
-    <p class="intro-tag">Nuestra propuesta</p>
-    <h2 class="intro-title">
-      Todo lo que tu belleza<br>
-      necesita, <em>en un solo lugar</em>
-    </h2>
-    <p class="intro-desc">
-      Glimmer es un catálogo de cosméticos y accesorios de belleza seleccionados con amor — para que tu rutina sea fácil, linda y completamente tuya.
-    </p>
-  </div>
-  <div class="intro-right">
-    <div class="intro-stat">
-      <p class="intro-stat-n">5</p>
-      <p class="intro-stat-l">Productos</p>
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <img src="1781996948826_image.png" alt="Glimmer — Catálogo de Cosméticos 2026" id="hero-img" loading="lazy">
+    <div class="hero-arrow" aria-hidden="true">
+      <span>Explorar</span>
+      <div class="arrow-bar"></div>
     </div>
-    <div class="intro-stat">
-      <p class="intro-stat-n">✦</p>
-      <p class="intro-stat-l">Calidad</p>
+  </section>
+
+  <!-- INTRO STRIP -->
+  <section class="intro-strip" id="intro" aria-label="Propuesta de Glimmer">
+    <div class="intro-left">
+      <p class="intro-tag">Nuestra propuesta</p>
+      <h2 class="intro-title">
+        Todo lo que tu belleza<br>
+        necesita, <em>en un solo lugar</em>
+      </h2>
+      <p class="intro-desc">
+        Glimmer es un catálogo de cosméticos y accesorios de belleza seleccionados con amor — para que tu rutina sea fácil, linda y completamente tuya.
+      </p>
     </div>
-    <div class="intro-stat">
-      <p class="intro-stat-n">🐰</p>
-      <p class="intro-stat-l">Cruelty free</p>
-    </div>
-  </div>
-</div>
-
-<!-- CARRUSEL DE PRODUCTOS -->
-<section class="sec" id="productos">
-  <div class="sec-hdr">
-    <p class="sec-eye">Colección 2026</p>
-    <h2 class="sec-title">Nuestros productos</h2>
-    <p class="sec-sub">Deslizá para explorar · Arrastrá con el mouse</p>
-  </div>
-
-  <div class="carousel-wrap">
-    <div class="carousel-track" id="track">
-
-      <!-- 01 Polvos de Hadas -->
-      <div class="c-card active" data-idx="0">
-        <div class="c-visual">
-          <div class="c-vbg" style="background:radial-gradient(ellipse at 50% 70%,#F5D0DC,#FAE4EA)"></div>
-          <span class="c-badge">✦ Favorita</span>
-          <div class="c-ring">
-            <svg viewBox="0 0 42 42" fill="none">
-              <circle cx="21" cy="21" r="14" stroke="#C9758A" stroke-width=".8"/>
-              <circle cx="21" cy="21" r="8" stroke="#B8864A" stroke-width=".5" stroke-dasharray="2 2"/>
-              <circle cx="21" cy="21" r="3.5" fill="#C9758A" opacity=".5"/>
-              <path d="M21 7v3M21 32v3M7 21h3M32 21h3" stroke="#B8864A" stroke-width=".8" stroke-linecap="round"/>
-              <path d="M11 11l2 2M29 29l2 2M29 11l-2 2M11 29l2-2" stroke="#C9758A" stroke-width=".5" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <span class="c-photo">📷 Tu foto aquí</span>
-          <span class="c-ghost">01</span>
-        </div>
-        <div class="c-body">
-          <p class="c-cat">Maquillaje · Fijador</p>
-          <h3 class="c-name">Polvos de Hadas</h3>
-          <div class="c-line"></div>
-          <p class="c-desc">Polvo ultrafino que fija el maquillaje y deja la piel con un acabado sedoso y luminoso. Sin pesadez, sin poros visibles.</p>
-          <div class="c-benefits">
-            <div class="c-b"><div class="c-dot"></div><span class="c-btext">Fija el maquillaje todo el día</span></div>
-            <div class="c-b"><div class="c-dot"></div><span class="c-btext">Acabado luminoso y sedoso</span></div>
-            <div class="c-b"><div class="c-dot"></div><span class="c-btext">Textura ultrafina, sin peso</span></div>
-          </div>
-        </div>
+    <div class="intro-right">
+      <div class="intro-stat">
+        <p class="intro-stat-n">5</p>
+        <p class="intro-stat-l">Productos</p>
       </div>
-
-      <!-- 02 Enchinador -->
-      <div class="c-card" data-idx="1">
-        <div class="c-visual">
-          <div class="c-vbg" style="background:radial-gradient(ellipse at 50% 70%,#EDD5C0,#FAE4EA)"></div>
-          <div class="c-ring">
-            <svg viewBox="0 0 42 42" fill="none">
-              <path d="M14 36 Q14 26 18 18 Q21 11 25 6" stroke="#C9758A" stroke-width="1.2" stroke-linecap="round"/>
-              <path d="M18 36 Q18 26 22 18 Q25 11 29 6" stroke="#B8864A" stroke-width=".8" stroke-linecap="round" stroke-dasharray="2 3"/>
-              <ellipse cx="15" cy="38" rx="4" ry="2.5" stroke="#C9758A" stroke-width=".7" fill="none"/>
-              <ellipse cx="19" cy="39" rx="4" ry="2.5" stroke="#B8864A" stroke-width=".7" fill="none"/>
-              <circle cx="25" cy="5" r="2" fill="#B8864A" opacity=".6"/>
-            </svg>
-          </div>
-          <span class="c-photo">📷 Tu foto aquí</span>
-          <span class="c-ghost">02</span>
-        </div>
-        <div class="c-body">
-          <p class="c-cat">Herramientas · Pestañas</p>
-          <h3 class="c-name">Enchinador</h3>
-          <div class="c-line"></div>
-          <p class="c-desc">Rizos perfectos en segundos. Diseño ergonómico que abraza la pestaña con suavidad — sin jalón, sin dolor.</p>
-          <div class="c-benefits">
-            <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Rizo que dura todo el día</span></div>
-            <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Sin jalón ni dolor</span></div>
-            <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Apto para todo tipo de pestaña</span></div>
-          </div>
-        </div>
+      <div class="intro-stat">
+        <p class="intro-stat-n">✦</p>
+        <p class="intro-stat-l">Calidad</p>
       </div>
-
-      <!-- 03 Esponjas -->
-      <div class="c-card" data-idx="2">
-        <div class="c-visual">
-          <div class="c-vbg" style="background:radial-gradient(ellipse at 50% 70%,#F5D0DC,#FDF0F3)"></div>
-          <div class="c-ring">
-            <svg viewBox="0 0 42 42" fill="none">
-              <ellipse cx="21" cy="26" rx="12" ry="10" stroke="#C9758A" stroke-width=".7"/>
-              <ellipse cx="21" cy="24" rx="12" ry="10" stroke="#A8506A" stroke-width=".5" stroke-dasharray="3 3" fill="none"/>
-              <path d="M9 24 Q16 18 21 20 Q26 18 33 24" stroke="#C9758A" stroke-width=".7" fill="none"/>
-              <path d="M21 11v6" stroke="#B8864A" stroke-width=".7" stroke-linecap="round"/>
-              <circle cx="21" cy="9" r="2.5" fill="none" stroke="#B8864A" stroke-width=".7"/>
-              <circle cx="16" cy="28" r="1.5" fill="#C9758A" opacity=".3"/>
-              <circle cx="26" cy="26" r="1" fill="#C9758A" opacity=".25"/>
-            </svg>
-          </div>
-          <span class="c-photo">📷 Tu foto aquí</span>
-          <span class="c-ghost">03</span>
-        </div>
-        <div class="c-body">
-          <p class="c-cat">Aplicadores · Base</p>
-          <h3 class="c-name">Esponjas</h3>
-          <div class="c-line"></div>
-          <p class="c-desc">Difuminado suave y parejo sin marcas. Húmeda para acabado natural o seca para cobertura total — vos elegís.</p>
-          <div class="c-benefits">
-            <div class="c-b"><div class="c-dot"></div><span class="c-btext">Sin marcas ni bordes visibles</span></div>
-            <div class="c-b"><div class="c-dot"></div><span class="c-btext">Natural o cobertura total</span></div>
-            <div class="c-b"><div class="c-dot"></div><span class="c-btext">Suave con todo tipo de piel</span></div>
-          </div>
-        </div>
+      <div class="intro-stat">
+        <p class="intro-stat-n">🐰</p>
+        <p class="intro-stat-l">Cruelty free</p>
       </div>
+    </div>
+  </section>
 
-      <!-- 04 Rimel -->
-      <div class="c-card" data-idx="3">
-        <div class="c-visual">
-          <div class="c-vbg" style="background:radial-gradient(ellipse at 50% 70%,#EDD5C0,#FAE4EA)"></div>
-          <div class="c-ring">
-            <svg viewBox="0 0 42 42" fill="none">
-              <ellipse cx="21" cy="21" rx="5.5" ry="16" stroke="#C9758A" stroke-width=".7"/>
-              <path d="M16 13C16 13 10 11 6 13" stroke="#C9758A" stroke-width="1" stroke-linecap="round"/>
-              <path d="M16 18C16 18 9 16 5 19" stroke="#C9758A" stroke-width="1" stroke-linecap="round"/>
-              <path d="M16 23C16 23 8 22 4 26" stroke="#A8506A" stroke-width=".8" stroke-linecap="round"/>
-              <path d="M26 13C26 13 32 11 36 13" stroke="#C9758A" stroke-width="1" stroke-linecap="round"/>
-              <path d="M26 18C26 18 33 16 37 19" stroke="#C9758A" stroke-width="1" stroke-linecap="round"/>
-              <path d="M26 23C26 23 34 22 38 26" stroke="#A8506A" stroke-width=".8" stroke-linecap="round"/>
-              <circle cx="21" cy="8" r="2.5" fill="#B8864A" opacity=".7"/>
-            </svg>
+  <!-- CARRUSEL DE PRODUCTOS -->
+  <section class="sec" id="productos" aria-label="Nuestros productos">
+    <div class="sec-hdr">
+      <p class="sec-eye">Colección 2026</p>
+      <h2 class="sec-title">Nuestros productos</h2>
+      <p class="sec-sub">Deslizá para explorar · Arrastrá con el mouse</p>
+    </div>
+
+    <div class="carousel-wrap" role="region" aria-label="Carrusel de productos">
+      <div class="carousel-track" id="track" role="group">
+
+        <!-- 01 Polvos de Hadas -->
+        <div class="c-card active" data-idx="0" role="article" aria-label="Producto: Polvos de Hadas">
+          <div class="c-visual">
+            <div class="c-vbg" style="background:radial-gradient(ellipse at 50% 70%,#F5D0DC,#FAE4EA)"></div>
+            <span class="c-badge">✦ Favorita</span>
+            <div class="c-ring">
+              <svg viewBox="0 0 42 42" fill="none" aria-hidden="true">
+                <circle cx="21" cy="21" r="14" stroke="#C9758A" stroke-width=".8"/>
+                <circle cx="21" cy="21" r="8" stroke="#B8864A" stroke-width=".5" stroke-dasharray="2 2"/>
+                <circle cx="21" cy="21" r="3.5" fill="#C9758A" opacity=".5"/>
+                <path d="M21 7v3M21 32v3M7 21h3M32 21h3" stroke="#B8864A" stroke-width=".8" stroke-linecap="round"/>
+                <path d="M11 11l2 2M29 29l2 2M29 11l-2 2M11 29l2-2" stroke="#C9758A" stroke-width=".5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <span class="c-photo">📷 Tu foto aquí</span>
+            <span class="c-ghost" aria-hidden="true">01</span>
           </div>
-          <span class="c-photo">📷 Tu foto aquí</span>
-          <span class="c-ghost">04</span>
-        </div>
-        <div class="c-body">
-          <p class="c-cat">Ojos · Volumen</p>
-          <h3 class="c-name">Rimel</h3>
-          <div class="c-line"></div>
-          <p class="c-desc">Pestañas largas y voluminosas desde la primera pasada. Sin grumos, sin manchas, resistente todo el día.</p>
-          <div class="c-benefits">
-            <div class="c-b"><div class="c-dot" style="background:#A8506A"></div><span class="c-btext">Volumen y longitud notables</span></div>
-            <div class="c-b"><div class="c-dot" style="background:#A8506A"></div><span class="c-btext">No se corre ni mancha</span></div>
-            <div class="c-b"><div class="c-dot" style="background:#A8506A"></div><span class="c-btext">Aplicación limpia, sin grumos</span></div>
+          <div class="c-body">
+            <p class="c-cat">Maquillaje · Fijador</p>
+            <h3 class="c-name">Polvos de Hadas</h3>
+            <div class="c-line" aria-hidden="true"></div>
+            <p class="c-desc">Polvo ultrafino que fija el maquillaje y deja la piel con un acabado sedoso y luminoso. Sin pesadez, sin poros visibles.</p>
+            <ul class="c-benefits">
+              <li class="c-b"><div class="c-dot" aria-hidden="true"></div><span class="c-btext">Fija el maquillaje todo el día</span></li>
+              <li class="c-b"><div class="c-dot" aria-hidden="true"></div><span class="c-btext">Acabado luminoso y sedoso</span></li>
+              <li class="c-b"><div class="c-dot" aria-hidden="true"></div><span class="c-btext">Textura ultrafina, sin peso</span></li>
+            </ul>
           </div>
         </div>
+
+        <!-- 02 Enchinador -->
+        <div class="c-card" data-idx="1" role="article" aria-label="Producto: Enchinador">
+          <div class="c-visual">
+            <div class="c-vbg" style="background:radial-gradient(ellipse at 50% 70%,#EDD5C0,#FAE4EA)"></div>
+            <div class="c-ring">
+              <svg viewBox="0 0 42 42" fill="none" aria-hidden="true">
+                <path d="M14 36 Q14 26 18 18 Q21 11 25 6" stroke="#C9758A" stroke-width="1.2" stroke-linecap="round"/>
+                <path d="M18 36 Q18 26 22 18 Q25 11 29 6" stroke="#B8864A" stroke-width=".8" stroke-linecap="round" stroke-dasharray="2 3"/>
+                <ellipse cx="15" cy="38" rx="4" ry="2.5" stroke="#C9758A" stroke-width=".7" fill="none"/>
+                <ellipse cx="19" cy="39" rx="4" ry="2.5" stroke="#B8864A" stroke-width=".7" fill="none"/>
+                <circle cx="25" cy="5" r="2" fill="#B8864A" opacity=".6"/>
+              </svg>
+            </div>
+            <span class="c-photo">📷 Tu foto aquí</span>
+            <span class="c-ghost" aria-hidden="true">02</span>
+          </div>
+          <div class="c-body">
+            <p class="c-cat">Herramientas · Pestañas</p>
+            <h3 class="c-name">Enchinador</h3>
+            <div class="c-line" aria-hidden="true"></div>
+            <p class="c-desc">Rizos perfectos en segundos. Diseño ergonómico que abraza la pestaña con suavidad — sin jalón, sin dolor.</p>
+            <ul class="c-benefits">
+              <li class="c-b"><div class="c-dot" style="background:#B8864A" aria-hidden="true"></div><span class="c-btext">Rizo que dura todo el día</span></li>
+              <li class="c-b"><div class="c-dot" style="background:#B8864A" aria-hidden="true"></div><span class="c-btext">Sin jalón ni dolor</span></li>
+              <li class="c-b"><div class="c-dot" style="background:#B8864A" aria-hidden="true"></div><span class="c-btext">Apto para todo tipo de pestaña</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 03 Esponjas -->
+        <div class="c-card" data-idx="2" role="article" aria-label="Producto: Esponjas">
+          <div class="c-visual">
+            <div class="c-vbg" style="background:radial-gradient(ellipse at 50% 70%,#F5D0DC,#FDF0F3)"></div>
+            <div class="c-ring">
+              <svg viewBox="0 0 42 42" fill="none" aria-hidden="true">
+                <ellipse cx="21" cy="26" rx="12" ry="10" stroke="#C9758A" stroke-width=".7"/>
+                <ellipse cx="21" cy="24" rx="12" ry="10" stroke="#A8506A" stroke-width=".5" stroke-dasharray="3 3" fill="none"/>
+                <path d="M9 24 Q16 18 21 20 Q26 18 33 24" stroke="#C9758A" stroke-width=".7" fill="none"/>
+                <path d="M21 11v6" stroke="#B8864A" stroke-width=".7" stroke-linecap="round"/>
+                <circle cx="21" cy="9" r="2.5" fill="none" stroke="#B8864A" stroke-width=".7"/>
+                <circle cx="16" cy="28" r="1.5" fill="#C9758A" opacity=".3"/>
+                <circle cx="26" cy="26" r="1" fill="#C9758A" opacity=".25"/>
+              </svg>
+            </div>
+            <span class="c-photo">📷 Tu foto aquí</span>
+            <span class="c-ghost" aria-hidden="true">03</span>
+          </div>
+          <div class="c-body">
+            <p class="c-cat">Aplicadores · Base</p>
+            <h3 class="c-name">Esponjas</h3>
+            <div class="c-line" aria-hidden="true"></div>
+            <p class="c-desc">Difuminado suave y parejo sin marcas. Húmeda para acabado natural o seca para cobertura total — vos elegís.</p>
+            <ul class="c-benefits">
+              <li class="c-b"><div class="c-dot" aria-hidden="true"></div><span class="c-btext">Sin marcas ni bordes visibles</span></li>
+              <li class="c-b"><div class="c-dot" aria-hidden="true"></div><span class="c-btext">Natural o cobertura total</span></li>
+              <li class="c-b"><div class="c-dot" aria-hidden="true"></div><span class="c-btext">Suave con todo tipo de piel</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 04 Rimel -->
+        <div class="c-card" data-idx="3" role="article" aria-label="Producto: Rimel">
+          <div class="c-visual">
+            <div class="c-vbg" style="background:radial-gradient(ellipse at 50% 70%,#EDD5C0,#FAE4EA)"></div>
+            <div class="c-ring">
+              <svg viewBox="0 0 42 42" fill="none" aria-hidden="true">
+                <ellipse cx="21" cy="21" rx="5.5" ry="16" stroke="#C9758A" stroke-width=".7"/>
+                <path d="M16 13C16 13 10 11 6 13" stroke="#C9758A" stroke-width="1" stroke-linecap="round"/>
+                <path d="M16 18C16 18 9 16 5 19" stroke="#C9758A" stroke-width="1" stroke-linecap="round"/>
+                <path d="M16 23C16 23 8 22 4 26" stroke="#A8506A" stroke-width=".8" stroke-linecap="round"/>
+                <path d="M26 13C26 13 32 11 36 13" stroke="#C9758A" stroke-width="1" stroke-linecap="round"/>
+                <path d="M26 18C26 18 33 16 37 19" stroke="#C9758A" stroke-width="1" stroke-linecap="round"/>
+                <path d="M26 23C26 23 34 22 38 26" stroke="#A8506A" stroke-width=".8" stroke-linecap="round"/>
+                <circle cx="21" cy="8" r="2.5" fill="#B8864A" opacity=".7"/>
+              </svg>
+            </div>
+            <span class="c-photo">📷 Tu foto aquí</span>
+            <span class="c-ghost" aria-hidden="true">04</span>
+          </div>
+          <div class="c-body">
+            <p class="c-cat">Ojos · Volumen</p>
+            <h3 class="c-name">Rimel</h3>
+            <div class="c-line" aria-hidden="true"></div>
+            <p class="c-desc">Pestañas largas y voluminosas desde la primera pasada. Sin grumos, sin manchas, resistente todo el día.</p>
+            <ul class="c-benefits">
+              <li class="c-b"><div class="c-dot" style="background:#A8506A" aria-hidden="true"></div><span class="c-btext">Volumen y longitud notables</span></li>
+              <li class="c-b"><div class="c-dot" style="background:#A8506A" aria-hidden="true"></div><span class="c-btext">No se corre ni mancha</span></li>
+              <li class="c-b"><div class="c-dot" style="background:#A8506A" aria-hidden="true"></div><span class="c-btext">Aplicación limpia, sin grumos</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 05 Espejos -->
+        <div class="c-card" data-idx="4" role="article" aria-label="Producto: Espejos">
+          <div class="c-visual">
+            <div class="c-vbg" style="background:radial-gradient(ellipse at 50% 70%,#F5D0DC,#FDF0F3)"></div>
+            <div class="c-ring">
+              <svg viewBox="0 0 42 42" fill="none" aria-hidden="true">
+                <rect x="9" y="7" width="24" height="28" rx="12" stroke="#B8864A" stroke-width=".7"/>
+                <rect x="13" y="11" width="16" height="20" rx="8" stroke="#C9758A" stroke-width=".5"/>
+                <ellipse cx="21" cy="21" rx="5" ry="6" fill="none" stroke="#B8864A" stroke-width=".4" stroke-dasharray="2 2"/>
+                <circle cx="21" cy="5" r="1.8" fill="#B8864A" opacity=".5"/>
+                <path d="M9 21H5M37 21h-4" stroke="#B8864A" stroke-width=".5" stroke-linecap="round" opacity=".4"/>
+              </svg>
+            </div>
+            <span class="c-photo">📷 Tu foto aquí</span>
+            <span class="c-ghost" aria-hidden="true">05</span>
+          </div>
+          <div class="c-body">
+            <p class="c-cat">Accesorios · Portátil</p>
+            <h3 class="c-name">Espejos</h3>
+            <div class="c-line" aria-hidden="true"></div>
+            <p class="c-desc">Reflexión nítida y sin distorsión. Compacto y liviano para llevar siempre y retocar donde estés.</p>
+            <ul class="c-benefits">
+              <li class="c-b"><div class="c-dot" style="background:#B8864A" aria-hidden="true"></div><span class="c-btext">Imagen nítida, sin distorsión</span></li>
+              <li class="c-b"><div class="c-dot" style="background:#B8864A" aria-hidden="true"></div><span class="c-btext">Compacto, entra en cualquier cartera</span></li>
+              <li class="c-b"><div class="c-dot" style="background:#B8864A" aria-hidden="true"></div><span class="c-btext">Ideal para retoques al instante</span></li>
+            </ul>
+          </div>
+        </div>
+
       </div>
+    </div>
 
-      <!-- 05 Espejos -->
-      <div class="c-card" data-idx="4">
-        <div class="c-visual">
-          <div class="c-vbg" style="background:radial-gradient(ellipse at 50% 70%,#F5D0DC,#FDF0F3)"></div>
-          <div class="c-ring">
-            <svg viewBox="0 0 42 42" fill="none">
-              <rect x="9" y="7" width="24" height="28" rx="12" stroke="#B8864A" stroke-width=".7"/>
-              <rect x="13" y="11" width="16" height="20" rx="8" stroke="#C9758A" stroke-width=".5"/>
-              <ellipse cx="21" cy="21" rx="5" ry="6" fill="none" stroke="#B8864A" stroke-width=".4" stroke-dasharray="2 2"/>
-              <circle cx="21" cy="5" r="1.8" fill="#B8864A" opacity=".5"/>
-              <path d="M9 21H5M37 21h-4" stroke="#B8864A" stroke-width=".5" stroke-linecap="round" opacity=".4"/>
-            </svg>
-          </div>
-          <span class="c-photo">📷 Tu foto aquí</span>
-          <span class="c-ghost">05</span>
-        </div>
-        <div class="c-body">
-          <p class="c-cat">Accesorios · Portátil</p>
-          <h3 class="c-name">Espejos</h3>
-          <div class="c-line"></div>
-          <p class="c-desc">Reflexión nítida y sin distorsión. Compacto y liviano para llevar siempre y retocar donde estés.</p>
-          <div class="c-benefits">
-            <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Imagen nítida, sin distorsión</span></div>
-            <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Compacto, entra en cualquier cartera</span></div>
-            <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Ideal para retoques al instante</span></div>
-          </div>
-        </div>
+    <div class="c-controls">
+      <button class="c-btn" id="prev" aria-label="Producto anterior">&#8592;</button>
+      <div class="c-dots" id="dots" role="tablist" aria-label="Navegación de productos"></div>
+      <button class="c-btn" id="next" aria-label="Producto siguiente">&#8594;</button>
+    </div>
+  </section>
+
+  <!-- RITUAL DE BELLEZA -->
+  <section class="ritual" id="ritual" aria-label="El ritual Glimmer">
+    <div class="sec-hdr">
+      <p class="sec-eye">Tu rutina diaria</p>
+      <h2 class="sec-title">El ritual Glimmer</h2>
+      <p class="sec-sub">4 pasos para brillar cada día</p>
+    </div>
+    <div class="ritual-grid">
+      <div class="ritual-step">
+        <div class="ritual-icon" aria-hidden="true">✨</div>
+        <p class="ritual-num">01</p>
+        <p class="ritual-name">Preparar</p>
+        <p class="ritual-desc">Comenzá con la piel limpia e hidratada como base perfecta</p>
       </div>
-
+      <div class="ritual-step">
+        <div class="ritual-icon" aria-hidden="true">💄</div>
+        <p class="ritual-num">02</p>
+        <p class="ritual-name">Aplicar</p>
+        <p class="ritual-desc">Usá las esponjas para una base perfecta y uniforme</p>
+      </div>
+      <div class="ritual-step">
+        <div class="ritual-icon" aria-hidden="true">👁️</div>
+        <p class="ritual-num">03</p>
+        <p class="ritual-name">Realzar</p>
+        <p class="ritual-desc">Enchinador y rimel para pestañas que hablan solas</p>
+      </div>
+      <div class="ritual-step">
+        <div class="ritual-icon" aria-hidden="true">✦</div>
+        <p class="ritual-num">04</p>
+        <p class="ritual-name">Fijar</p>
+        <p class="ritual-desc">Polvos de Hadas para un acabado que dura toda la jornada</p>
+      </div>
     </div>
-  </div>
+  </section>
 
-  <div class="c-controls">
-    <button class="c-btn" id="prev" aria-label="Anterior">&#8592;</button>
-    <div class="c-dots" id="dots"></div>
-    <button class="c-btn" id="next" aria-label="Siguiente">&#8594;</button>
-  </div>
-</section>
-
-<!-- RITUAL DE BELLEZA -->
-<section class="ritual" id="ritual">
-  <div class="sec-hdr">
-    <p class="sec-eye">Tu rutina diaria</p>
-    <h2 class="sec-title">El ritual Glimmer</h2>
-    <p class="sec-sub">4 pasos para brillar cada día</p>
-  </div>
-  <div class="ritual-grid">
-    <div class="ritual-step">
-      <div class="ritual-icon">✨</div>
-      <p class="ritual-num">01</p>
-      <p class="ritual-name">Preparar</p>
-      <p class="ritual-desc">Comenzá con la piel limpia e hidratada como base perfecta</p>
+  <!-- CHARTS -->
+  <section class="chart-sec" id="nosotras" aria-label="Calidad que se siente">
+    <div class="sec-hdr">
+      <p class="sec-eye">¿Por qué Glimmer?</p>
+      <h2 class="sec-title">Calidad que se siente</h2>
+      <p class="sec-sub">Productos elegidos por sus resultados reales</p>
     </div>
-    <div class="ritual-step">
-      <div class="ritual-icon">💄</div>
-      <p class="ritual-num">02</p>
-      <p class="ritual-name">Aplicar</p>
-      <p class="ritual-desc">Usá las esponjas para una base perfecta y uniforme</p>
+    <div class="chart-grid">
+      <div class="chart-card">
+        <p class="chart-card-title">Satisfacción por producto</p>
+        <p class="chart-card-sub">Basado en feedback de clientas</p>
+        <div class="chart-wrap"><canvas id="cRadar" aria-label="Gráfico de satisfacción por producto"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <p class="chart-card-title">Lo más valorado</p>
+        <p class="chart-card-sub">Beneficios que más importan al usar</p>
+        <div class="chart-wrap"><canvas id="cDoughnut" aria-label="Gráfico de beneficios más valorados"></canvas></div>
+      </div>
     </div>
-    <div class="ritual-step">
-      <div class="ritual-icon">👁️</div>
-      <p class="ritual-num">03</p>
-      <p class="ritual-name">Realzar</p>
-      <p class="ritual-desc">Enchinador y rimel para pestañas que hablan solas</p>
-    </div>
-    <div class="ritual-step">
-      <div class="ritual-icon">✦</div>
-      <p class="ritual-num">04</p>
-      <p class="ritual-name">Fijar</p>
-      <p class="ritual-desc">Polvos de Hadas para un acabado que dura toda la jornada</p>
-    </div>
-  </div>
-</section>
+  </section>
 
-<!-- CHARTS -->
-<section class="chart-sec" id="nosotras">
-  <div class="sec-hdr">
-    <p class="sec-eye">¿Por qué Glimmer?</p>
-    <h2 class="sec-title">Calidad que se siente</h2>
-    <p class="sec-sub">Productos elegidos por sus resultados reales</p>
-  </div>
-  <div class="chart-grid">
-    <div class="chart-card">
-      <p class="chart-card-title">Satisfacción por producto</p>
-      <p class="chart-card-sub">Basado en feedback de clientas</p>
-      <div class="chart-wrap"><canvas id="cRadar"></canvas></div>
-    </div>
-    <div class="chart-card">
-      <p class="chart-card-title">Lo más valorado</p>
-      <p class="chart-card-sub">Beneficios que más importan al usar</p>
-      <div class="chart-wrap"><canvas id="cDoughnut"></canvas></div>
-    </div>
-  </div>
-</section>
+  <!-- QUOTE -->
+  <section class="quote-sec">
+    <div class="quote-mark" aria-hidden="true">"</div>
+    <p class="quote-text">Todo lo que amás, en un solo catálogo.</p>
+    <p class="quote-author">— Glimmer Beauty 2026</p>
+  </section>
 
-<!-- FRASE -->
-<section class="quote-sec">
-  <div class="quote-mark">"</div>
-  <p class="quote-text">Todo lo que amás, en un solo catálogo.</p>
-  <p class="quote-author">— Glimmer Beauty 2026</p>
-</section>
+  <!-- CLOSING -->
+  <section class="closing">
+    <p class="closing-label">— catálogo de belleza 2026 —</p>
+    <h1 class="closing-title">GLIMMER</h1>
+    <em class="closing-em">cosmética &amp; belleza</em>
+    <div class="closing-line" aria-hidden="true"></div>
+    <p class="closing-tagline">Porque cada día es una oportunidad de brillar</p>
+  </section>
 
-<!-- CIERRE -->
-<section class="closing">
-  <p class="closing-label">— catálogo de belleza 2026 —</p>
-  <h2 class="closing-title">GLIMMER</h2>
-  <em class="closing-em">cosmética &amp; belleza</em>
-  <div class="closing-line"></div>
-  <p class="closing-tagline">Porque cada día es una oportunidad de brillar</p>
-</section>
+  <script>
+    // Pétalos animados
+    const pc = document.getElementById('petals');
+    for (let i = 0; i < 24; i++) {
+      const p = document.createElement('div');
+      p.className = 'petal';
+      const s = 5 + Math.random() * 9;
+      p.style.cssText = `width:${s}px;height:${s * 1.5}px;left:${Math.random() * 100}%;animation-duration:${10 + Math.random() * 16}s;animation-delay:${Math.random() * 14}s;background:hsl(${338 + Math.random() * 18},${55 + Math.random() * 20}%,${80 + Math.random() * 12}%)`;
+      pc.appendChild(p);
+    }
 
-<script>
-/* Pétalos */
-const pc=document.getElementById('petals');
-for(let i=0;i<24;i++){
-  const p=document.createElement('div');p.className='petal';
-  const s=5+Math.random()*9;
-  p.style.cssText=`width:${s}px;height:${s*1.5}px;left:${Math.random()*100}%;animation-duration:${10+Math.random()*16}s;animation-delay:${Math.random()*14}s;background:hsl(${338+Math.random()*18},${55+Math.random()*20}%,${80+Math.random()*12}%)`;
-  pc.appendChild(p);
-}
+    // GSAP Animations
+    if (typeof gsap !== 'undefined') {
+      gsap.registerPlugin(ScrollTrigger);
 
-/* GSAP */
-gsap.registerPlugin(ScrollTrigger);
-gsap.from('#hero-img',{opacity:0,scale:1.03,duration:1.3,ease:'power3.out',delay:.2});
-const anim=(el,y=32)=>gsap.from(el,{scrollTrigger:{trigger:el,start:'top 84%'},opacity:0,y,duration:.9,ease:'power3.out'});
-anim('#intro');anim('.sec');anim('.ritual',24);anim('.chart-sec',24);anim('.quote-sec',20);anim('.closing',20);
-document.querySelectorAll('.ritual-step').forEach((el,i)=>{
-  gsap.from(el,{scrollTrigger:{trigger:el,start:'top 88%'},opacity:0,y:24,duration:.7,ease:'power3.out',delay:i*.1});
-});
-document.querySelectorAll('.c-ring').forEach((el,i)=>{
-  gsap.to(el,{y:-6,duration:2.2+i*.2,repeat:-1,yoyo:true,ease:'sine.inOut',delay:i*.3});
-});
+      // Hero image fade in
+      gsap.from('#hero-img', {
+        opacity: 0,
+        scale: 1.03,
+        duration: 1.3,
+        ease: 'power3.out',
+        delay: 0.2
+      });
 
-/* Carrusel */
-const track=document.getElementById('track');
-const cards=Array.from(track.querySelectorAll('.c-card'));
-const dotsW=document.getElementById('dots');
-let cur=0;
-cards.forEach((_,i)=>{
-  const d=document.createElement('div');
-  d.className='c-dot-btn'+(i===0?' on':'');
-  d.addEventListener('click',()=>goTo(i));
-  dotsW.appendChild(d);
-});
-function goTo(idx){
-  cur=(idx+cards.length)%cards.length;
-  cards.forEach((c,i)=>c.classList.toggle('active',i===cur));
-  dotsW.querySelectorAll('.c-dot-btn').forEach((d,i)=>d.classList.toggle('on',i===cur));
-  const cw=cards[0].offsetWidth+20;
-  track.scrollTo({left:Math.max(0,cur*cw-(track.offsetWidth/2-cards[0].offsetWidth/2)),behavior:'smooth'});
-}
-document.getElementById('prev').addEventListener('click',()=>goTo(cur-1));
-document.getElementById('next').addEventListener('click',()=>goTo(cur+1));
-let isDown=false,sx,sl;
-track.addEventListener('mousedown',e=>{isDown=true;sx=e.pageX-track.offsetLeft;sl=track.scrollLeft;track.style.cursor='grabbing'});
-track.addEventListener('mouseleave',()=>{isDown=false;track.style.cursor='grab'});
-track.addEventListener('mouseup',()=>{isDown=false;track.style.cursor='grab'});
-track.addEventListener('mousemove',e=>{if(!isDown)return;e.preventDefault();track.scrollLeft=sl-(e.pageX-track.offsetLeft-sx)*1.4});
-track.addEventListener('scroll',()=>{
-  const idx=Math.round(track.scrollLeft/(cards[0].offsetWidth+20));
-  if(idx!==cur&&idx>=0&&idx<cards.length){cur=idx;cards.forEach((c,i)=>c.classList.toggle('active',i===cur));dotsW.querySelectorAll('.c-dot-btn').forEach((d,i)=>d.classList.toggle('on',i===cur))}
-},{passive:true});
+      // Generic section animations
+      const anim = (el, y = 32) =>
+        gsap.from(el, {
+          scrollTrigger: { trigger: el, start: 'top 84%' },
+          opacity: 0,
+          y,
+          duration: 0.9,
+          ease: 'power3.out'
+        });
 
-/* Charts */
-const r='rgba(201,117,138,',g='rgba(184,134,74,',p='rgba(168,80,106,',n='rgba(212,168,112,',s='rgba(196,160,176,';
-new Chart(document.getElementById('cRadar'),{
-  type:'radar',
-  data:{
-    labels:['Polvos de Hadas','Enchinador','Esponjas','Rimel','Espejos'],
-    datasets:[{label:'Satisfacción %',data:[95,90,88,93,85],backgroundColor:r+'0.12)',borderColor:r+'0.8)',pointBackgroundColor:'#C9758A',pointBorderColor:'#F2B8C8',pointRadius:4,borderWidth:1.5}]
-  },
-  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{r:{min:70,max:100,ticks:{color:'rgba(138,80,104,.5)',font:{size:10,family:'DM Sans'},stepSize:10,backdropColor:'transparent'},grid:{color:'rgba(201,117,138,.12)'},angleLines:{color:'rgba(201,117,138,.12)'},pointLabels:{color:'#8A5068',font:{size:11,family:'DM Sans'}}}}}
-});
-new Chart(document.getElementById('cDoughnut'),{
-  type:'doughnut',
-  data:{
-    labels:['Larga duración','Fácil de usar','Resultado visible','Comodidad','Calidad'],
-    datasets:[{data:[30,22,25,12,11],backgroundColor:[r+'.82)',g+'.8)',p+'.78)',n+'.76)',s+'.78)'],borderColor:'#FDF0F3',borderWidth:2,hoverOffset:6}]
-  },
-  options:{responsive:true,maintainAspectRatio:false,cutout:'65%',plugins:{legend:{position:'bottom',labels:{color:'#8A5068',font:{size:11,family:'DM Sans'},padding:11,boxWidth:9,usePointStyle:true}}}}
-});
-</script>
+      anim('#intro');
+      anim('.sec');
+      anim('.ritual', 24);
+      anim('.chart-sec', 24);
+      anim('.quote-sec', 20);
+      anim('.closing', 20);
+
+      // Ritual steps staggered
+      document.querySelectorAll('.ritual-step').forEach((el, i) => {
+        gsap.from(el, {
+          scrollTrigger: { trigger: el, start: 'top 88%' },
+          opacity: 0,
+          y: 24,
+          duration: 0.7,
+          ease: 'power3.out',
+          delay: i * 0.1
+        });
+      });
+
+      // Ring floating animations
+      document.querySelectorAll('.c-ring').forEach((el, i) => {
+        gsap.to(el, {
+          y: -6,
+          duration: 2.2 + i * 0.2,
+          repeat: -1,
+          yoyo: true,
+          ease: 'sine.inOut',
+          delay: i * 0.3
+        });
+      });
+    }
+
+    // Carousel functionality
+    const track = document.getElementById('track');
+    const cards = Array.from(track.querySelectorAll('.c-card'));
+    const dotsW = document.getElementById('dots');
+    let cur = 0;
+
+    // Create dot buttons
+    cards.forEach((_, i) => {
+      const d = document.createElement('button');
+      d.className = 'c-dot-btn' + (i === 0 ? ' on' : '');
+      d.setAttribute('role', 'tab');
+      d.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+      d.setAttribute('aria-label', `Producto ${i + 1}`);
+      d.addEventListener('click', () => goTo(i));
+      dotsW.appendChild(d);
+    });
+
+    function goTo(idx) {
+      cur = (idx + cards.length) % cards.length;
+      cards.forEach((c, i) => c.classList.toggle('active', i === cur));
+      dotsW.querySelectorAll('.c-dot-btn').forEach((d, i) => {
+        d.classList.toggle('on', i === cur);
+        d.setAttribute('aria-selected', i === cur ? 'true' : 'false');
+      });
+      const cw = cards[0].offsetWidth + 20;
+      track.scrollTo({
+        left: Math.max(0, cur * cw - (track.offsetWidth / 2 - cards[0].offsetWidth / 2)),
+        behavior: 'smooth'
+      });
+    }
+
+    // Carousel controls
+    document.getElementById('prev').addEventListener('click', () => goTo(cur - 1));
+    document.getElementById('next').addEventListener('click', () => goTo(cur + 1));
+
+    // Mouse drag functionality
+    let isDown = false, sx, sl;
+    track.addEventListener('mousedown', e => {
+      isDown = true;
+      sx = e.pageX - track.offsetLeft;
+      sl = track.scrollLeft;
+      track.style.cursor = 'grabbing';
+    });
+
+    track.addEventListener('mouseleave', () => {
+      isDown = false;
+      track.style.cursor = 'grab';
+    });
+
+    track.addEventListener('mouseup', () => {
+      isDown = false;
+      track.style.cursor = 'grab';
+    });
+
+    track.addEventListener('mousemove', e => {
+      if (!isDown) return;
+      e.preventDefault();
+      track.scrollLeft = sl - (e.pageX - track.offsetLeft - sx) * 1.4;
+    });
+
+    track.addEventListener('scroll', () => {
+      const idx = Math.round(track.scrollLeft / (cards[0].offsetWidth + 20));
+      if (idx !== cur && idx >= 0 && idx < cards.length) {
+        cur = idx;
+        cards.forEach((c, i) => c.classList.toggle('active', i === cur));
+        dotsW.querySelectorAll('.c-dot-btn').forEach((d, i) => {
+          d.classList.toggle('on', i === cur);
+          d.setAttribute('aria-selected', i === cur ? 'true' : 'false');
+        });
+      }
+    }, { passive: true });
+
+    // Charts
+    if (typeof Chart !== 'undefined') {
+      const r = 'rgba(201,117,138,';
+      const g = 'rgba(184,134,74,';
+      const p = 'rgba(168,80,106,';
+      const n = 'rgba(212,168,112,';
+      const s = 'rgba(196,160,176,';
+
+      new Chart(document.getElementById('cRadar'), {
+        type: 'radar',
+        data: {
+          labels: ['Polvos de Hadas', 'Enchinador', 'Esponjas', 'Rimel', 'Espejos'],
+          datasets: [{
+            label: 'Satisfacción %',
+            data: [95, 90, 88, 93, 85],
+            backgroundColor: r + '0.12)',
+            borderColor: r + '0.8)',
+            pointBackgroundColor: '#C9758A',
+            pointBorderColor: '#F2B8C8',
+            pointRadius: 4,
+            borderWidth: 1.5
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            r: {
+              min: 70,
+              max: 100,
+              ticks: {
+                color: 'rgba(138,80,104,.5)',
+                font: { size: 10, family: 'DM Sans' },
+                stepSize: 10,
+                backdropColor: 'transparent'
+              },
+              grid: { color: 'rgba(201,117,138,.12)' },
+              angleLines: { color: 'rgba(201,117,138,.12)' },
+              pointLabels: { color: '#8A5068', font: { size: 11, family: 'DM Sans' } }
+            }
+          }
+        }
+      });
+
+      new Chart(document.getElementById('cDoughnut'), {
+        type: 'doughnut',
+        data: {
+          labels: ['Larga duración', 'Fácil de usar', 'Resultado visible', 'Comodidad', 'Calidad'],
+          datasets: [{
+            data: [30, 22, 25, 12, 11],
+            backgroundColor: [r + '.82)', g + '.8)', p + '.78)', n + '.76)', s + '.78)'],
+            borderColor: '#FDF0F3',
+            borderWidth: 2,
+            hoverOffset: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: '65%',
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                color: '#8A5068',
+                font: { size: 11, family: 'DM Sans' },
+                padding: 11,
+                boxWidth: 9,
+                usePointStyle: true
+              }
+            }
+          }
+        }
+      });
+    }
+  </script>
 </body>
 </html>
