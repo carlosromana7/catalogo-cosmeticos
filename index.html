@@ -194,7 +194,7 @@ body{background:var(--bg);color:var(--dark);font-family:var(--ff-b);font-weight:
   </div>
   <div class="intro-right">
     <div class="intro-stat">
-      <p class="intro-stat-n">13</p>
+      <p class="intro-stat-n">12</p>
       <p class="intro-stat-l">Productos</p>
     </div>
     <div class="intro-stat">
@@ -346,26 +346,42 @@ body{background:var(--bg);color:var(--dark);font-family:var(--ff-b);font-weight:
         </div>
       </div>
 
-      <!-- 06 — foto: brochas-grandes.png -->
+      <!-- 06 — fotos: brochas-grandes.png y brochas-pequenas.png -->
       <div class="c-card" data-idx="5">
-        <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#EDD5C0,#FDF0F3)">
-          <img class="prod-img" src="brochas-grandes.png" alt="Brochas Grandes"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="placeholder" style="display:none">
-            <svg viewBox="0 0 44 44" fill="none"><path d="M22 6v26" stroke="#B8864A" stroke-width="1" stroke-linecap="round"/><ellipse cx="22" cy="34" rx="8" ry="5" fill="none" stroke="#C9758A" stroke-width=".8"/><ellipse cx="22" cy="36" rx="8" ry="5" fill="none" stroke="#A8506A" stroke-width=".5"/><circle cx="22" cy="8" r="3" fill="none" stroke="#B8864A" stroke-width=".7"/></svg>
-            <span>brochas-grandes.png</span>
+        <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#EDD5C0,#FDF0F3);display:flex;flex-direction:row;gap:0">
+          <!-- mitad izquierda: grandes -->
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:0.5px solid rgba(180,100,130,.15);overflow:hidden;position:relative">
+            <img class="prod-img" src="brochas-grandes.png" alt="Brochas Grandes"
+                 style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="placeholder" style="display:none;flex-direction:column;align-items:center;gap:6px">
+              <svg width="32" height="32" viewBox="0 0 44 44" fill="none"><path d="M22 6v26" stroke="#B8864A" stroke-width="1" stroke-linecap="round"/><ellipse cx="22" cy="34" rx="8" ry="5" fill="none" stroke="#C9758A" stroke-width=".8"/><circle cx="22" cy="8" r="3" fill="none" stroke="#B8864A" stroke-width=".7"/></svg>
+              <span style="font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:rgba(100,50,70,.4)">brochas-grandes.png</span>
+            </div>
+            <span style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:rgba(168,80,106,.7);padding:2px 8px;border-radius:999px;white-space:nowrap">Grandes</span>
+          </div>
+          <!-- mitad derecha: pequeñas -->
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;position:relative">
+            <img class="prod-img" src="brochas-pequenas.png" alt="Brochas Pequeñas"
+                 style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="placeholder" style="display:none;flex-direction:column;align-items:center;gap:6px">
+              <svg width="26" height="26" viewBox="0 0 44 44" fill="none"><path d="M22 6v22" stroke="#B8864A" stroke-width=".8" stroke-linecap="round"/><ellipse cx="22" cy="30" rx="5" ry="4" fill="none" stroke="#C9758A" stroke-width=".7"/><circle cx="22" cy="8" r="2" fill="none" stroke="#B8864A" stroke-width=".6"/></svg>
+              <span style="font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:rgba(100,50,70,.4)">brochas-pequenas.png</span>
+            </div>
+            <span style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:rgba(168,80,106,.7);padding:2px 8px;border-radius:999px;white-space:nowrap">Pequeñas</span>
           </div>
           <span class="c-num">06</span>
         </div>
         <div class="c-body">
-          <p class="c-cat">Herramientas · Aplicación</p>
-          <h3 class="c-name">Brochas Grandes</h3>
+          <p class="c-cat">Herramientas · Aplicación &amp; Detalle</p>
+          <h3 class="c-name">Brochas</h3>
           <div class="c-line"></div>
-          <p class="c-desc">Distribución uniforme y suave del polvo, rubor o iluminador. Cerdas suaves que no irritan la piel.</p>
+          <p class="c-desc">Set completo: brochas grandes para polvo, rubor e iluminador — y pequeñas para sombras y detalles precisos.</p>
           <div class="c-benefits">
-            <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Distribución uniforme y pareja</span></div>
-            <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Cerdas suaves, no irritan</span></div>
-            <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Multifuncional: polvo, rubor, iluminador</span></div>
+            <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Grandes: polvo, rubor e iluminador</span></div>
+            <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Pequeñas: sombras y detalles precisos</span></div>
+            <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Cerdas suaves, acabado profesional</span></div>
           </div>
         </div>
       </div>
@@ -517,29 +533,7 @@ body{background:var(--bg);color:var(--dark);font-family:var(--ff-b);font-weight:
         </div>
       </div>
 
-      <!-- 13 — foto: brochas-pequenas.png -->
-      <div class="c-card" data-idx="12">
-        <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#F5D0DC,#FAE4EA)">
-          <img class="prod-img" src="brochas-pequenas.png" alt="Brochas Pequeñas"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="placeholder" style="display:none">
-            <svg viewBox="0 0 44 44" fill="none"><path d="M22 6v22" stroke="#B8864A" stroke-width=".8" stroke-linecap="round"/><ellipse cx="22" cy="30" rx="5" ry="4" fill="none" stroke="#C9758A" stroke-width=".7"/><ellipse cx="22" cy="32" rx="5" ry="4" fill="none" stroke="#A8506A" stroke-width=".5"/><circle cx="22" cy="8" r="2" fill="none" stroke="#B8864A" stroke-width=".6"/></svg>
-            <span>brochas-pequenas.png</span>
-          </div>
-          <span class="c-num">13</span>
-        </div>
-        <div class="c-body">
-          <p class="c-cat">Herramientas · Detalle</p>
-          <h3 class="c-name">Brochas Pequeñas</h3>
-          <div class="c-line"></div>
-          <p class="c-desc">Precisión máxima para sombras, delineado y detalles del rostro. Perfectas para acabados profesionales.</p>
-          <div class="c-benefits">
-            <div class="c-b"><div class="c-dot"></div><span class="c-btext">Precisión para sombras y detalles</span></div>
-            <div class="c-b"><div class="c-dot"></div><span class="c-btext">Cerdas suaves y de larga duración</span></div>
-            <div class="c-b"><div class="c-dot"></div><span class="c-btext">Acabado profesional en casa</span></div>
-          </div>
-        </div>
-      </div>
+
 
     </div><!-- /track -->
   </div>
