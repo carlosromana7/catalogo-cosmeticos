@@ -194,7 +194,7 @@ body{background:var(--bg);color:var(--dark);font-family:var(--ff-b);font-weight:
   </div>
   <div class="intro-right">
     <div class="intro-stat">
-      <p class="intro-stat-n">12</p>
+      <p class="intro-stat-n">14</p>
       <p class="intro-stat-l">Productos</p>
     </div>
     <div class="intro-stat">
@@ -460,51 +460,80 @@ body{background:var(--bg);color:var(--dark);font-family:var(--ff-b);font-weight:
         </div>
       </div>
 
-      <!-- 10 — foto: delineador-doble-punta.png -->
-      <div class="c-card" data-idx="9">
-        <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#EDD5C0,#FAE4EA)">
-          <img class="prod-img" src="delineador-doble-punta.png" alt="Delineador doble punta"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="placeholder" style="display:none">
-            <svg viewBox="0 0 44 44" fill="none"><path d="M10 34L34 10" stroke="#3D2030" stroke-width="2" stroke-linecap="round"/><circle cx="10" cy="34" r="3" fill="#C9758A" opacity=".7"/><circle cx="34" cy="10" r="2" fill="#3D2030" opacity=".6"/><path d="M16 28L28 16" stroke="#C9758A" stroke-width=".5" stroke-linecap="round" stroke-dasharray="2 2"/></svg>
-            <span>delineador-doble-punta.png</span>
+      <!-- 10 — DELINEADORES (agrupados, abre modal) -->
+      <div class="c-card c-card-group" data-idx="9" onclick="openModal('modal-deli')" style="cursor:pointer">
+        <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#2A1E30,#1A1020);display:flex;flex-direction:row;gap:0">
+          <div style="flex:1;overflow:hidden;position:relative;border-right:0.5px solid rgba(180,100,130,.2)">
+            <img class="prod-img" src="delineador-doble-punta.png" alt="Delineador Doble Punta"
+                 style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="placeholder" style="display:none;flex-direction:column;align-items:center;gap:5px;height:100%;justify-content:center">
+              <svg width="30" height="30" viewBox="0 0 44 44" fill="none"><path d="M10 34L34 10" stroke="#C9758A" stroke-width="1.5" stroke-linecap="round"/><circle cx="10" cy="34" r="3" fill="#C9758A" opacity=".6"/></svg>
+              <span style="font-size:8px;color:rgba(255,255,255,.4);letter-spacing:.1em;text-transform:uppercase">doble-punta.png</span>
+            </div>
+            <span style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:rgba(168,80,106,.75);padding:2px 8px;border-radius:999px;white-space:nowrap">Doble punta</span>
+          </div>
+          <div style="flex:1;overflow:hidden;position:relative">
+            <img class="prod-img" src="delineador-normal.png" alt="Delineador Normal"
+                 style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="placeholder" style="display:none;flex-direction:column;align-items:center;gap:5px;height:100%;justify-content:center">
+              <svg width="30" height="30" viewBox="0 0 44 44" fill="none"><path d="M34 10L10 34" stroke="#B8864A" stroke-width="1.5" stroke-linecap="round"/><circle cx="34" cy="10" r="3" fill="#B8864A" opacity=".6"/></svg>
+              <span style="font-size:8px;color:rgba(255,255,255,.4);letter-spacing:.1em;text-transform:uppercase">delineador-normal.png</span>
+            </div>
+            <span style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:rgba(184,134,74,.75);padding:2px 8px;border-radius:999px;white-space:nowrap">Normal</span>
           </div>
           <span class="c-num">10</span>
+          <span style="position:absolute;top:12px;right:12px;z-index:4;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:rgba(61,32,48,.7);padding:4px 10px;border-radius:999px">Ver opciones →</span>
         </div>
         <div class="c-body">
           <p class="c-cat">Ojos · Definición</p>
-          <h3 class="c-name">Delineador Doble Punta</h3>
+          <h3 class="c-name">Delineadores</h3>
           <div class="c-line"></div>
-          <p class="c-desc">Dos puntas en un solo producto: punta fina para trazos precisos y punta gruesa para looks más dramáticos.</p>
+          <p class="c-desc">Dos opciones para definir tu mirada: delineador de doble punta y delineador clásico. Hacé clic para ver cada uno.</p>
           <div class="c-benefits">
-            <div class="c-b"><div class="c-dot" style="background:#3D2030"></div><span class="c-btext">Dos puntas, dos estilos</span></div>
-            <div class="c-b"><div class="c-dot" style="background:#3D2030"></div><span class="c-btext">Trazo preciso y duradero</span></div>
-            <div class="c-b"><div class="c-dot" style="background:#3D2030"></div><span class="c-btext">No se corre ni borra</span></div>
+            <div class="c-b"><div class="c-dot" style="background:#3D2030"></div><span class="c-btext">Doble punta: fino + dramático</span></div>
+            <div class="c-b"><div class="c-dot" style="background:#3D2030"></div><span class="c-btext">Normal: trazo clásico y preciso</span></div>
+            <div class="c-b"><div class="c-dot" style="background:#3D2030"></div><span class="c-btext">Ambos de larga duración</span></div>
           </div>
         </div>
       </div>
 
-      <!-- 11 — foto: tinta-labial-brasilera.png -->
-      <div class="c-card" data-idx="10">
-        <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#F5D0DC,#FDF0F3)">
-          <img class="prod-img" src="tinta-labial-brasilera.png" alt="Tinta Labial Brasilera"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="placeholder" style="display:none">
-            <svg viewBox="0 0 44 44" fill="none"><path d="M12 24 Q22 14 32 24 Q28 32 22 34 Q16 32 12 24Z" fill="#F2B8C8" opacity=".5" stroke="#C9758A" stroke-width=".7"/><path d="M16 24 Q22 18 28 24" stroke="#A8506A" stroke-width=".6" fill="none"/></svg>
-            <span>tinta-labial-brasilera.png</span>
+      <!-- 11 — TINTAS LABIALES (agrupadas, abre modal) -->
+      <div class="c-card c-card-group" data-idx="10" onclick="openModal('modal-tinta')" style="cursor:pointer">
+        <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#F5D0DC,#FDF0F3);display:flex;flex-direction:row;gap:0">
+          <div style="flex:1;overflow:hidden;position:relative;border-right:0.5px solid rgba(180,100,130,.2)">
+            <img class="prod-img" src="tinta-labial-brasilera.png" alt="Tinta Labial Brasilera"
+                 style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="placeholder" style="display:none;flex-direction:column;align-items:center;gap:5px;height:100%;justify-content:center">
+              <svg width="30" height="30" viewBox="0 0 44 44" fill="none"><path d="M12 24Q22 14 32 24Q28 32 22 34Q16 32 12 24Z" fill="#F2B8C8" opacity=".5" stroke="#C9758A" stroke-width=".7"/></svg>
+              <span style="font-size:8px;color:rgba(100,50,70,.4);letter-spacing:.1em;text-transform:uppercase">brasilera.png</span>
+            </div>
+            <span style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:rgba(168,80,106,.75);padding:2px 8px;border-radius:999px;white-space:nowrap">Brasilera</span>
           </div>
-          <span class="c-badge">✦ Tendencia</span>
+          <div style="flex:1;overflow:hidden;position:relative">
+            <img class="prod-img" src="tinta-kathy-kelly.png" alt="Tinta Kathy Kelly"
+                 style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="placeholder" style="display:none;flex-direction:column;align-items:center;gap:5px;height:100%;justify-content:center">
+              <svg width="30" height="30" viewBox="0 0 44 44" fill="none"><path d="M12 24Q22 14 32 24Q28 32 22 34Q16 32 12 24Z" fill="#D4A870" opacity=".5" stroke="#B8864A" stroke-width=".7"/></svg>
+              <span style="font-size:8px;color:rgba(100,50,70,.4);letter-spacing:.1em;text-transform:uppercase">kathy-kelly.png</span>
+            </div>
+            <span style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:rgba(184,134,74,.75);padding:2px 8px;border-radius:999px;white-space:nowrap">Kathy Kelly</span>
+          </div>
           <span class="c-num">11</span>
+          <span style="position:absolute;top:12px;right:12px;z-index:4;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:rgba(168,80,106,.7);padding:4px 10px;border-radius:999px">Ver opciones →</span>
         </div>
         <div class="c-body">
           <p class="c-cat">Labios · Larga duración</p>
-          <h3 class="c-name">Tinta Labial Brasilera</h3>
+          <h3 class="c-name">Tintas Labiales</h3>
           <div class="c-line"></div>
-          <p class="c-desc">Color intenso que se queda. Fórmula brasilera ultra-durable que aguanta todo — comida, bebida, besos.</p>
+          <p class="c-desc">Dos tintas irresistibles: la Brasilera ultra-durable y la Kathy Kelly con colores vibrantes. Hacé clic para ver cada una.</p>
           <div class="c-benefits">
-            <div class="c-b"><div class="c-dot"></div><span class="c-btext">Ultra larga duración</span></div>
-            <div class="c-b"><div class="c-dot"></div><span class="c-btext">Resistente a comida y bebida</span></div>
-            <div class="c-b"><div class="c-dot"></div><span class="c-btext">Color intenso y vibrante</span></div>
+            <div class="c-b"><div class="c-dot"></div><span class="c-btext">Brasilera: máxima duración</span></div>
+            <div class="c-b"><div class="c-dot"></div><span class="c-btext">Kathy Kelly: colores vibrantes</span></div>
+            <div class="c-b"><div class="c-dot"></div><span class="c-btext">Ambas resistentes a todo el día</span></div>
           </div>
         </div>
       </div>
@@ -534,6 +563,56 @@ body{background:var(--bg);color:var(--dark);font-family:var(--ff-b);font-weight:
       </div>
 
 
+
+      <!-- 13 — foto: agua-micelar.png -->
+      <div class="c-card" data-idx="12">
+        <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#E8D0F0,#F0E0F8)">
+          <img class="prod-img" src="agua-micelar.png" alt="Agua Micelar"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="placeholder" style="display:none">
+            <svg viewBox="0 0 44 44" fill="none"><path d="M22 8 C22 8 32 20 32 28 C32 34 27.5 38 22 38 C16.5 38 12 34 12 28 C12 20 22 8 22 8Z" stroke="#9060B0" stroke-width=".8" fill="none"/><path d="M16 30 Q22 26 28 30" stroke="#9060B0" stroke-width=".6" fill="none"/></svg>
+            <span>agua-micelar.png</span>
+          </div>
+          <span class="c-badge">✦ Nuevo</span>
+          <span class="c-num">13</span>
+        </div>
+        <div class="c-body">
+          <p class="c-cat">Cuidado · Limpieza</p>
+          <h3 class="c-name">Agua Micelar</h3>
+          <div class="c-line"></div>
+          <p class="c-desc">Limpia, desmaquilla e hidrata en un solo paso. Suave con la piel, efectiva con el maquillaje.</p>
+          <div class="c-benefits">
+            <div class="c-b"><div class="c-dot" style="background:#9060B0"></div><span class="c-btext">Desmaquilla sin frotar</span></div>
+            <div class="c-b"><div class="c-dot" style="background:#9060B0"></div><span class="c-btext">Hidrata mientras limpia</span></div>
+            <div class="c-b"><div class="c-dot" style="background:#9060B0"></div><span class="c-btext">Apta para piel sensible</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 14 — foto: gloss.png -->
+      <div class="c-card" data-idx="13">
+        <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#D0F0D8,#E8F8EC)">
+          <img class="prod-img" src="gloss.png" alt="Gloss"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="placeholder" style="display:none">
+            <svg viewBox="0 0 44 44" fill="none"><ellipse cx="22" cy="28" rx="10" ry="7" fill="#A0D8A8" opacity=".4" stroke="#50A060" stroke-width=".7"/><path d="M14 28 Q22 22 30 28" stroke="#50A060" stroke-width=".6" fill="none"/><circle cx="18" cy="26" r="2" fill="#fff" opacity=".6"/></svg>
+            <span>gloss.png</span>
+          </div>
+          <span class="c-badge">✦ Tendencia</span>
+          <span class="c-num">14</span>
+        </div>
+        <div class="c-body">
+          <p class="c-cat">Labios · Brillo</p>
+          <h3 class="c-name">Gloss</h3>
+          <div class="c-line"></div>
+          <p class="c-desc">Brillo irresistible que hidrata y da volumen a los labios. El toque final que completa cualquier look.</p>
+          <div class="c-benefits">
+            <div class="c-b"><div class="c-dot" style="background:#50A060"></div><span class="c-btext">Brillo intenso y duradero</span></div>
+            <div class="c-b"><div class="c-dot" style="background:#50A060"></div><span class="c-btext">Hidrata y da volumen</span></div>
+            <div class="c-b"><div class="c-dot" style="background:#50A060"></div><span class="c-btext">Disponible en varios tonos</span></div>
+          </div>
+        </div>
+      </div>
 
     </div><!-- /track -->
   </div>
@@ -617,8 +696,153 @@ body{background:var(--bg);color:var(--dark);font-family:var(--ff-b);font-weight:
   <p class="closing-tagline">Porque cada día es una oportunidad de brillar</p>
 </section>
 
+<!-- MODAL DELINEADORES -->
+<div id="modal-deli" class="modal-overlay" onclick="closeModal('modal-deli')">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal('modal-deli')">✕</button>
+    <p class="modal-eyebrow">Ojos · Definición</p>
+    <h2 class="modal-title">Delineadores</h2>
+    <div class="modal-grid">
+      <div class="modal-item">
+        <div class="modal-img" style="background:radial-gradient(ellipse at 50% 60%,#2A1E30,#1A1020)">
+          <img src="delineador-doble-punta.png" alt="Delineador Doble Punta"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="modal-ph" style="display:none">
+            <svg width="36" height="36" viewBox="0 0 44 44" fill="none"><path d="M10 34L34 10" stroke="#C9758A" stroke-width="1.5" stroke-linecap="round"/><circle cx="10" cy="34" r="3" fill="#C9758A" opacity=".6"/></svg>
+            <span>delineador-doble-punta.png</span>
+          </div>
+        </div>
+        <div class="modal-item-body">
+          <h3 class="modal-item-name">Doble Punta</h3>
+          <p class="modal-item-desc">Punta fina para trazos precisos + punta gruesa para looks dramáticos. Dos estilos en un solo producto.</p>
+          <div class="modal-tags">
+            <span class="modal-tag">Trazo fino y grueso</span>
+            <span class="modal-tag">Larga duración</span>
+            <span class="modal-tag">No se corre</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-item">
+        <div class="modal-img" style="background:radial-gradient(ellipse at 50% 60%,#2A2018,#181008)">
+          <img src="delineador-normal.png" alt="Delineador Normal"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="modal-ph" style="display:none">
+            <svg width="36" height="36" viewBox="0 0 44 44" fill="none"><path d="M34 10L10 34" stroke="#B8864A" stroke-width="1.5" stroke-linecap="round"/><circle cx="34" cy="10" r="3" fill="#B8864A" opacity=".6"/></svg>
+            <span>delineador-normal.png</span>
+          </div>
+        </div>
+        <div class="modal-item-body">
+          <h3 class="modal-item-name">Normal</h3>
+          <p class="modal-item-desc">Trazo clásico y preciso para definir la mirada. Fórmula duradera disponible en múltiples colores.</p>
+          <div class="modal-tags">
+            <span class="modal-tag">Trazo preciso</span>
+            <span class="modal-tag">Varios colores</span>
+            <span class="modal-tag">Fórmula duradera</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL TINTAS LABIALES -->
+<div id="modal-tinta" class="modal-overlay" onclick="closeModal('modal-tinta')">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal('modal-tinta')">✕</button>
+    <p class="modal-eyebrow">Labios · Larga duración</p>
+    <h2 class="modal-title">Tintas Labiales</h2>
+    <div class="modal-grid">
+      <div class="modal-item">
+        <div class="modal-img" style="background:radial-gradient(ellipse at 50% 60%,#F5D0DC,#FDF0F3)">
+          <img src="tinta-labial-brasilera.png" alt="Tinta Labial Brasilera"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="modal-ph" style="display:none">
+            <svg width="36" height="36" viewBox="0 0 44 44" fill="none"><path d="M12 24Q22 14 32 24Q28 32 22 34Q16 32 12 24Z" fill="#F2B8C8" opacity=".5" stroke="#C9758A" stroke-width=".7"/></svg>
+            <span>tinta-labial-brasilera.png</span>
+          </div>
+        </div>
+        <div class="modal-item-body">
+          <h3 class="modal-item-name">Tinta Labial Brasilera</h3>
+          <p class="modal-item-desc">Fórmula brasilera ultra-durable que aguanta comida, bebida y besos. Color intenso que dura todo el día.</p>
+          <div class="modal-tags">
+            <span class="modal-tag">Ultra durable</span>
+            <span class="modal-tag">Resistente a todo</span>
+            <span class="modal-tag">Color intenso</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-item">
+        <div class="modal-img" style="background:radial-gradient(ellipse at 50% 60%,#EDD5F0,#F8F0FC)">
+          <img src="tinta-kathy-kelly.png" alt="Tinta Kathy Kelly"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="modal-ph" style="display:none">
+            <svg width="36" height="36" viewBox="0 0 44 44" fill="none"><path d="M12 24Q22 14 32 24Q28 32 22 34Q16 32 12 24Z" fill="#D4A870" opacity=".5" stroke="#B8864A" stroke-width=".7"/></svg>
+            <span>tinta-kathy-kelly.png</span>
+          </div>
+        </div>
+        <div class="modal-item-body">
+          <h3 class="modal-item-name">Tinta Kathy Kelly</h3>
+          <p class="modal-item-desc">Colores vibrantes y una fórmula suave que tiñe los labios de forma uniforme. Resultado profesional.</p>
+          <div class="modal-tags">
+            <span class="modal-tag">Colores vibrantes</span>
+            <span class="modal-tag">Fórmula suave</span>
+            <span class="modal-tag">Acabado uniforme</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+/* MODAL */
+.modal-overlay{
+  display:none;position:fixed;inset:0;z-index:999;
+  background:rgba(61,32,48,.6);backdrop-filter:blur(8px);
+  align-items:center;justify-content:center;padding:20px;
+}
+.modal-overlay.open{display:flex;animation:mfade .25s ease}
+@keyframes mfade{from{opacity:0}to{opacity:1}}
+.modal-box{
+  background:#fff;border-radius:24px;max-width:680px;width:100%;
+  padding:36px 32px;position:relative;
+  animation:mslide .3s ease;
+  max-height:90vh;overflow-y:auto;
+}
+@keyframes mslide{from{transform:translateY(24px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-close{
+  position:absolute;top:16px;right:20px;
+  background:var(--bg2);border:0.5px solid var(--border);
+  border-radius:50%;width:32px;height:32px;
+  font-size:14px;color:var(--mid);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;
+}
+.modal-close:hover{background:var(--rose);color:#fff;border-color:var(--rose)}
+.modal-eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--rose);margin-bottom:8px}
+.modal-title{font-family:var(--ff-d);font-size:28px;color:var(--dark);margin-bottom:28px}
+.modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.modal-item{border:0.5px solid var(--border);border-radius:16px;overflow:hidden}
+.modal-img{height:200px;position:relative;overflow:hidden}
+.modal-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease}
+.modal-item:hover .modal-img img{transform:scale(1.05)}
+.modal-ph{
+  display:none;flex-direction:column;align-items:center;justify-content:center;
+  gap:8px;height:100%;
+}
+.modal-ph span{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(100,50,70,.4)}
+.modal-item-body{padding:16px}
+.modal-item-name{font-family:var(--ff-d);font-size:18px;color:var(--dark);margin-bottom:8px}
+.modal-item-desc{font-size:12px;color:var(--mid);line-height:1.7;margin-bottom:12px}
+.modal-tags{display:flex;flex-wrap:wrap;gap:5px}
+.modal-tag{font-size:10px;padding:3px 10px;border-radius:999px;background:var(--bg2);color:var(--rose2);border:0.5px solid var(--border2)}
+@media(max-width:560px){.modal-grid{grid-template-columns:1fr}.modal-box{padding:24px 18px}}
+</style>
 <script>
-/* Pétalos */
+function openModal(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden'}
+function closeModal(id){document.getElementById(id).classList.remove('open');document.body.style.overflow=''}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.querySelectorAll('.modal-overlay.open').forEach(m=>m.classList.remove('open'));document.body.style.overflow=''}});
+</script>
 const pc=document.getElementById('petals');
 for(let i=0;i<24;i++){
   const p=document.createElement('div');p.className='petal';
