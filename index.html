@@ -843,6 +843,7 @@ function openModal(id){document.getElementById(id).classList.add('open');documen
 function closeModal(id){document.getElementById(id).classList.remove('open');document.body.style.overflow=''}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.querySelectorAll('.modal-overlay.open').forEach(m=>m.classList.remove('open'));document.body.style.overflow=''}});
 </script>
+<script>
 const pc=document.getElementById('petals');
 for(let i=0;i<24;i++){
   const p=document.createElement('div');p.className='petal';
