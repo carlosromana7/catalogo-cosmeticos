@@ -9,7 +9,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -63,60 +62,52 @@ body{background:var(--bg);color:var(--dark);font-family:var(--ff-b);font-weight:
 /* SECCIÓN */
 .sec{padding:60px 32px;position:relative;z-index:1}
 .sec.alt{background:var(--bg2)}
-.sec-hdr{text-align:center;margin-bottom:48px}
+.sec-hdr{text-align:center;margin-bottom:36px}
 .sec-eye{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--rose);margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:14px}
 .sec-eye::before,.sec-eye::after{content:'';display:inline-block;width:28px;height:.5px;background:var(--border2)}
 .sec-title{font-family:var(--ff-d);font-size:clamp(24px,4vw,36px);color:var(--dark);margin-bottom:8px}
 .sec-sub{font-size:13px;color:var(--mid)}
 
-/* CARRUSEL */
-.carousel-wrap{position:relative}
-.carousel-track{display:flex;gap:20px;padding:8px 52px 28px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;cursor:grab;user-select:none;-webkit-overflow-scrolling:touch}
-.carousel-track:active{cursor:grabbing}
-.carousel-track::-webkit-scrollbar{display:none}
-.carousel-wrap::before,.carousel-wrap::after{content:'';position:absolute;top:0;width:52px;height:100%;z-index:2;pointer-events:none}
-.carousel-wrap::before{left:0;background:linear-gradient(to right,var(--bg),transparent)}
-.carousel-wrap::after{right:0;background:linear-gradient(to left,var(--bg),transparent)}
+/* ── FILTROS ── */
+.filter-bar{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:36px}
+.filter-btn{font-family:var(--ff-b);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:8px 18px;border-radius:999px;border:0.5px solid var(--border2);background:transparent;color:var(--mid);cursor:pointer;transition:all .22s;white-space:nowrap}
+.filter-btn:hover{border-color:var(--rose);color:var(--rose2);background:rgba(201,117,138,.06)}
+.filter-btn.active{background:var(--rose2);color:#fff;border-color:var(--rose2)}
+
+/* ── GRILLA DE PRODUCTOS ── */
+.prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px;max-width:1200px;margin:0 auto}
 
 /* TARJETA */
-.c-card{scroll-snap-align:center;flex-shrink:0;width:288px;background:#fff;border:0.5px solid var(--border);border-radius:22px;overflow:hidden;transition:border-color .25s,transform .25s,box-shadow .25s}
-.c-card:hover{border-color:var(--rose);transform:translateY(-7px);box-shadow:0 20px 50px rgba(180,100,130,.13)}
-.c-card.active{border-color:var(--rose);box-shadow:0 10px 40px rgba(180,100,130,.18)}
+.c-card{background:#fff;border:0.5px solid var(--border);border-radius:22px;overflow:hidden;transition:border-color .25s,transform .25s,box-shadow .25s;display:flex;flex-direction:column}
+.c-card:hover{border-color:var(--rose);transform:translateY(-6px);box-shadow:0 18px 48px rgba(180,100,130,.13)}
+.c-card[style*="display:none"]{display:none!important}
 
-/* IMAGEN del producto */
-.c-visual{height:240px;position:relative;overflow:hidden}
+/* IMAGEN */
+.c-visual{height:220px;position:relative;overflow:hidden;flex-shrink:0}
 .c-visual img.prod-img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;transition:transform .4s ease}
 .c-card:hover .c-visual img.prod-img{transform:scale(1.05)}
-
-/* Placeholder cuando no hay imagen */
-.c-visual .placeholder{
-  width:100%;height:100%;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
-}
+.c-visual .placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
 .c-visual .placeholder svg{width:44px;height:44px}
 .c-visual .placeholder span{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:rgba(100,50,70,.4)}
-
 .c-badge{position:absolute;top:12px;left:12px;z-index:3;font-size:9px;letter-spacing:.1em;text-transform:uppercase;background:var(--rose2);color:#fff;padding:4px 12px;border-radius:999px}
-.c-num{position:absolute;bottom:8px;right:12px;z-index:3;font-family:var(--ff-d);font-size:32px;color:rgba(255,255,255,.55);line-height:1;pointer-events:none}
+.c-num{position:absolute;bottom:8px;right:12px;z-index:3;font-family:var(--ff-d);font-size:28px;color:rgba(255,255,255,.5);line-height:1;pointer-events:none}
 
-.c-body{padding:18px 20px 22px}
+/* CUERPO DE TARJETA */
+.c-body{padding:18px 20px 22px;display:flex;flex-direction:column;flex:1}
 .c-cat{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft);margin-bottom:5px}
-.c-name{font-family:var(--ff-d);font-size:20px;color:var(--dark);margin-bottom:7px;line-height:1.2}
+.c-name{font-family:var(--ff-d);font-size:19px;color:var(--dark);margin-bottom:7px;line-height:1.2}
 .c-line{width:28px;height:.5px;background:var(--gold);margin-bottom:10px}
 .c-desc{font-size:12px;color:var(--mid);line-height:1.75;margin-bottom:13px}
-.c-benefits{display:flex;flex-direction:column;gap:6px}
+.c-benefits{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;flex:1}
 .c-b{display:flex;align-items:center;gap:8px}
 .c-dot{width:5px;height:5px;border-radius:50%;background:var(--rose);flex-shrink:0}
 .c-btext{font-size:11px;color:var(--rose2)}
 
-/* CONTROLES */
-.c-controls{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:30px}
-.c-btn{width:40px;height:40px;border-radius:50%;border:0.5px solid var(--border2);background:#fff;color:var(--rose2);font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s}
-.c-btn:hover{background:var(--bg2);border-color:var(--rose)}
-.c-btn:active{transform:scale(.95)}
-.c-dots{display:flex;gap:7px}
-.c-dot-btn{width:6px;height:6px;border-radius:50%;background:var(--border2);cursor:pointer;transition:all .25s}
-.c-dot-btn.on{background:var(--rose);transform:scale(1.4)}
+/* BOTÓN CONSULTAR */
+
+/* CONTADOR DE RESULTADOS */
+.results-count{text-align:center;font-size:12px;color:var(--soft);margin-bottom:24px;letter-spacing:.05em}
+.results-count span{color:var(--rose2);font-weight:500}
 
 /* RITUAL */
 .ritual{position:relative;z-index:1;background:linear-gradient(135deg,#FDF0F3 0%,#FAE4EA 100%);border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border);padding:60px 32px}
@@ -126,14 +117,6 @@ body{background:var(--bg);color:var(--dark);font-family:var(--ff-b);font-weight:
 .ritual-num{font-family:var(--ff-d);font-size:36px;color:var(--rosep);line-height:1;margin-bottom:8px}
 .ritual-name{font-family:var(--ff-d);font-size:15px;color:var(--dark);margin-bottom:6px}
 .ritual-desc{font-size:11px;color:var(--mid);line-height:1.6}
-
-/* CHART */
-.chart-sec{position:relative;z-index:1;background:var(--bg2);border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border);padding:60px 32px}
-.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:800px;margin:0 auto}
-.chart-card{background:#fff;border:0.5px solid var(--border);border-radius:16px;padding:26px 22px}
-.chart-card-title{font-family:var(--ff-d);font-size:17px;color:var(--rose2);margin-bottom:3px}
-.chart-card-sub{font-size:11px;color:var(--soft);letter-spacing:.05em;margin-bottom:18px}
-.chart-wrap{position:relative;height:186px}
 
 /* FRASE */
 .quote-sec{position:relative;z-index:1;text-align:center;padding:60px 32px;background:var(--bg);border-top:0.5px solid var(--border)}
@@ -149,15 +132,60 @@ body{background:var(--bg);color:var(--dark);font-family:var(--ff-b);font-weight:
 .closing-line{width:36px;height:.5px;background:var(--border2);margin:0 auto 22px}
 .closing-tagline{font-family:var(--ff-d);font-style:italic;font-size:16px;color:var(--mid)}
 
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:999;background:rgba(61,32,48,.6);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex;animation:mfade .25s ease}
+@keyframes mfade{from{opacity:0}to{opacity:1}}
+.modal-box{background:#fff;border-radius:24px;max-width:680px;width:100%;padding:36px 32px;position:relative;animation:mslide .3s ease;max-height:90vh;overflow-y:auto}
+@keyframes mslide{from{transform:translateY(24px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-close{position:absolute;top:16px;right:20px;background:var(--bg2);border:0.5px solid var(--border);border-radius:50%;width:32px;height:32px;font-size:14px;color:var(--mid);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.modal-close:hover{background:var(--rose);color:#fff;border-color:var(--rose)}
+.modal-eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--rose);margin-bottom:8px}
+.modal-title{font-family:var(--ff-d);font-size:28px;color:var(--dark);margin-bottom:28px}
+.modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.modal-item{border:0.5px solid var(--border);border-radius:16px;overflow:hidden}
+.modal-img{height:200px;position:relative;overflow:hidden}
+.modal-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease}
+.modal-item:hover .modal-img img{transform:scale(1.05)}
+.modal-ph{display:none;flex-direction:column;align-items:center;justify-content:center;gap:8px;height:100%}
+.modal-ph span{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(100,50,70,.4)}
+.modal-item-body{padding:16px}
+.modal-item-name{font-family:var(--ff-d);font-size:18px;color:var(--dark);margin-bottom:8px}
+.modal-item-desc{font-size:12px;color:var(--mid);line-height:1.7;margin-bottom:12px}
+.modal-tags{display:flex;flex-wrap:wrap;gap:5px}
+.modal-tag{font-size:10px;padding:3px 10px;border-radius:999px;background:var(--bg2);color:var(--rose2);border:0.5px solid var(--border2)}
+.modal-box-wide{max-width:820px}
+.modal-parches-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.modal-parches-img{border-radius:14px;overflow:hidden;height:100%;min-height:300px;background:#F5EEFF;position:relative;display:flex;align-items:center;justify-content:center}
+.modal-parches-img img{width:100%;height:100%;object-fit:cover;display:block}
+.modal-serum-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.modal-serum-item{border:0.5px solid var(--border);border-radius:14px;overflow:hidden;transition:transform .2s;cursor:default}
+.modal-serum-item:hover{transform:translateY(-4px)}
+.modal-serum-img{height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.modal-serum-body{padding:12px}
+.modal-serum-tag{display:inline-block;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:999px;border:0.5px solid;margin-bottom:7px}
+.modal-serum-name{font-family:var(--ff-d);font-size:14px;color:var(--dark);margin-bottom:4px;line-height:1.2}
+.modal-serum-formula{font-size:10px;color:var(--soft);margin-bottom:8px;line-height:1.4}
+.modal-serum-benefits{display:flex;flex-direction:column;gap:4px}
+.modal-serum-benefits span{font-size:10px;color:var(--mid);line-height:1.5}
+
 /* RESPONSIVE */
 @media(max-width:700px){
   .hdr-nav{display:none}.hdr{padding:0 20px}
   .intro-strip{flex-direction:column}
   .intro-right{flex-direction:row;justify-content:center}
-  .c-card{width:262px}.carousel-track{padding:8px 28px 24px;gap:14px}
   .ritual-grid{grid-template-columns:1fr 1fr}
-  .chart-grid{grid-template-columns:1fr}
+  .prod-grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+  .sec{padding:48px 16px}
 }
+@media(max-width:440px){
+  .prod-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .c-visual{height:160px}
+  .c-body{padding:12px 14px 16px}
+  .c-name{font-size:15px}
+  .c-desc,.c-benefits{display:none}
+}
+@media(max-width:560px){.modal-grid{grid-template-columns:1fr}.modal-box{padding:24px 18px}.modal-parches-grid{grid-template-columns:1fr}.modal-serum-grid{grid-template-columns:1fr 1fr}.modal-box-wide{max-width:100%}}
 @media(prefers-reduced-motion:reduce){.petal,.arrow-bar{animation:none}}
 </style>
 </head>
@@ -208,495 +236,465 @@ body{background:var(--bg);color:var(--dark);font-family:var(--ff-b);font-weight:
   </div>
 </div>
 
-<!-- ══ CARRUSEL DE PRODUCTOS ══ -->
-<!--
-  📁 INSTRUCCIONES DE IMÁGENES:
-  Guardá cada foto con el nombre exacto que está en src="..."
-  en la misma carpeta que este archivo HTML.
-  Formatos aceptados: .png .jpg .jpeg .webp
--->
+<!-- ══ GRILLA DE PRODUCTOS ══ -->
 <section class="sec" id="productos">
   <div class="sec-hdr">
     <p class="sec-eye">Colección 2026</p>
     <h2 class="sec-title">Nuestros productos</h2>
-    <p class="sec-sub">Deslizá para explorar · Arrastrá con el mouse</p>
+    <p class="sec-sub">Elegí una categoría para filtrar</p>
   </div>
 
-  <div class="carousel-wrap">
-    <div class="carousel-track" id="track">
-
-      <!-- 01 — foto: polvos-de-hadas.png -->
-      <div class="c-card active" data-idx="0">
-        <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#F5D0DC,#FAE4EA)">
-          <img class="prod-img" src="polvos-de-hadas.png" alt="Polvos de Hadas"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="placeholder" style="display:none">
-            <svg viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="14" stroke="#C9758A" stroke-width=".8"/><circle cx="22" cy="22" r="4" fill="#C9758A" opacity=".5"/><path d="M22 8v3M22 33v3M8 22h3M33 22h3" stroke="#B8864A" stroke-width=".8" stroke-linecap="round"/></svg>
-            <span>polvos-de-hadas.png</span>
-          </div>
-          <span class="c-badge">✦ Favorita</span>
-          <span class="c-num">01</span>
-        </div>
-        <div class="c-body">
-          <p class="c-cat">Maquillaje · Fijador</p>
-          <h3 class="c-name">Polvos de Hadas</h3>
-          <div class="c-line"></div>
-          <p class="c-desc">Polvo ultrafino que fija el maquillaje todo el día. Acabado sedoso y luminoso sin pesadez.</p>
-          <div class="c-benefits">
-            <div class="c-b"><div class="c-dot"></div><span class="c-btext">Fija el maquillaje todo el día</span></div>
-            <div class="c-b"><div class="c-dot"></div><span class="c-btext">Acabado luminoso y sedoso</span></div>
-            <div class="c-b"><div class="c-dot"></div><span class="c-btext">Textura ultrafina, sin peso</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 02 — foto: enchinador.png -->
-      <div class="c-card" data-idx="1">
-        <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#EDD5C0,#FAE4EA)">
-          <img class="prod-img" src="enchinador.png" alt="Enchinador"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="placeholder" style="display:none">
-            <svg viewBox="0 0 44 44" fill="none"><path d="M15 38Q15 26 19 18Q22 11 26 6" stroke="#C9758A" stroke-width="1.2" stroke-linecap="round"/><path d="M19 38Q19 26 23 18Q26 11 30 6" stroke="#B8864A" stroke-width=".8" stroke-linecap="round" stroke-dasharray="2 3"/><circle cx="26" cy="5" r="2" fill="#B8864A" opacity=".6"/></svg>
-            <span>enchinador.png</span>
-          </div>
-          <span class="c-num">02</span>
-        </div>
-        <div class="c-body">
-          <p class="c-cat">Herramientas · Pestañas</p>
-          <h3 class="c-name">Enchinador</h3>
-          <div class="c-line"></div>
-          <p class="c-desc">Rizos perfectos en segundos. Diseño ergonómico que cuida tus pestañas sin jalón ni dolor.</p>
-          <div class="c-benefits">
-            <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Rizo que dura todo el día</span></div>
-            <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Sin jalón ni dolor</span></div>
-            <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Apto para todo tipo de pestaña</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 03 — foto: esponjas.png -->
-      <div class="c-card" data-idx="2">
-        <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#F5D0DC,#FDF0F3)">
-          <img class="prod-img" src="esponjas.png" alt="Esponjas"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="placeholder" style="display:none">
-            <svg viewBox="0 0 44 44" fill="none"><ellipse cx="22" cy="27" rx="13" ry="11" stroke="#C9758A" stroke-width=".7"/><path d="M22 12v6" stroke="#B8864A" stroke-width=".7" stroke-linecap="round"/><circle cx="22" cy="10" r="2.5" fill="none" stroke="#B8864A" stroke-width=".7"/></svg>
-            <span>esponjas.png</span>
-          </div>
-          <span class="c-num">03</span>
-        </div>
-        <div class="c-body">
-          <p class="c-cat">Aplicadores · Base</p>
-          <h3 class="c-name">Esponjas</h3>
-          <div class="c-line"></div>
-          <p class="c-desc">Difuminado suave y sin marcas. Húmeda para acabado natural o seca para cobertura total.</p>
-          <div class="c-benefits">
-            <div class="c-b"><div class="c-dot"></div><span class="c-btext">Sin marcas ni bordes visibles</span></div>
-            <div class="c-b"><div class="c-dot"></div><span class="c-btext">Natural o cobertura total</span></div>
-            <div class="c-b"><div class="c-dot"></div><span class="c-btext">Suave con todo tipo de piel</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 04 — foto: rimel.png -->
-      <div class="c-card" data-idx="3">
-        <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#EDD5C0,#FAE4EA)">
-          <img class="prod-img" src="rimel.png" alt="Rimel"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="placeholder" style="display:none">
-            <svg viewBox="0 0 44 44" fill="none"><ellipse cx="22" cy="22" rx="6" ry="17" stroke="#C9758A" stroke-width=".7"/><path d="M17 14C17 14 11 12 7 14" stroke="#C9758A" stroke-width="1" stroke-linecap="round"/><path d="M27 14C27 14 33 12 37 14" stroke="#C9758A" stroke-width="1" stroke-linecap="round"/><circle cx="22" cy="9" r="2.5" fill="#B8864A" opacity=".7"/></svg>
-            <span>rimel.png</span>
-          </div>
-          <span class="c-num">04</span>
-        </div>
-        <div class="c-body">
-          <p class="c-cat">Ojos · Volumen</p>
-          <h3 class="c-name">Rimel</h3>
-          <div class="c-line"></div>
-          <p class="c-desc">Pestañas largas y voluminosas desde la primera pasada. Sin grumos, sin manchas, resistente todo el día.</p>
-          <div class="c-benefits">
-            <div class="c-b"><div class="c-dot" style="background:#A8506A"></div><span class="c-btext">Volumen y longitud notables</span></div>
-            <div class="c-b"><div class="c-dot" style="background:#A8506A"></div><span class="c-btext">No se corre ni mancha</span></div>
-            <div class="c-b"><div class="c-dot" style="background:#A8506A"></div><span class="c-btext">Aplicación limpia, sin grumos</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 05 — foto: espejos.png -->
-      <div class="c-card" data-idx="4">
-        <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#F5D0DC,#FDF0F3)">
-          <img class="prod-img" src="espejos.png" alt="Espejos"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="placeholder" style="display:none">
-            <svg viewBox="0 0 44 44" fill="none"><rect x="10" y="8" width="24" height="28" rx="12" stroke="#B8864A" stroke-width=".7"/><rect x="14" y="12" width="16" height="20" rx="8" stroke="#C9758A" stroke-width=".5"/><circle cx="22" cy="6" r="1.8" fill="#B8864A" opacity=".5"/></svg>
-            <span>espejos.png</span>
-          </div>
-          <span class="c-num">05</span>
-        </div>
-        <div class="c-body">
-          <p class="c-cat">Accesorios · Portátil</p>
-          <h3 class="c-name">Espejos</h3>
-          <div class="c-line"></div>
-          <p class="c-desc">Reflexión nítida y sin distorsión. Compacto para llevar siempre y retocar donde estés.</p>
-          <div class="c-benefits">
-            <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Imagen nítida, sin distorsión</span></div>
-            <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Compacto, entra en cualquier cartera</span></div>
-            <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Ideal para retoques al instante</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 06 — fotos: brochas-grandes.png y brochas-pequenas.png -->
-      <div class="c-card" data-idx="5">
-        <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#EDD5C0,#FDF0F3);display:flex;flex-direction:row;gap:0">
-          <!-- mitad izquierda: grandes -->
-          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:0.5px solid rgba(180,100,130,.15);overflow:hidden;position:relative">
-            <img class="prod-img" src="brochas-grandes.png" alt="Brochas Grandes"
-                 style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"
-                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-            <div class="placeholder" style="display:none;flex-direction:column;align-items:center;gap:6px">
-              <svg width="32" height="32" viewBox="0 0 44 44" fill="none"><path d="M22 6v26" stroke="#B8864A" stroke-width="1" stroke-linecap="round"/><ellipse cx="22" cy="34" rx="8" ry="5" fill="none" stroke="#C9758A" stroke-width=".8"/><circle cx="22" cy="8" r="3" fill="none" stroke="#B8864A" stroke-width=".7"/></svg>
-              <span style="font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:rgba(100,50,70,.4)">brochas-grandes.png</span>
-            </div>
-            <span style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:rgba(168,80,106,.7);padding:2px 8px;border-radius:999px;white-space:nowrap">Grandes</span>
-          </div>
-          <!-- mitad derecha: pequeñas -->
-          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;position:relative">
-            <img class="prod-img" src="brochas-pequenas.png" alt="Brochas Pequeñas"
-                 style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"
-                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-            <div class="placeholder" style="display:none;flex-direction:column;align-items:center;gap:6px">
-              <svg width="26" height="26" viewBox="0 0 44 44" fill="none"><path d="M22 6v22" stroke="#B8864A" stroke-width=".8" stroke-linecap="round"/><ellipse cx="22" cy="30" rx="5" ry="4" fill="none" stroke="#C9758A" stroke-width=".7"/><circle cx="22" cy="8" r="2" fill="none" stroke="#B8864A" stroke-width=".6"/></svg>
-              <span style="font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:rgba(100,50,70,.4)">brochas-pequenas.png</span>
-            </div>
-            <span style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:rgba(168,80,106,.7);padding:2px 8px;border-radius:999px;white-space:nowrap">Pequeñas</span>
-          </div>
-          <span class="c-num">06</span>
-        </div>
-        <div class="c-body">
-          <p class="c-cat">Herramientas · Aplicación &amp; Detalle</p>
-          <h3 class="c-name">Brochas</h3>
-          <div class="c-line"></div>
-          <p class="c-desc">Set completo: brochas grandes para polvo, rubor e iluminador — y pequeñas para sombras y detalles precisos.</p>
-          <div class="c-benefits">
-            <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Grandes: polvo, rubor e iluminador</span></div>
-            <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Pequeñas: sombras y detalles precisos</span></div>
-            <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Cerdas suaves, acabado profesional</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 07 — foto: rubor-mett.png -->
-      <div class="c-card" data-idx="6">
-        <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#F5D0DC,#FAE4EA)">
-          <img class="prod-img" src="rubor-mett.png" alt="Rubor Mett"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="placeholder" style="display:none">
-            <svg viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="14" fill="none" stroke="#C9758A" stroke-width=".7"/><circle cx="22" cy="22" r="9" fill="#F2B8C8" opacity=".4"/><circle cx="22" cy="22" r="4" fill="#C9758A" opacity=".5"/></svg>
-            <span>rubor-mett.png</span>
-          </div>
-          <span class="c-badge">✦ Nuevo</span>
-          <span class="c-num">07</span>
-        </div>
-        <div class="c-body">
-          <p class="c-cat">Maquillaje · Mejillas</p>
-          <h3 class="c-name">Rubor Mett</h3>
-          <div class="c-line"></div>
-          <p class="c-desc">Color natural en las mejillas con acabado mate perfecto. Pigmentación intensa que dura todo el día.</p>
-          <div class="c-benefits">
-            <div class="c-b"><div class="c-dot"></div><span class="c-btext">Acabado mate impecable</span></div>
-            <div class="c-b"><div class="c-dot"></div><span class="c-btext">Color intenso y duradero</span></div>
-            <div class="c-b"><div class="c-dot"></div><span class="c-btext">Efecto natural y fresco</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 08 — foto: duo-rubor-iluminador.png -->
-      <div class="c-card" data-idx="7">
-        <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#EDD5C0,#F5D0DC)">
-          <img class="prod-img" src="duo-rubor-iluminador.png" alt="Dúo Rubor + Iluminador"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="placeholder" style="display:none">
-            <svg viewBox="0 0 44 44" fill="none"><rect x="6" y="10" width="14" height="24" rx="4" fill="none" stroke="#C9758A" stroke-width=".7"/><rect x="24" y="10" width="14" height="24" rx="4" fill="none" stroke="#B8864A" stroke-width=".7"/><circle cx="13" cy="22" r="5" fill="#F2B8C8" opacity=".5"/><circle cx="31" cy="22" r="5" fill="#D4A870" opacity=".5"/></svg>
-            <span>duo-rubor-iluminador.png</span>
-          </div>
-          <span class="c-badge">✦ Favorita</span>
-          <span class="c-num">08</span>
-        </div>
-        <div class="c-body">
-          <p class="c-cat">Maquillaje · Dúo</p>
-          <h3 class="c-name">Dúo Rubor + Iluminador</h3>
-          <div class="c-line"></div>
-          <p class="c-desc">Dos en uno: rubor para dar vida y un iluminador que aporta ese brillo dorado irresistible.</p>
-          <div class="c-benefits">
-            <div class="c-b"><div class="c-dot"></div><span class="c-btext">Rubor + iluminador en un solo compacto</span></div>
-            <div class="c-b"><div class="c-dot"></div><span class="c-btext">Brillo dorado natural</span></div>
-            <div class="c-b"><div class="c-dot"></div><span class="c-btext">Práctico, todo en un producto</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 09 — foto: pestanas-par.png -->
-      <div class="c-card" data-idx="8">
-        <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#F5D0DC,#FAE4EA)">
-          <img class="prod-img" src="pestanas-par.png" alt="Pestañas (par)"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="placeholder" style="display:none">
-            <svg viewBox="0 0 44 44" fill="none"><path d="M8 26 Q14 18 22 20 Q30 18 36 26" stroke="#C9758A" stroke-width="1.2" fill="none" stroke-linecap="round"/><path d="M10 24C10 24 12 16 16 14" stroke="#A8506A" stroke-width=".8" stroke-linecap="round"/><path d="M18 22C18 22 19 13 22 11" stroke="#A8506A" stroke-width=".8" stroke-linecap="round"/><path d="M26 22C26 22 27 13 30 11" stroke="#A8506A" stroke-width=".8" stroke-linecap="round"/><path d="M34 24C34 24 33 16 30 14" stroke="#A8506A" stroke-width=".8" stroke-linecap="round"/></svg>
-            <span>pestanas-par.png</span>
-          </div>
-          <span class="c-num">09</span>
-        </div>
-        <div class="c-body">
-          <p class="c-cat">Ojos · Postizas</p>
-          <h3 class="c-name">Pestañas (par)</h3>
-          <div class="c-line"></div>
-          <p class="c-desc">Pestañas postizas de impacto. Volumen y longitud instantánea para una mirada que enamora.</p>
-          <div class="c-benefits">
-            <div class="c-b"><div class="c-dot" style="background:#A8506A"></div><span class="c-btext">Volumen instantáneo dramático</span></div>
-            <div class="c-b"><div class="c-dot" style="background:#A8506A"></div><span class="c-btext">Reutilizables múltiples veces</span></div>
-            <div class="c-b"><div class="c-dot" style="background:#A8506A"></div><span class="c-btext">Mirada profesional en minutos</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 10 — DELINEADORES (agrupados, abre modal) -->
-      <div class="c-card c-card-group" data-idx="9" onclick="openModal('modal-deli')" style="cursor:pointer">
-        <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#2A1E30,#1A1020);display:flex;flex-direction:row;gap:0">
-          <div style="flex:1;overflow:hidden;position:relative;border-right:0.5px solid rgba(180,100,130,.2)">
-            <img class="prod-img" src="delineador-doble-punta.png" alt="Delineador Doble Punta"
-                 style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"
-                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-            <div class="placeholder" style="display:none;flex-direction:column;align-items:center;gap:5px;height:100%;justify-content:center">
-              <svg width="30" height="30" viewBox="0 0 44 44" fill="none"><path d="M10 34L34 10" stroke="#C9758A" stroke-width="1.5" stroke-linecap="round"/><circle cx="10" cy="34" r="3" fill="#C9758A" opacity=".6"/></svg>
-              <span style="font-size:8px;color:rgba(255,255,255,.4);letter-spacing:.1em;text-transform:uppercase">doble-punta.png</span>
-            </div>
-            <span style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:rgba(168,80,106,.75);padding:2px 8px;border-radius:999px;white-space:nowrap">Doble punta</span>
-          </div>
-          <div style="flex:1;overflow:hidden;position:relative">
-            <img class="prod-img" src="delineador-normal.png" alt="Delineador Normal"
-                 style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"
-                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-            <div class="placeholder" style="display:none;flex-direction:column;align-items:center;gap:5px;height:100%;justify-content:center">
-              <svg width="30" height="30" viewBox="0 0 44 44" fill="none"><path d="M34 10L10 34" stroke="#B8864A" stroke-width="1.5" stroke-linecap="round"/><circle cx="34" cy="10" r="3" fill="#B8864A" opacity=".6"/></svg>
-              <span style="font-size:8px;color:rgba(255,255,255,.4);letter-spacing:.1em;text-transform:uppercase">delineador-normal.png</span>
-            </div>
-            <span style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:rgba(184,134,74,.75);padding:2px 8px;border-radius:999px;white-space:nowrap">Normal</span>
-          </div>
-          <span class="c-num">10</span>
-          <span style="position:absolute;top:12px;right:12px;z-index:4;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:rgba(61,32,48,.7);padding:4px 10px;border-radius:999px">Ver opciones →</span>
-        </div>
-        <div class="c-body">
-          <p class="c-cat">Ojos · Definición</p>
-          <h3 class="c-name">Delineadores</h3>
-          <div class="c-line"></div>
-          <p class="c-desc">Dos opciones para definir tu mirada: delineador de doble punta y delineador clásico. Hacé clic para ver cada uno.</p>
-          <div class="c-benefits">
-            <div class="c-b"><div class="c-dot" style="background:#3D2030"></div><span class="c-btext">Doble punta: fino + dramático</span></div>
-            <div class="c-b"><div class="c-dot" style="background:#3D2030"></div><span class="c-btext">Normal: trazo clásico y preciso</span></div>
-            <div class="c-b"><div class="c-dot" style="background:#3D2030"></div><span class="c-btext">Ambos de larga duración</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 11 — TINTAS LABIALES (agrupadas, abre modal) -->
-      <div class="c-card c-card-group" data-idx="10" onclick="openModal('modal-tinta')" style="cursor:pointer">
-        <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#F5D0DC,#FDF0F3);display:flex;flex-direction:row;gap:0">
-          <div style="flex:1;overflow:hidden;position:relative;border-right:0.5px solid rgba(180,100,130,.2)">
-            <img class="prod-img" src="tinta-labial-brasilera.png" alt="Tinta Labial Brasilera"
-                 style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"
-                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-            <div class="placeholder" style="display:none;flex-direction:column;align-items:center;gap:5px;height:100%;justify-content:center">
-              <svg width="30" height="30" viewBox="0 0 44 44" fill="none"><path d="M12 24Q22 14 32 24Q28 32 22 34Q16 32 12 24Z" fill="#F2B8C8" opacity=".5" stroke="#C9758A" stroke-width=".7"/></svg>
-              <span style="font-size:8px;color:rgba(100,50,70,.4);letter-spacing:.1em;text-transform:uppercase">brasilera.png</span>
-            </div>
-            <span style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:rgba(168,80,106,.75);padding:2px 8px;border-radius:999px;white-space:nowrap">Brasilera</span>
-          </div>
-          <div style="flex:1;overflow:hidden;position:relative">
-            <img class="prod-img" src="tinta-kathy-kelly.png" alt="Tinta Kathy Kelly"
-                 style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"
-                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-            <div class="placeholder" style="display:none;flex-direction:column;align-items:center;gap:5px;height:100%;justify-content:center">
-              <svg width="30" height="30" viewBox="0 0 44 44" fill="none"><path d="M12 24Q22 14 32 24Q28 32 22 34Q16 32 12 24Z" fill="#D4A870" opacity=".5" stroke="#B8864A" stroke-width=".7"/></svg>
-              <span style="font-size:8px;color:rgba(100,50,70,.4);letter-spacing:.1em;text-transform:uppercase">kathy-kelly.png</span>
-            </div>
-            <span style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:rgba(184,134,74,.75);padding:2px 8px;border-radius:999px;white-space:nowrap">Kathy Kelly</span>
-          </div>
-          <span class="c-num">11</span>
-          <span style="position:absolute;top:12px;right:12px;z-index:4;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:rgba(168,80,106,.7);padding:4px 10px;border-radius:999px">Ver opciones →</span>
-        </div>
-        <div class="c-body">
-          <p class="c-cat">Labios · Larga duración</p>
-          <h3 class="c-name">Tintas Labiales</h3>
-          <div class="c-line"></div>
-          <p class="c-desc">Dos tintas irresistibles: la Brasilera ultra-durable y la Kathy Kelly con colores vibrantes. Hacé clic para ver cada una.</p>
-          <div class="c-benefits">
-            <div class="c-b"><div class="c-dot"></div><span class="c-btext">Brasilera: máxima duración</span></div>
-            <div class="c-b"><div class="c-dot"></div><span class="c-btext">Kathy Kelly: colores vibrantes</span></div>
-            <div class="c-b"><div class="c-dot"></div><span class="c-btext">Ambas resistentes a todo el día</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 12 — foto: corrector.png -->
-      <div class="c-card" data-idx="11">
-        <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#EDD5C0,#FDF0F3)">
-          <img class="prod-img" src="corrector.png" alt="Corrector"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="placeholder" style="display:none">
-            <svg viewBox="0 0 44 44" fill="none"><rect x="16" y="6" width="12" height="32" rx="6" fill="none" stroke="#B8864A" stroke-width=".7"/><rect x="18" y="10" width="8" height="20" rx="4" fill="#EDD5C0" opacity=".6"/><circle cx="22" cy="38" r="3" fill="none" stroke="#C9758A" stroke-width=".6"/></svg>
-            <span>corrector.png</span>
-          </div>
-          <span class="c-num">12</span>
-        </div>
-        <div class="c-body">
-          <p class="c-cat">Base · Cobertura</p>
-          <h3 class="c-name">Corrector</h3>
-          <div class="c-line"></div>
-          <p class="c-desc">Cobertura total para ojeras, manchas e imperfecciones. Fórmula cremosa de fácil difuminado.</p>
-          <div class="c-benefits">
-            <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Cobertura total de ojeras y manchas</span></div>
-            <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Fácil de difuminar</span></div>
-            <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Acabado natural, sin efecto máscara</span></div>
-          </div>
-        </div>
-      </div>
-
-
-
-      <!-- 13 — foto: agua-micelar.png -->
-      <div class="c-card" data-idx="12">
-        <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#E8D0F0,#F0E0F8)">
-          <img class="prod-img" src="agua-micelar.png" alt="Agua Micelar"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="placeholder" style="display:none">
-            <svg viewBox="0 0 44 44" fill="none"><path d="M22 8 C22 8 32 20 32 28 C32 34 27.5 38 22 38 C16.5 38 12 34 12 28 C12 20 22 8 22 8Z" stroke="#9060B0" stroke-width=".8" fill="none"/><path d="M16 30 Q22 26 28 30" stroke="#9060B0" stroke-width=".6" fill="none"/></svg>
-            <span>agua-micelar.png</span>
-          </div>
-          <span class="c-badge">✦ Nuevo</span>
-          <span class="c-num">13</span>
-        </div>
-        <div class="c-body">
-          <p class="c-cat">Cuidado · Limpieza</p>
-          <h3 class="c-name">Agua Micelar</h3>
-          <div class="c-line"></div>
-          <p class="c-desc">Limpia, desmaquilla e hidrata en un solo paso. Suave con la piel, efectiva con el maquillaje.</p>
-          <div class="c-benefits">
-            <div class="c-b"><div class="c-dot" style="background:#9060B0"></div><span class="c-btext">Desmaquilla sin frotar</span></div>
-            <div class="c-b"><div class="c-dot" style="background:#9060B0"></div><span class="c-btext">Hidrata mientras limpia</span></div>
-            <div class="c-b"><div class="c-dot" style="background:#9060B0"></div><span class="c-btext">Apta para piel sensible</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 14 — foto: gloss.png -->
-      <div class="c-card" data-idx="13">
-        <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#D0F0D8,#E8F8EC)">
-          <img class="prod-img" src="gloss.png" alt="Gloss"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="placeholder" style="display:none">
-            <svg viewBox="0 0 44 44" fill="none"><ellipse cx="22" cy="28" rx="10" ry="7" fill="#A0D8A8" opacity=".4" stroke="#50A060" stroke-width=".7"/><path d="M14 28 Q22 22 30 28" stroke="#50A060" stroke-width=".6" fill="none"/><circle cx="18" cy="26" r="2" fill="#fff" opacity=".6"/></svg>
-            <span>gloss.png</span>
-          </div>
-          <span class="c-badge">✦ Tendencia</span>
-          <span class="c-num">14</span>
-        </div>
-        <div class="c-body">
-          <p class="c-cat">Labios · Brillo</p>
-          <h3 class="c-name">Gloss</h3>
-          <div class="c-line"></div>
-          <p class="c-desc">Brillo irresistible que hidrata y da volumen a los labios. El toque final que completa cualquier look.</p>
-          <div class="c-benefits">
-            <div class="c-b"><div class="c-dot" style="background:#50A060"></div><span class="c-btext">Brillo intenso y duradero</span></div>
-            <div class="c-b"><div class="c-dot" style="background:#50A060"></div><span class="c-btext">Hidrata y da volumen</span></div>
-            <div class="c-b"><div class="c-dot" style="background:#50A060"></div><span class="c-btext">Disponible en varios tonos</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 15 — foto: mascarilla-hidratante.png -->
-      <div class="c-card" data-idx="14">
-        <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#C8E0F0,#E8F4FC)">
-          <img class="prod-img" src="mascarilla-hidratante.png" alt="Mascarilla Hidratante"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="placeholder" style="display:none">
-            <svg viewBox="0 0 44 44" fill="none"><ellipse cx="22" cy="22" rx="14" ry="16" stroke="#4090C0" stroke-width=".8"/><path d="M15 18 Q22 14 29 18" stroke="#4090C0" stroke-width=".6" fill="none"/><circle cx="17" cy="24" r="2" fill="#4090C0" opacity=".4"/><circle cx="27" cy="24" r="2" fill="#4090C0" opacity=".4"/><path d="M18 30 Q22 33 26 30" stroke="#4090C0" stroke-width=".6" fill="none"/></svg>
-            <span>mascarilla-hidratante.png</span>
-          </div>
-          <span class="c-badge">✦ Nuevo</span>
-          <span class="c-num">15</span>
-        </div>
-        <div class="c-body">
-          <p class="c-cat">Cuidado · Hidratación</p>
-          <h3 class="c-name">Mascarilla Hidratante</h3>
-          <div class="c-line"></div>
-          <p class="c-desc">Hidratación profunda en 15 minutos. Activos frutales que revitalizan, suavizan y dan luminosidad a la piel.</p>
-          <div class="c-benefits">
-            <div class="c-b"><div class="c-dot" style="background:#4090C0"></div><span class="c-btext">Hidratación profunda inmediata</span></div>
-            <div class="c-b"><div class="c-dot" style="background:#4090C0"></div><span class="c-btext">Revitaliza y da luminosidad</span></div>
-            <div class="c-b"><div class="c-dot" style="background:#4090C0"></div><span class="c-btext">Apta para todo tipo de piel</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 16 — PARCHES PARA GRANOS (abre modal con modo de uso) -->
-      <div class="c-card c-card-group" data-idx="15" onclick="openModal('modal-parches')" style="cursor:pointer">
-        <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#E8D8F8,#F5EEFF);position:relative">
-          <img class="prod-img" src="parches-granos.png" alt="Parches para granos"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="placeholder" style="display:none">
-            <svg viewBox="0 0 44 44" fill="none"><path d="M22 6 L38 22 L22 38 L6 22 Z" stroke="#9060C0" stroke-width=".8" fill="none"/><circle cx="22" cy="22" r="6" fill="#C8A8E8" opacity=".5"/><circle cx="22" cy="22" r="2" fill="#9060C0" opacity=".6"/></svg>
-            <span>parches-granos.png</span>
-          </div>
-          <span class="c-num">16</span>
-          <span style="position:absolute;top:12px;right:12px;z-index:4;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:rgba(144,96,192,.8);padding:4px 10px;border-radius:999px">Ver modo de uso →</span>
-        </div>
-        <div class="c-body">
-          <p class="c-cat">Cuidado · Anti-acné</p>
-          <h3 class="c-name">Parches para Granos</h3>
-          <div class="c-line"></div>
-          <p class="c-desc">Parches hidrocoloides que reducen granos mientras dormís. Tocá para ver el modo de uso y beneficios.</p>
-          <div class="c-benefits">
-            <div class="c-b"><div class="c-dot" style="background:#9060C0"></div><span class="c-btext">Absorbe impurezas mientras dormís</span></div>
-            <div class="c-b"><div class="c-dot" style="background:#9060C0"></div><span class="c-btext">Reduce inflamación en horas</span></div>
-            <div class="c-b"><div class="c-dot" style="background:#9060C0"></div><span class="c-btext">Dermatológicamente probado</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 17 — SÉRUMS FACIALES (abre modal con las 4 variedades) -->
-      <div class="c-card c-card-group" data-idx="16" onclick="openModal('modal-serum')" style="cursor:pointer">
-        <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#D8F0D8,#EEF8EE);position:relative">
-          <img class="prod-img" src="serum-facial.png" alt="Sérums Faciales"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="placeholder" style="display:none">
-            <svg viewBox="0 0 44 44" fill="none"><rect x="8" y="10" width="7" height="28" rx="3" fill="#80C080" opacity=".5" stroke="#40A040" stroke-width=".6"/><rect x="18" y="10" width="7" height="28" rx="3" fill="#80B0D0" opacity=".5" stroke="#4090C0" stroke-width=".6"/><rect x="28" y="10" width="7" height="28" rx="3" fill="#F0A0C0" opacity=".5" stroke="#C06080" stroke-width=".6"/></svg>
-            <span>serum-facial.png</span>
-          </div>
-          <span class="c-num">17</span>
-          <span style="position:absolute;top:12px;right:12px;z-index:4;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:rgba(64,160,64,.8);padding:4px 10px;border-radius:999px">Ver variedades →</span>
-        </div>
-        <div class="c-body">
-          <p class="c-cat">Cuidado · Tratamiento</p>
-          <h3 class="c-name">Sérums Faciales</h3>
-          <div class="c-line"></div>
-          <p class="c-desc">4 variedades para cada necesidad: antiacné, hialurónico, rosa mosqueta y colágeno. Tocá para ver cuál es para vos.</p>
-          <div class="c-benefits">
-            <div class="c-b"><div class="c-dot" style="background:#40A040"></div><span class="c-btext">4 fórmulas especializadas</span></div>
-            <div class="c-b"><div class="c-dot" style="background:#40A040"></div><span class="c-btext">Oil free, dermatológicamente probado</span></div>
-            <div class="c-b"><div class="c-dot" style="background:#40A040"></div><span class="c-btext">Resultados visibles desde la 1ª semana</span></div>
-          </div>
-        </div>
-      </div>
-
-    </div><!-- /track -->
+  <!-- FILTROS -->
+  <div class="filter-bar" id="filterBar">
+    <button class="filter-btn active" data-cat="todos">Todos</button>
+    <button class="filter-btn" data-cat="maquillaje">💄 Maquillaje</button>
+    <button class="filter-btn" data-cat="ojos">👁️ Ojos</button>
+    <button class="filter-btn" data-cat="labios">💋 Labios</button>
+    <button class="filter-btn" data-cat="cuidado">🌿 Cuidado</button>
+    <button class="filter-btn" data-cat="accesorios">🖌️ Herramientas</button>
+    <button class="filter-btn" data-cat="accesorios">✨ Accesorios</button>
   </div>
 
-  <div class="c-controls">
-    <button class="c-btn" id="prev" aria-label="Anterior">&#8592;</button>
-    <div class="c-dots" id="dots"></div>
-    <button class="c-btn" id="next" aria-label="Siguiente">&#8594;</button>
-  </div>
+  <p class="results-count" id="resultsCount"><span id="countNum">17</span> productos</p>
+
+  <!-- GRILLA -->
+  <div class="prod-grid" id="prodGrid">
+
+    <!-- 01 polvos-de-hadas.png | maquillaje -->
+    <div class="c-card" data-cat="maquillaje">
+      <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#F5D0DC,#FAE4EA)">
+        <img class="prod-img" src="polvos-de-hadas.png" alt="Polvos de Hadas" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="placeholder" style="display:none">
+          <svg viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="14" stroke="#C9758A" stroke-width=".8"/><circle cx="22" cy="22" r="4" fill="#C9758A" opacity=".5"/><path d="M22 8v3M22 33v3M8 22h3M33 22h3" stroke="#B8864A" stroke-width=".8" stroke-linecap="round"/></svg>
+          <span>polvos-de-hadas.png</span>
+        </div>
+        <span class="c-badge">✦ Favorita</span>
+        <span class="c-num">01</span>
+      </div>
+      <div class="c-body">
+        <p class="c-cat">Maquillaje · Fijador</p>
+        <h3 class="c-name">Polvos de Hadas</h3>
+        <div class="c-line"></div>
+        <p class="c-desc">Polvo ultrafino que fija el maquillaje todo el día. Acabado sedoso y luminoso sin pesadez.</p>
+        <div class="c-benefits">
+          <div class="c-b"><div class="c-dot"></div><span class="c-btext">Fija el maquillaje todo el día</span></div>
+          <div class="c-b"><div class="c-dot"></div><span class="c-btext">Acabado luminoso y sedoso</span></div>
+          <div class="c-b"><div class="c-dot"></div><span class="c-btext">Textura ultrafina, sin peso</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 02 enchinador.png | accesorios -->
+    <div class="c-card" data-cat="accesorios">
+      <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#EDD5C0,#FAE4EA)">
+        <img class="prod-img" src="enchinador.png" alt="Enchinador" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="placeholder" style="display:none">
+          <svg viewBox="0 0 44 44" fill="none"><path d="M15 38Q15 26 19 18Q22 11 26 6" stroke="#C9758A" stroke-width="1.2" stroke-linecap="round"/><path d="M19 38Q19 26 23 18Q26 11 30 6" stroke="#B8864A" stroke-width=".8" stroke-linecap="round" stroke-dasharray="2 3"/><circle cx="26" cy="5" r="2" fill="#B8864A" opacity=".6"/></svg>
+          <span>enchinador.png</span>
+        </div>
+        <span class="c-num">02</span>
+      </div>
+      <div class="c-body">
+        <p class="c-cat">Herramientas · Pestañas</p>
+        <h3 class="c-name">Enchinador</h3>
+        <div class="c-line"></div>
+        <p class="c-desc">Rizos perfectos en segundos. Diseño ergonómico que cuida tus pestañas sin jalón ni dolor.</p>
+        <div class="c-benefits">
+          <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Rizo que dura todo el día</span></div>
+          <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Sin jalón ni dolor</span></div>
+          <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Apto para todo tipo de pestaña</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 03 esponjas.png | accesorios -->
+    <div class="c-card" data-cat="accesorios">
+      <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#F5D0DC,#FDF0F3)">
+        <img class="prod-img" src="esponjas.png" alt="Esponjas" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="placeholder" style="display:none">
+          <svg viewBox="0 0 44 44" fill="none"><ellipse cx="22" cy="27" rx="13" ry="11" stroke="#C9758A" stroke-width=".7"/><path d="M22 12v6" stroke="#B8864A" stroke-width=".7" stroke-linecap="round"/><circle cx="22" cy="10" r="2.5" fill="none" stroke="#B8864A" stroke-width=".7"/></svg>
+          <span>esponjas.png</span>
+        </div>
+        <span class="c-num">03</span>
+      </div>
+      <div class="c-body">
+        <p class="c-cat">Aplicadores · Base</p>
+        <h3 class="c-name">Esponjas</h3>
+        <div class="c-line"></div>
+        <p class="c-desc">Difuminado suave y sin marcas. Húmeda para acabado natural o seca para cobertura total.</p>
+        <div class="c-benefits">
+          <div class="c-b"><div class="c-dot"></div><span class="c-btext">Sin marcas ni bordes visibles</span></div>
+          <div class="c-b"><div class="c-dot"></div><span class="c-btext">Natural o cobertura total</span></div>
+          <div class="c-b"><div class="c-dot"></div><span class="c-btext">Suave con todo tipo de piel</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 04 rimel.png | ojos -->
+    <div class="c-card" data-cat="ojos">
+      <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#EDD5C0,#FAE4EA)">
+        <img class="prod-img" src="rimel.png" alt="Rimel" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="placeholder" style="display:none">
+          <svg viewBox="0 0 44 44" fill="none"><ellipse cx="22" cy="22" rx="6" ry="17" stroke="#C9758A" stroke-width=".7"/><path d="M17 14C17 14 11 12 7 14" stroke="#C9758A" stroke-width="1" stroke-linecap="round"/><path d="M27 14C27 14 33 12 37 14" stroke="#C9758A" stroke-width="1" stroke-linecap="round"/><circle cx="22" cy="9" r="2.5" fill="#B8864A" opacity=".7"/></svg>
+          <span>rimel.png</span>
+        </div>
+        <span class="c-num">04</span>
+      </div>
+      <div class="c-body">
+        <p class="c-cat">Ojos · Volumen</p>
+        <h3 class="c-name">Rimel</h3>
+        <div class="c-line"></div>
+        <p class="c-desc">Pestañas largas y voluminosas desde la primera pasada. Sin grumos, sin manchas, resistente todo el día.</p>
+        <div class="c-benefits">
+          <div class="c-b"><div class="c-dot" style="background:#A8506A"></div><span class="c-btext">Volumen y longitud notables</span></div>
+          <div class="c-b"><div class="c-dot" style="background:#A8506A"></div><span class="c-btext">No se corre ni mancha</span></div>
+          <div class="c-b"><div class="c-dot" style="background:#A8506A"></div><span class="c-btext">Aplicación limpia, sin grumos</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 05 espejos.png | accesorios -->
+    <div class="c-card" data-cat="accesorios">
+      <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#F5D0DC,#FDF0F3)">
+        <img class="prod-img" src="espejos.png" alt="Espejos" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="placeholder" style="display:none">
+          <svg viewBox="0 0 44 44" fill="none"><rect x="10" y="8" width="24" height="28" rx="12" stroke="#B8864A" stroke-width=".7"/><rect x="14" y="12" width="16" height="20" rx="8" stroke="#C9758A" stroke-width=".5"/><circle cx="22" cy="6" r="1.8" fill="#B8864A" opacity=".5"/></svg>
+          <span>espejos.png</span>
+        </div>
+        <span class="c-num">05</span>
+      </div>
+      <div class="c-body">
+        <p class="c-cat">Accesorios · Portátil</p>
+        <h3 class="c-name">Espejos</h3>
+        <div class="c-line"></div>
+        <p class="c-desc">Reflexión nítida y sin distorsión. Compacto para llevar siempre y retocar donde estés.</p>
+        <div class="c-benefits">
+          <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Imagen nítida, sin distorsión</span></div>
+          <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Compacto, entra en cualquier cartera</span></div>
+          <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Ideal para retoques al instante</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 06 brochas | accesorios -->
+    <div class="c-card" data-cat="accesorios">
+      <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#EDD5C0,#FDF0F3);display:flex;flex-direction:row;gap:0">
+        <div style="flex:1;overflow:hidden;position:relative;border-right:0.5px solid rgba(180,100,130,.15)">
+          <img class="prod-img" src="brochas-grandes.png" alt="Brochas Grandes" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="placeholder" style="display:none;flex-direction:column;align-items:center;gap:6px">
+            <svg width="32" height="32" viewBox="0 0 44 44" fill="none"><path d="M22 6v26" stroke="#B8864A" stroke-width="1" stroke-linecap="round"/><ellipse cx="22" cy="34" rx="8" ry="5" fill="none" stroke="#C9758A" stroke-width=".8"/></svg>
+            <span style="font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:rgba(100,50,70,.4)">brochas-grandes.png</span>
+          </div>
+          <span style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:rgba(168,80,106,.7);padding:2px 8px;border-radius:999px;white-space:nowrap">Grandes</span>
+        </div>
+        <div style="flex:1;overflow:hidden;position:relative">
+          <img class="prod-img" src="brochas-pequenas.png" alt="Brochas Pequeñas" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="placeholder" style="display:none;flex-direction:column;align-items:center;gap:6px">
+            <svg width="26" height="26" viewBox="0 0 44 44" fill="none"><path d="M22 6v22" stroke="#B8864A" stroke-width=".8" stroke-linecap="round"/><ellipse cx="22" cy="30" rx="5" ry="4" fill="none" stroke="#C9758A" stroke-width=".7"/></svg>
+            <span style="font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:rgba(100,50,70,.4)">brochas-pequenas.png</span>
+          </div>
+          <span style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:rgba(168,80,106,.7);padding:2px 8px;border-radius:999px;white-space:nowrap">Pequeñas</span>
+        </div>
+        <span class="c-num">06</span>
+      </div>
+      <div class="c-body">
+        <p class="c-cat">Herramientas · Aplicación &amp; Detalle</p>
+        <h3 class="c-name">Brochas</h3>
+        <div class="c-line"></div>
+        <p class="c-desc">Set completo: brochas grandes para polvo, rubor e iluminador — y pequeñas para sombras y detalles precisos.</p>
+        <div class="c-benefits">
+          <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Grandes: polvo, rubor e iluminador</span></div>
+          <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Pequeñas: sombras y detalles precisos</span></div>
+          <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Cerdas suaves, acabado profesional</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 07 rubor-mett.png | maquillaje -->
+    <div class="c-card" data-cat="maquillaje">
+      <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#F5D0DC,#FAE4EA)">
+        <img class="prod-img" src="rubor-mett.png" alt="Rubor Mett" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="placeholder" style="display:none">
+          <svg viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="14" fill="none" stroke="#C9758A" stroke-width=".7"/><circle cx="22" cy="22" r="9" fill="#F2B8C8" opacity=".4"/><circle cx="22" cy="22" r="4" fill="#C9758A" opacity=".5"/></svg>
+          <span>rubor-mett.png</span>
+        </div>
+        <span class="c-badge">✦ Nuevo</span>
+        <span class="c-num">07</span>
+      </div>
+      <div class="c-body">
+        <p class="c-cat">Maquillaje · Mejillas</p>
+        <h3 class="c-name">Rubor Mett</h3>
+        <div class="c-line"></div>
+        <p class="c-desc">Color natural en las mejillas con acabado mate perfecto. Pigmentación intensa que dura todo el día.</p>
+        <div class="c-benefits">
+          <div class="c-b"><div class="c-dot"></div><span class="c-btext">Acabado mate impecable</span></div>
+          <div class="c-b"><div class="c-dot"></div><span class="c-btext">Color intenso y duradero</span></div>
+          <div class="c-b"><div class="c-dot"></div><span class="c-btext">Efecto natural y fresco</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 08 duo-rubor-iluminador.png | maquillaje -->
+    <div class="c-card" data-cat="maquillaje">
+      <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#EDD5C0,#F5D0DC)">
+        <img class="prod-img" src="duo-rubor-iluminador.png" alt="Dúo Rubor + Iluminador" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="placeholder" style="display:none">
+          <svg viewBox="0 0 44 44" fill="none"><rect x="6" y="10" width="14" height="24" rx="4" fill="none" stroke="#C9758A" stroke-width=".7"/><rect x="24" y="10" width="14" height="24" rx="4" fill="none" stroke="#B8864A" stroke-width=".7"/><circle cx="13" cy="22" r="5" fill="#F2B8C8" opacity=".5"/><circle cx="31" cy="22" r="5" fill="#D4A870" opacity=".5"/></svg>
+          <span>duo-rubor-iluminador.png</span>
+        </div>
+        <span class="c-badge">✦ Favorita</span>
+        <span class="c-num">08</span>
+      </div>
+      <div class="c-body">
+        <p class="c-cat">Maquillaje · Dúo</p>
+        <h3 class="c-name">Dúo Rubor + Iluminador</h3>
+        <div class="c-line"></div>
+        <p class="c-desc">Dos en uno: rubor para dar vida y un iluminador que aporta ese brillo dorado irresistible.</p>
+        <div class="c-benefits">
+          <div class="c-b"><div class="c-dot"></div><span class="c-btext">Rubor + iluminador en un solo compacto</span></div>
+          <div class="c-b"><div class="c-dot"></div><span class="c-btext">Brillo dorado natural</span></div>
+          <div class="c-b"><div class="c-dot"></div><span class="c-btext">Práctico, todo en un producto</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 09 pestanas-par.png | ojos -->
+    <div class="c-card" data-cat="ojos">
+      <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#F5D0DC,#FAE4EA)">
+        <img class="prod-img" src="pestanas-par.png" alt="Pestañas (par)" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="placeholder" style="display:none">
+          <svg viewBox="0 0 44 44" fill="none"><path d="M8 26 Q14 18 22 20 Q30 18 36 26" stroke="#C9758A" stroke-width="1.2" fill="none" stroke-linecap="round"/><path d="M10 24C10 24 12 16 16 14" stroke="#A8506A" stroke-width=".8" stroke-linecap="round"/><path d="M18 22C18 22 19 13 22 11" stroke="#A8506A" stroke-width=".8" stroke-linecap="round"/><path d="M26 22C26 22 27 13 30 11" stroke="#A8506A" stroke-width=".8" stroke-linecap="round"/><path d="M34 24C34 24 33 16 30 14" stroke="#A8506A" stroke-width=".8" stroke-linecap="round"/></svg>
+          <span>pestanas-par.png</span>
+        </div>
+        <span class="c-num">09</span>
+      </div>
+      <div class="c-body">
+        <p class="c-cat">Ojos · Postizas</p>
+        <h3 class="c-name">Pestañas (par)</h3>
+        <div class="c-line"></div>
+        <p class="c-desc">Pestañas postizas de impacto. Volumen y longitud instantánea para una mirada que enamora.</p>
+        <div class="c-benefits">
+          <div class="c-b"><div class="c-dot" style="background:#A8506A"></div><span class="c-btext">Volumen instantáneo dramático</span></div>
+          <div class="c-b"><div class="c-dot" style="background:#A8506A"></div><span class="c-btext">Reutilizables múltiples veces</span></div>
+          <div class="c-b"><div class="c-dot" style="background:#A8506A"></div><span class="c-btext">Mirada profesional en minutos</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 10 Delineadores | ojos — abre modal -->
+    <div class="c-card" data-cat="ojos" onclick="openModal('modal-deli')" style="cursor:pointer">
+      <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#2A1E30,#1A1020);display:flex;flex-direction:row;gap:0">
+        <div style="flex:1;overflow:hidden;position:relative;border-right:0.5px solid rgba(180,100,130,.2)">
+          <img class="prod-img" src="delineador-doble-punta.png" alt="Delineador Doble Punta" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="placeholder" style="display:none;flex-direction:column;align-items:center;gap:5px;height:100%;justify-content:center">
+            <svg width="30" height="30" viewBox="0 0 44 44" fill="none"><path d="M10 34L34 10" stroke="#C9758A" stroke-width="1.5" stroke-linecap="round"/><circle cx="10" cy="34" r="3" fill="#C9758A" opacity=".6"/></svg>
+            <span style="font-size:8px;color:rgba(255,255,255,.4);letter-spacing:.1em;text-transform:uppercase">doble-punta.png</span>
+          </div>
+          <span style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:rgba(168,80,106,.75);padding:2px 8px;border-radius:999px;white-space:nowrap">Doble punta</span>
+        </div>
+        <div style="flex:1;overflow:hidden;position:relative">
+          <img class="prod-img" src="delineador-normal.png" alt="Delineador Normal" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="placeholder" style="display:none;flex-direction:column;align-items:center;gap:5px;height:100%;justify-content:center">
+            <svg width="30" height="30" viewBox="0 0 44 44" fill="none"><path d="M34 10L10 34" stroke="#B8864A" stroke-width="1.5" stroke-linecap="round"/><circle cx="34" cy="10" r="3" fill="#B8864A" opacity=".6"/></svg>
+            <span style="font-size:8px;color:rgba(255,255,255,.4);letter-spacing:.1em;text-transform:uppercase">normal.png</span>
+          </div>
+          <span style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:rgba(184,134,74,.75);padding:2px 8px;border-radius:999px;white-space:nowrap">Normal</span>
+        </div>
+        <span class="c-num">10</span>
+        <span style="position:absolute;top:12px;right:12px;z-index:4;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:rgba(61,32,48,.7);padding:4px 10px;border-radius:999px">Ver opciones →</span>
+      </div>
+      <div class="c-body">
+        <p class="c-cat">Ojos · Definición</p>
+        <h3 class="c-name">Delineadores</h3>
+        <div class="c-line"></div>
+        <p class="c-desc">Dos opciones para definir tu mirada: delineador de doble punta y delineador clásico.</p>
+        <div class="c-benefits">
+          <div class="c-b"><div class="c-dot" style="background:#3D2030"></div><span class="c-btext">Doble punta: fino + dramático</span></div>
+          <div class="c-b"><div class="c-dot" style="background:#3D2030"></div><span class="c-btext">Normal: trazo clásico y preciso</span></div>
+          <div class="c-b"><div class="c-dot" style="background:#3D2030"></div><span class="c-btext">Ambos de larga duración</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 11 Tintas labiales | labios — abre modal -->
+    <div class="c-card" data-cat="labios" onclick="openModal('modal-tinta')" style="cursor:pointer">
+      <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#F5D0DC,#FDF0F3);display:flex;flex-direction:row;gap:0">
+        <div style="flex:1;overflow:hidden;position:relative;border-right:0.5px solid rgba(180,100,130,.2)">
+          <img class="prod-img" src="tinta-labial-brasilera.png" alt="Tinta Labial Brasilera" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="placeholder" style="display:none;flex-direction:column;align-items:center;gap:5px;height:100%;justify-content:center">
+            <svg width="30" height="30" viewBox="0 0 44 44" fill="none"><path d="M12 24Q22 14 32 24Q28 32 22 34Q16 32 12 24Z" fill="#F2B8C8" opacity=".5" stroke="#C9758A" stroke-width=".7"/></svg>
+            <span style="font-size:8px;color:rgba(100,50,70,.4);letter-spacing:.1em;text-transform:uppercase">brasilera.png</span>
+          </div>
+          <span style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:rgba(168,80,106,.75);padding:2px 8px;border-radius:999px;white-space:nowrap">Brasilera</span>
+        </div>
+        <div style="flex:1;overflow:hidden;position:relative">
+          <img class="prod-img" src="tinta-kathy-kelly.png" alt="Tinta Kathy Kelly" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="placeholder" style="display:none;flex-direction:column;align-items:center;gap:5px;height:100%;justify-content:center">
+            <svg width="30" height="30" viewBox="0 0 44 44" fill="none"><path d="M12 24Q22 14 32 24Q28 32 22 34Q16 32 12 24Z" fill="#D4A870" opacity=".5" stroke="#B8864A" stroke-width=".7"/></svg>
+            <span style="font-size:8px;color:rgba(100,50,70,.4);letter-spacing:.1em;text-transform:uppercase">kathy-kelly.png</span>
+          </div>
+          <span style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:rgba(184,134,74,.75);padding:2px 8px;border-radius:999px;white-space:nowrap">Kathy Kelly</span>
+        </div>
+        <span class="c-num">11</span>
+        <span style="position:absolute;top:12px;right:12px;z-index:4;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:rgba(168,80,106,.7);padding:4px 10px;border-radius:999px">Ver opciones →</span>
+      </div>
+      <div class="c-body">
+        <p class="c-cat">Labios · Larga duración</p>
+        <h3 class="c-name">Tintas Labiales</h3>
+        <div class="c-line"></div>
+        <p class="c-desc">Dos tintas irresistibles: la Brasilera ultra-durable y la Kathy Kelly con colores vibrantes.</p>
+        <div class="c-benefits">
+          <div class="c-b"><div class="c-dot"></div><span class="c-btext">Brasilera: máxima duración</span></div>
+          <div class="c-b"><div class="c-dot"></div><span class="c-btext">Kathy Kelly: colores vibrantes</span></div>
+          <div class="c-b"><div class="c-dot"></div><span class="c-btext">Ambas resistentes todo el día</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 12 corrector.png | maquillaje -->
+    <div class="c-card" data-cat="maquillaje">
+      <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#EDD5C0,#FDF0F3)">
+        <img class="prod-img" src="corrector.png" alt="Corrector" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="placeholder" style="display:none">
+          <svg viewBox="0 0 44 44" fill="none"><rect x="16" y="6" width="12" height="32" rx="6" fill="none" stroke="#B8864A" stroke-width=".7"/><rect x="18" y="10" width="8" height="20" rx="4" fill="#EDD5C0" opacity=".6"/><circle cx="22" cy="38" r="3" fill="none" stroke="#C9758A" stroke-width=".6"/></svg>
+          <span>corrector.png</span>
+        </div>
+        <span class="c-num">12</span>
+      </div>
+      <div class="c-body">
+        <p class="c-cat">Base · Cobertura</p>
+        <h3 class="c-name">Corrector</h3>
+        <div class="c-line"></div>
+        <p class="c-desc">Cobertura total para ojeras, manchas e imperfecciones. Fórmula cremosa de fácil difuminado.</p>
+        <div class="c-benefits">
+          <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Cobertura total de ojeras y manchas</span></div>
+          <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Fácil de difuminar</span></div>
+          <div class="c-b"><div class="c-dot" style="background:#B8864A"></div><span class="c-btext">Acabado natural, sin efecto máscara</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 13 agua-micelar.png | cuidado -->
+    <div class="c-card" data-cat="cuidado">
+      <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#E8D0F0,#F0E0F8)">
+        <img class="prod-img" src="agua-micelar.png" alt="Agua Micelar" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="placeholder" style="display:none">
+          <svg viewBox="0 0 44 44" fill="none"><path d="M22 8 C22 8 32 20 32 28 C32 34 27.5 38 22 38 C16.5 38 12 34 12 28 C12 20 22 8 22 8Z" stroke="#9060B0" stroke-width=".8" fill="none"/><path d="M16 30 Q22 26 28 30" stroke="#9060B0" stroke-width=".6" fill="none"/></svg>
+          <span>agua-micelar.png</span>
+        </div>
+        <span class="c-badge">✦ Nuevo</span>
+        <span class="c-num">13</span>
+      </div>
+      <div class="c-body">
+        <p class="c-cat">Cuidado · Limpieza</p>
+        <h3 class="c-name">Agua Micelar</h3>
+        <div class="c-line"></div>
+        <p class="c-desc">Limpia, desmaquilla e hidrata en un solo paso. Suave con la piel, efectiva con el maquillaje.</p>
+        <div class="c-benefits">
+          <div class="c-b"><div class="c-dot" style="background:#9060B0"></div><span class="c-btext">Desmaquilla sin frotar</span></div>
+          <div class="c-b"><div class="c-dot" style="background:#9060B0"></div><span class="c-btext">Hidrata mientras limpia</span></div>
+          <div class="c-b"><div class="c-dot" style="background:#9060B0"></div><span class="c-btext">Apta para piel sensible</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 14 gloss.png | labios -->
+    <div class="c-card" data-cat="labios">
+      <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#D0F0D8,#E8F8EC)">
+        <img class="prod-img" src="gloss.png" alt="Gloss" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="placeholder" style="display:none">
+          <svg viewBox="0 0 44 44" fill="none"><ellipse cx="22" cy="28" rx="10" ry="7" fill="#A0D8A8" opacity=".4" stroke="#50A060" stroke-width=".7"/><path d="M14 28 Q22 22 30 28" stroke="#50A060" stroke-width=".6" fill="none"/><circle cx="18" cy="26" r="2" fill="#fff" opacity=".6"/></svg>
+          <span>gloss.png</span>
+        </div>
+        <span class="c-badge">✦ Tendencia</span>
+        <span class="c-num">14</span>
+      </div>
+      <div class="c-body">
+        <p class="c-cat">Labios · Brillo</p>
+        <h3 class="c-name">Gloss</h3>
+        <div class="c-line"></div>
+        <p class="c-desc">Brillo irresistible que hidrata y da volumen a los labios. El toque final que completa cualquier look.</p>
+        <div class="c-benefits">
+          <div class="c-b"><div class="c-dot" style="background:#50A060"></div><span class="c-btext">Brillo intenso y duradero</span></div>
+          <div class="c-b"><div class="c-dot" style="background:#50A060"></div><span class="c-btext">Hidrata y da volumen</span></div>
+          <div class="c-b"><div class="c-dot" style="background:#50A060"></div><span class="c-btext">Disponible en varios tonos</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 15 mascarilla-hidratante.png | cuidado -->
+    <div class="c-card" data-cat="cuidado">
+      <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#C8E0F0,#E8F4FC)">
+        <img class="prod-img" src="mascarilla-hidratante.png" alt="Mascarilla Hidratante" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="placeholder" style="display:none">
+          <svg viewBox="0 0 44 44" fill="none"><ellipse cx="22" cy="22" rx="14" ry="16" stroke="#4090C0" stroke-width=".8"/><path d="M15 18 Q22 14 29 18" stroke="#4090C0" stroke-width=".6" fill="none"/><circle cx="17" cy="24" r="2" fill="#4090C0" opacity=".4"/><circle cx="27" cy="24" r="2" fill="#4090C0" opacity=".4"/><path d="M18 30 Q22 33 26 30" stroke="#4090C0" stroke-width=".6" fill="none"/></svg>
+          <span>mascarilla-hidratante.png</span>
+        </div>
+        <span class="c-badge">✦ Nuevo</span>
+        <span class="c-num">15</span>
+      </div>
+      <div class="c-body">
+        <p class="c-cat">Cuidado · Hidratación</p>
+        <h3 class="c-name">Mascarilla Hidratante</h3>
+        <div class="c-line"></div>
+        <p class="c-desc">Hidratación profunda en 15 minutos. Activos frutales que revitalizan, suavizan y dan luminosidad a la piel.</p>
+        <div class="c-benefits">
+          <div class="c-b"><div class="c-dot" style="background:#4090C0"></div><span class="c-btext">Hidratación profunda inmediata</span></div>
+          <div class="c-b"><div class="c-dot" style="background:#4090C0"></div><span class="c-btext">Revitaliza y da luminosidad</span></div>
+          <div class="c-b"><div class="c-dot" style="background:#4090C0"></div><span class="c-btext">Apta para todo tipo de piel</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 16 Parches para granos | cuidado — abre modal -->
+    <div class="c-card" data-cat="cuidado" onclick="openModal('modal-parches')" style="cursor:pointer">
+      <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#E8D8F8,#F5EEFF);position:relative">
+        <img class="prod-img" src="parches-granos.png" alt="Parches para granos" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="placeholder" style="display:none">
+          <svg viewBox="0 0 44 44" fill="none"><path d="M22 6 L38 22 L22 38 L6 22 Z" stroke="#9060C0" stroke-width=".8" fill="none"/><circle cx="22" cy="22" r="6" fill="#C8A8E8" opacity=".5"/><circle cx="22" cy="22" r="2" fill="#9060C0" opacity=".6"/></svg>
+          <span>parches-granos.png</span>
+        </div>
+        <span class="c-num">16</span>
+        <span style="position:absolute;top:12px;right:12px;z-index:4;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:rgba(144,96,192,.8);padding:4px 10px;border-radius:999px">Modo de uso →</span>
+      </div>
+      <div class="c-body">
+        <p class="c-cat">Cuidado · Anti-acné</p>
+        <h3 class="c-name">Parches para Granos</h3>
+        <div class="c-line"></div>
+        <p class="c-desc">Parches hidrocoloides que reducen granos mientras dormís. Dermatológicamente probado.</p>
+        <div class="c-benefits">
+          <div class="c-b"><div class="c-dot" style="background:#9060C0"></div><span class="c-btext">Absorbe impurezas mientras dormís</span></div>
+          <div class="c-b"><div class="c-dot" style="background:#9060C0"></div><span class="c-btext">Reduce inflamación en horas</span></div>
+          <div class="c-b"><div class="c-dot" style="background:#9060C0"></div><span class="c-btext">Dermatológicamente probado</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 17 Sérums faciales | cuidado — abre modal -->
+    <div class="c-card" data-cat="cuidado" onclick="openModal('modal-serum')" style="cursor:pointer">
+      <div class="c-visual" style="background:radial-gradient(ellipse at 50% 70%,#D8F0D8,#EEF8EE);position:relative">
+        <img class="prod-img" src="serum-facial.png" alt="Sérums Faciales" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="placeholder" style="display:none">
+          <svg viewBox="0 0 44 44" fill="none"><rect x="8" y="10" width="7" height="28" rx="3" fill="#80C080" opacity=".5" stroke="#40A040" stroke-width=".6"/><rect x="18" y="10" width="7" height="28" rx="3" fill="#80B0D0" opacity=".5" stroke="#4090C0" stroke-width=".6"/><rect x="28" y="10" width="7" height="28" rx="3" fill="#F0A0C0" opacity=".5" stroke="#C06080" stroke-width=".6"/></svg>
+          <span>serum-facial.png</span>
+        </div>
+        <span class="c-num">17</span>
+        <span style="position:absolute;top:12px;right:12px;z-index:4;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:rgba(64,160,64,.8);padding:4px 10px;border-radius:999px">4 variedades →</span>
+      </div>
+      <div class="c-body">
+        <p class="c-cat">Cuidado · Tratamiento</p>
+        <h3 class="c-name">Sérums Faciales</h3>
+        <div class="c-line"></div>
+        <p class="c-desc">4 variedades para cada necesidad: antiacné, hialurónico, rosa mosqueta y colágeno.</p>
+        <div class="c-benefits">
+          <div class="c-b"><div class="c-dot" style="background:#40A040"></div><span class="c-btext">4 fórmulas especializadas</span></div>
+          <div class="c-b"><div class="c-dot" style="background:#40A040"></div><span class="c-btext">Oil free, dermatológicamente probado</span></div>
+          <div class="c-b"><div class="c-dot" style="background:#40A040"></div><span class="c-btext">Resultados visibles desde la 1ª semana</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /prod-grid -->
 </section>
 
 <!-- RITUAL -->
@@ -734,29 +732,8 @@ body{background:var(--bg);color:var(--dark);font-family:var(--ff-b);font-weight:
   </div>
 </section>
 
-<!-- CHARTS -->
-<section class="chart-sec" id="nosotras">
-  <div class="sec-hdr">
-    <p class="sec-eye">¿Por qué Glimmer?</p>
-    <h2 class="sec-title">Calidad que se siente</h2>
-    <p class="sec-sub">Productos elegidos por sus resultados reales</p>
-  </div>
-  <div class="chart-grid">
-    <div class="chart-card">
-      <p class="chart-card-title">Categorías del catálogo</p>
-      <p class="chart-card-sub">Distribución de productos por tipo</p>
-      <div class="chart-wrap"><canvas id="cDoughnut"></canvas></div>
-    </div>
-    <div class="chart-card">
-      <p class="chart-card-title">Lo más valorado</p>
-      <p class="chart-card-sub">Beneficios que más importan al usar</p>
-      <div class="chart-wrap"><canvas id="cBar"></canvas></div>
-    </div>
-  </div>
-</section>
-
 <!-- FRASE -->
-<section class="quote-sec">
+<section class="quote-sec" id="nosotras">
   <div class="quote-mark">"</div>
   <p class="quote-text">Todo lo que amás, en un solo catálogo.</p>
   <p class="quote-author">— Glimmer Beauty 2026</p>
@@ -771,168 +748,7 @@ body{background:var(--bg);color:var(--dark);font-family:var(--ff-b);font-weight:
   <p class="closing-tagline">Porque cada día es una oportunidad de brillar</p>
 </section>
 
-<!-- MODAL PARCHES PARA GRANOS -->
-<div id="modal-parches" class="modal-overlay" onclick="closeModal('modal-parches')">
-  <div class="modal-box modal-box-wide" onclick="event.stopPropagation()">
-    <button class="modal-close" onclick="closeModal('modal-parches')">✕</button>
-    <p class="modal-eyebrow">Cuidado · Anti-acné</p>
-    <h2 class="modal-title">Parches para Granos</h2>
-    <div class="modal-parches-grid">
-      <!-- Foto producto -->
-      <div class="modal-parches-img">
-        <img src="parches-granos.png" alt="Parches para granos"
-             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-        <div class="modal-ph" style="display:none">
-          <svg width="48" height="48" viewBox="0 0 44 44" fill="none"><path d="M22 6L38 22L22 38L6 22Z" stroke="#9060C0" stroke-width=".8" fill="none"/><circle cx="22" cy="22" r="6" fill="#C8A8E8" opacity=".5"/></svg>
-          <span>parches-granos.png</span>
-        </div>
-      </div>
-      <!-- Info -->
-      <div class="modal-parches-info">
-        <div class="modal-info-block" style="background:#F5EEFF;border:0.5px solid rgba(144,96,192,.2);border-radius:14px;padding:18px 16px;margin-bottom:14px">
-          <p style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#9060C0;margin-bottom:10px">✦ Beneficios</p>
-          <div style="display:flex;flex-direction:column;gap:8px">
-            <div style="display:flex;align-items:flex-start;gap:8px"><div style="width:5px;height:5px;border-radius:50%;background:#9060C0;flex-shrink:0;margin-top:7px"></div><span style="font-size:12px;color:#5A3070;line-height:1.6">Absorbe impurezas y reduce el grano mientras dormís</span></div>
-            <div style="display:flex;align-items:flex-start;gap:8px"><div style="width:5px;height:5px;border-radius:50%;background:#9060C0;flex-shrink:0;margin-top:7px"></div><span style="font-size:12px;color:#5A3070;line-height:1.6">Protege el grano de bacterias externas</span></div>
-            <div style="display:flex;align-items:flex-start;gap:8px"><div style="width:5px;height:5px;border-radius:50%;background:#9060C0;flex-shrink:0;margin-top:7px"></div><span style="font-size:12px;color:#5A3070;line-height:1.6">Reduce inflamación y enrojecimiento en horas</span></div>
-            <div style="display:flex;align-items:flex-start;gap:8px"><div style="width:5px;height:5px;border-radius:50%;background:#9060C0;flex-shrink:0;margin-top:7px"></div><span style="font-size:12px;color:#5A3070;line-height:1.6">Dermatológicamente probado · 18 parches por pack</span></div>
-          </div>
-        </div>
-        <div style="background:#FBF5FF;border:0.5px solid rgba(144,96,192,.2);border-radius:14px;padding:18px 16px">
-          <p style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#9060C0;margin-bottom:12px">📋 Modo de uso — 4 pasos</p>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-            <div style="background:#fff;border-radius:10px;padding:12px;border:0.5px solid rgba(144,96,192,.15)">
-              <p style="font-size:18px;margin-bottom:4px">🧼</p>
-              <p style="font-size:11px;font-weight:500;color:#5A3070;margin-bottom:3px">Paso 1</p>
-              <p style="font-size:11px;color:#8A6090;line-height:1.5">Limpiá y secá bien el área con acné</p>
-            </div>
-            <div style="background:#fff;border-radius:10px;padding:12px;border:0.5px solid rgba(144,96,192,.15)">
-              <p style="font-size:18px;margin-bottom:4px">⭐</p>
-              <p style="font-size:11px;font-weight:500;color:#5A3070;margin-bottom:3px">Paso 2</p>
-              <p style="font-size:11px;color:#8A6090;line-height:1.5">Elegí el tamaño de parche adecuado</p>
-            </div>
-            <div style="background:#fff;border-radius:10px;padding:12px;border:0.5px solid rgba(144,96,192,.15)">
-              <p style="font-size:18px;margin-bottom:4px">👆</p>
-              <p style="font-size:11px;font-weight:500;color:#5A3070;margin-bottom:3px">Paso 3</p>
-              <p style="font-size:11px;color:#8A6090;line-height:1.5">Presioná suavemente y dejalo actuar</p>
-            </div>
-            <div style="background:#fff;border-radius:10px;padding:12px;border:0.5px solid rgba(144,96,192,.15)">
-              <p style="font-size:18px;margin-bottom:4px">✨</p>
-              <p style="font-size:11px;font-weight:500;color:#5A3070;margin-bottom:3px">Paso 4</p>
-              <p style="font-size:11px;color:#8A6090;line-height:1.5">¡Disfrutá la piel suave y limpia!</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL SÉRUMS FACIALES -->
-<div id="modal-serum" class="modal-overlay" onclick="closeModal('modal-serum')">
-  <div class="modal-box modal-box-wide" onclick="event.stopPropagation()">
-    <button class="modal-close" onclick="closeModal('modal-serum')">✕</button>
-    <p class="modal-eyebrow">Cuidado · Tratamiento</p>
-    <h2 class="modal-title">Sérums Faciales</h2>
-    <p style="font-size:13px;color:var(--mid);margin-bottom:24px">4 fórmulas especializadas · Oil Free · Dermatológicamente probado</p>
-    <div class="modal-serum-grid">
-
-      <div class="modal-serum-item" style="border-color:rgba(80,160,80,.3)">
-        <div class="modal-serum-img" style="background:linear-gradient(135deg,#C8E8C8,#E8F8E8)">
-          <span style="font-size:36px">🌿</span>
-          <span style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#408040;margin-top:4px">Antiacné</span>
-        </div>
-        <div class="modal-serum-body">
-          <div class="modal-serum-tag" style="background:#E8F8E8;color:#408040;border-color:rgba(80,160,80,.3)">Antiacné</div>
-          <h3 class="modal-serum-name">Sérum Antiacné</h3>
-          <p class="modal-serum-formula">Ácido Salicílico + Niacinamida</p>
-          <div class="modal-serum-benefits">
-            <span>✓ Disminuye cravos y espinhas</span>
-            <span>✓ Controla oleosidade</span>
-            <span>✓ Proporciona maciez</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="modal-serum-item" style="border-color:rgba(64,144,192,.3)">
-        <div class="modal-serum-img" style="background:linear-gradient(135deg,#C0D8F0,#E0EEF8)">
-          <span style="font-size:36px">💧</span>
-          <span style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#4080B0;margin-top:4px">Hialurónico</span>
-        </div>
-        <div class="modal-serum-body">
-          <div class="modal-serum-tag" style="background:#E0EEF8;color:#4080B0;border-color:rgba(64,144,192,.3)">Hidratación</div>
-          <h3 class="modal-serum-name">Sérum Hialurónico 10</h3>
-          <p class="modal-serum-formula">10% Ácido Hialurónico</p>
-          <div class="modal-serum-benefits">
-            <span>✓ Hidratación profunda</span>
-            <span>✓ Suaviza líneas de expresión</span>
-            <span>✓ Firmeza en la piel</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="modal-serum-item" style="border-color:rgba(192,96,128,.3)">
-        <div class="modal-serum-img" style="background:linear-gradient(135deg,#F0C8D8,#F8E0EA)">
-          <span style="font-size:36px">🌹</span>
-          <span style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#B06080;margin-top:4px">Rosa Mosqueta</span>
-        </div>
-        <div class="modal-serum-body">
-          <div class="modal-serum-tag" style="background:#F8E0EA;color:#B06080;border-color:rgba(192,96,128,.3)">Regeneración</div>
-          <h3 class="modal-serum-name">Sérum Rosa Mosqueta</h3>
-          <p class="modal-serum-formula">Rosa Mosqueta + Colágeno + Pantenol</p>
-          <div class="modal-serum-benefits">
-            <span>✓ Hidrata y tonifica</span>
-            <span>✓ Prolonga juventud</span>
-            <span>✓ Elasticidad visible</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="modal-serum-item" style="border-color:rgba(212,168,192,.3)">
-        <div class="modal-serum-img" style="background:linear-gradient(135deg,#F0D8E8,#F8EEF4)">
-          <span style="font-size:36px">✨</span>
-          <span style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#C080A0;margin-top:4px">Colágeno</span>
-        </div>
-        <div class="modal-serum-body">
-          <div class="modal-serum-tag" style="background:#F8EEF4;color:#C080A0;border-color:rgba(212,168,192,.3)">Anti-edad</div>
-          <h3 class="modal-serum-name">Sérum Colágeno 10</h3>
-          <p class="modal-serum-formula">10% Colágeno</p>
-          <div class="modal-serum-benefits">
-            <span>✓ Repone fibras de colágeno</span>
-            <span>✓ Firmeza y elasticidad</span>
-            <span>✓ Hidratación duradera</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<style>
-/* Modales extra — parches y sérums */
-.modal-box-wide{max-width:820px}
-.modal-parches-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.modal-parches-img{border-radius:14px;overflow:hidden;height:100%;min-height:300px;background:#F5EEFF;position:relative;display:flex;align-items:center;justify-content:center}
-.modal-parches-img img{width:100%;height:100%;object-fit:cover;display:block}
-
-.modal-serum-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.modal-serum-item{border:0.5px solid var(--border);border-radius:14px;overflow:hidden;transition:transform .2s;cursor:default}
-.modal-serum-item:hover{transform:translateY(-4px)}
-.modal-serum-img{height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.modal-serum-body{padding:12px}
-.modal-serum-tag{display:inline-block;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:999px;border:0.5px solid;margin-bottom:7px}
-.modal-serum-name{font-family:var(--ff-d);font-size:14px;color:var(--dark);margin-bottom:4px;line-height:1.2}
-.modal-serum-formula{font-size:10px;color:var(--soft);margin-bottom:8px;line-height:1.4}
-.modal-serum-benefits{display:flex;flex-direction:column;gap:4px}
-.modal-serum-benefits span{font-size:10px;color:var(--mid);line-height:1.5}
-
-@media(max-width:640px){
-  .modal-parches-grid{grid-template-columns:1fr}
-  .modal-serum-grid{grid-template-columns:1fr 1fr}
-  .modal-box-wide{max-width:100%}
-}
-</style>
+<!-- MODAL DELINEADORES -->
 <div id="modal-deli" class="modal-overlay" onclick="closeModal('modal-deli')">
   <div class="modal-box" onclick="event.stopPropagation()">
     <button class="modal-close" onclick="closeModal('modal-deli')">✕</button>
@@ -941,8 +757,7 @@ body{background:var(--bg);color:var(--dark);font-family:var(--ff-b);font-weight:
     <div class="modal-grid">
       <div class="modal-item">
         <div class="modal-img" style="background:radial-gradient(ellipse at 50% 60%,#2A1E30,#1A1020)">
-          <img src="delineador-doble-punta.png" alt="Delineador Doble Punta"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <img src="delineador-doble-punta.png" alt="Delineador Doble Punta" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="modal-ph" style="display:none">
             <svg width="36" height="36" viewBox="0 0 44 44" fill="none"><path d="M10 34L34 10" stroke="#C9758A" stroke-width="1.5" stroke-linecap="round"/><circle cx="10" cy="34" r="3" fill="#C9758A" opacity=".6"/></svg>
             <span>delineador-doble-punta.png</span>
@@ -960,8 +775,7 @@ body{background:var(--bg);color:var(--dark);font-family:var(--ff-b);font-weight:
       </div>
       <div class="modal-item">
         <div class="modal-img" style="background:radial-gradient(ellipse at 50% 60%,#2A2018,#181008)">
-          <img src="delineador-normal.png" alt="Delineador Normal"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <img src="delineador-normal.png" alt="Delineador Normal" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="modal-ph" style="display:none">
             <svg width="36" height="36" viewBox="0 0 44 44" fill="none"><path d="M34 10L10 34" stroke="#B8864A" stroke-width="1.5" stroke-linecap="round"/><circle cx="34" cy="10" r="3" fill="#B8864A" opacity=".6"/></svg>
             <span>delineador-normal.png</span>
@@ -990,8 +804,7 @@ body{background:var(--bg);color:var(--dark);font-family:var(--ff-b);font-weight:
     <div class="modal-grid">
       <div class="modal-item">
         <div class="modal-img" style="background:radial-gradient(ellipse at 50% 60%,#F5D0DC,#FDF0F3)">
-          <img src="tinta-labial-brasilera.png" alt="Tinta Labial Brasilera"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <img src="tinta-labial-brasilera.png" alt="Tinta Labial Brasilera" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="modal-ph" style="display:none">
             <svg width="36" height="36" viewBox="0 0 44 44" fill="none"><path d="M12 24Q22 14 32 24Q28 32 22 34Q16 32 12 24Z" fill="#F2B8C8" opacity=".5" stroke="#C9758A" stroke-width=".7"/></svg>
             <span>tinta-labial-brasilera.png</span>
@@ -1009,8 +822,7 @@ body{background:var(--bg);color:var(--dark);font-family:var(--ff-b);font-weight:
       </div>
       <div class="modal-item">
         <div class="modal-img" style="background:radial-gradient(ellipse at 50% 60%,#EDD5F0,#F8F0FC)">
-          <img src="tinta-kathy-kelly.png" alt="Tinta Kathy Kelly"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <img src="tinta-kathy-kelly.png" alt="Tinta Kathy Kelly" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="modal-ph" style="display:none">
             <svg width="36" height="36" viewBox="0 0 44 44" fill="none"><path d="M12 24Q22 14 32 24Q28 32 22 34Q16 32 12 24Z" fill="#D4A870" opacity=".5" stroke="#B8864A" stroke-width=".7"/></svg>
             <span>tinta-kathy-kelly.png</span>
@@ -1030,56 +842,94 @@ body{background:var(--bg);color:var(--dark);font-family:var(--ff-b);font-weight:
   </div>
 </div>
 
-<style>
-/* MODAL */
-.modal-overlay{
-  display:none;position:fixed;inset:0;z-index:999;
-  background:rgba(61,32,48,.6);backdrop-filter:blur(8px);
-  align-items:center;justify-content:center;padding:20px;
-}
-.modal-overlay.open{display:flex;animation:mfade .25s ease}
-@keyframes mfade{from{opacity:0}to{opacity:1}}
-.modal-box{
-  background:#fff;border-radius:24px;max-width:680px;width:100%;
-  padding:36px 32px;position:relative;
-  animation:mslide .3s ease;
-  max-height:90vh;overflow-y:auto;
-}
-@keyframes mslide{from{transform:translateY(24px);opacity:0}to{transform:translateY(0);opacity:1}}
-.modal-close{
-  position:absolute;top:16px;right:20px;
-  background:var(--bg2);border:0.5px solid var(--border);
-  border-radius:50%;width:32px;height:32px;
-  font-size:14px;color:var(--mid);cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  transition:all .2s;
-}
-.modal-close:hover{background:var(--rose);color:#fff;border-color:var(--rose)}
-.modal-eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--rose);margin-bottom:8px}
-.modal-title{font-family:var(--ff-d);font-size:28px;color:var(--dark);margin-bottom:28px}
-.modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.modal-item{border:0.5px solid var(--border);border-radius:16px;overflow:hidden}
-.modal-img{height:200px;position:relative;overflow:hidden}
-.modal-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease}
-.modal-item:hover .modal-img img{transform:scale(1.05)}
-.modal-ph{
-  display:none;flex-direction:column;align-items:center;justify-content:center;
-  gap:8px;height:100%;
-}
-.modal-ph span{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(100,50,70,.4)}
-.modal-item-body{padding:16px}
-.modal-item-name{font-family:var(--ff-d);font-size:18px;color:var(--dark);margin-bottom:8px}
-.modal-item-desc{font-size:12px;color:var(--mid);line-height:1.7;margin-bottom:12px}
-.modal-tags{display:flex;flex-wrap:wrap;gap:5px}
-.modal-tag{font-size:10px;padding:3px 10px;border-radius:999px;background:var(--bg2);color:var(--rose2);border:0.5px solid var(--border2)}
-@media(max-width:560px){.modal-grid{grid-template-columns:1fr}.modal-box{padding:24px 18px}}
-</style>
+<!-- MODAL PARCHES PARA GRANOS -->
+<div id="modal-parches" class="modal-overlay" onclick="closeModal('modal-parches')">
+  <div class="modal-box modal-box-wide" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal('modal-parches')">✕</button>
+    <p class="modal-eyebrow">Cuidado · Anti-acné</p>
+    <h2 class="modal-title">Parches para Granos</h2>
+    <div class="modal-parches-grid">
+      <div class="modal-parches-img">
+        <img src="parches-granos.png" alt="Parches para granos" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="modal-ph" style="display:none">
+          <svg width="48" height="48" viewBox="0 0 44 44" fill="none"><path d="M22 6L38 22L22 38L6 22Z" stroke="#9060C0" stroke-width=".8" fill="none"/><circle cx="22" cy="22" r="6" fill="#C8A8E8" opacity=".5"/></svg>
+          <span>parches-granos.png</span>
+        </div>
+      </div>
+      <div>
+        <div style="background:#F5EEFF;border:0.5px solid rgba(144,96,192,.2);border-radius:14px;padding:18px 16px;margin-bottom:14px">
+          <p style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#9060C0;margin-bottom:10px">✦ Beneficios</p>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;align-items:flex-start;gap:8px"><div style="width:5px;height:5px;border-radius:50%;background:#9060C0;flex-shrink:0;margin-top:7px"></div><span style="font-size:12px;color:#5A3070;line-height:1.6">Absorbe impurezas y reduce el grano mientras dormís</span></div>
+            <div style="display:flex;align-items:flex-start;gap:8px"><div style="width:5px;height:5px;border-radius:50%;background:#9060C0;flex-shrink:0;margin-top:7px"></div><span style="font-size:12px;color:#5A3070;line-height:1.6">Protege el grano de bacterias externas</span></div>
+            <div style="display:flex;align-items:flex-start;gap:8px"><div style="width:5px;height:5px;border-radius:50%;background:#9060C0;flex-shrink:0;margin-top:7px"></div><span style="font-size:12px;color:#5A3070;line-height:1.6">Reduce inflamación y enrojecimiento en horas</span></div>
+            <div style="display:flex;align-items:flex-start;gap:8px"><div style="width:5px;height:5px;border-radius:50%;background:#9060C0;flex-shrink:0;margin-top:7px"></div><span style="font-size:12px;color:#5A3070;line-height:1.6">Dermatológicamente probado · 18 parches por pack</span></div>
+          </div>
+        </div>
+        <div style="background:#FBF5FF;border:0.5px solid rgba(144,96,192,.2);border-radius:14px;padding:18px 16px">
+          <p style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#9060C0;margin-bottom:12px">📋 Modo de uso — 4 pasos</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div style="background:#fff;border-radius:10px;padding:12px;border:0.5px solid rgba(144,96,192,.15)"><p style="font-size:18px;margin-bottom:4px">🧼</p><p style="font-size:11px;font-weight:500;color:#5A3070;margin-bottom:3px">Paso 1</p><p style="font-size:11px;color:#8A6090;line-height:1.5">Limpiá y secá bien el área con acné</p></div>
+            <div style="background:#fff;border-radius:10px;padding:12px;border:0.5px solid rgba(144,96,192,.15)"><p style="font-size:18px;margin-bottom:4px">⭐</p><p style="font-size:11px;font-weight:500;color:#5A3070;margin-bottom:3px">Paso 2</p><p style="font-size:11px;color:#8A6090;line-height:1.5">Elegí el tamaño de parche adecuado</p></div>
+            <div style="background:#fff;border-radius:10px;padding:12px;border:0.5px solid rgba(144,96,192,.15)"><p style="font-size:18px;margin-bottom:4px">👆</p><p style="font-size:11px;font-weight:500;color:#5A3070;margin-bottom:3px">Paso 3</p><p style="font-size:11px;color:#8A6090;line-height:1.5">Presioná suavemente y dejalo actuar</p></div>
+            <div style="background:#fff;border-radius:10px;padding:12px;border:0.5px solid rgba(144,96,192,.15)"><p style="font-size:18px;margin-bottom:4px">✨</p><p style="font-size:11px;font-weight:500;color:#5A3070;margin-bottom:3px">Paso 4</p><p style="font-size:11px;color:#8A6090;line-height:1.5">¡Disfrutá la piel suave y limpia!</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL SÉRUMS FACIALES -->
+<div id="modal-serum" class="modal-overlay" onclick="closeModal('modal-serum')">
+  <div class="modal-box modal-box-wide" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal('modal-serum')">✕</button>
+    <p class="modal-eyebrow">Cuidado · Tratamiento</p>
+    <h2 class="modal-title">Sérums Faciales</h2>
+    <p style="font-size:13px;color:var(--mid);margin-bottom:24px">4 fórmulas especializadas · Oil Free · Dermatológicamente probado</p>
+    <div class="modal-serum-grid">
+      <div class="modal-serum-item" style="border-color:rgba(80,160,80,.3)">
+        <div class="modal-serum-img" style="background:linear-gradient(135deg,#C8E8C8,#E8F8E8)"><span style="font-size:36px">🌿</span><span style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#408040;margin-top:4px">Antiacné</span></div>
+        <div class="modal-serum-body">
+          <div class="modal-serum-tag" style="background:#E8F8E8;color:#408040;border-color:rgba(80,160,80,.3)">Antiacné</div>
+          <h3 class="modal-serum-name">Sérum Antiacné</h3>
+          <p class="modal-serum-formula">Ácido Salicílico + Niacinamida</p>
+          <div class="modal-serum-benefits"><span>✓ Disminuye cravos y espinhas</span><span>✓ Controla oleosidade</span><span>✓ Proporciona maciez</span></div>
+        </div>
+      </div>
+      <div class="modal-serum-item" style="border-color:rgba(64,144,192,.3)">
+        <div class="modal-serum-img" style="background:linear-gradient(135deg,#C0D8F0,#E0EEF8)"><span style="font-size:36px">💧</span><span style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#4080B0;margin-top:4px">Hialurónico</span></div>
+        <div class="modal-serum-body">
+          <div class="modal-serum-tag" style="background:#E0EEF8;color:#4080B0;border-color:rgba(64,144,192,.3)">Hidratación</div>
+          <h3 class="modal-serum-name">Sérum Hialurónico 10</h3>
+          <p class="modal-serum-formula">10% Ácido Hialurónico</p>
+          <div class="modal-serum-benefits"><span>✓ Hidratación profunda</span><span>✓ Suaviza líneas de expresión</span><span>✓ Firmeza en la piel</span></div>
+        </div>
+      </div>
+      <div class="modal-serum-item" style="border-color:rgba(192,96,128,.3)">
+        <div class="modal-serum-img" style="background:linear-gradient(135deg,#F0C8D8,#F8E0EA)"><span style="font-size:36px">🌹</span><span style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#B06080;margin-top:4px">Rosa Mosqueta</span></div>
+        <div class="modal-serum-body">
+          <div class="modal-serum-tag" style="background:#F8E0EA;color:#B06080;border-color:rgba(192,96,128,.3)">Regeneración</div>
+          <h3 class="modal-serum-name">Sérum Rosa Mosqueta</h3>
+          <p class="modal-serum-formula">Rosa Mosqueta + Colágeno + Pantenol</p>
+          <div class="modal-serum-benefits"><span>✓ Hidrata y tonifica</span><span>✓ Prolonga juventud</span><span>✓ Elasticidad visible</span></div>
+        </div>
+      </div>
+      <div class="modal-serum-item" style="border-color:rgba(212,168,192,.3)">
+        <div class="modal-serum-img" style="background:linear-gradient(135deg,#F0D8E8,#F8EEF4)"><span style="font-size:36px">✨</span><span style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#C080A0;margin-top:4px">Colágeno</span></div>
+        <div class="modal-serum-body">
+          <div class="modal-serum-tag" style="background:#F8EEF4;color:#C080A0;border-color:rgba(212,168,192,.3)">Anti-edad</div>
+          <h3 class="modal-serum-name">Sérum Colágeno 10</h3>
+          <p class="modal-serum-formula">10% Colágeno</p>
+          <div class="modal-serum-benefits"><span>✓ Repone fibras de colágeno</span><span>✓ Firmeza y elasticidad</span><span>✓ Hidratación duradera</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
-function openModal(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden'}
-function closeModal(id){document.getElementById(id).classList.remove('open');document.body.style.overflow=''}
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.querySelectorAll('.modal-overlay.open').forEach(m=>m.classList.remove('open'));document.body.style.overflow=''}});
-</script>
-<script>
+/* PÉTALOS */
 const pc=document.getElementById('petals');
 for(let i=0;i<24;i++){
   const p=document.createElement('div');p.className='petal';
@@ -1091,86 +941,42 @@ for(let i=0;i<24;i++){
 /* GSAP */
 gsap.registerPlugin(ScrollTrigger);
 gsap.from('#hero-img',{opacity:0,scale:1.03,duration:1.3,ease:'power3.out',delay:.2});
-['#intro','.sec','.ritual','.chart-sec','.quote-sec','.closing'].forEach(el=>{
+['#intro','.sec','.ritual','.quote-sec','.closing'].forEach(el=>{
   gsap.from(el,{scrollTrigger:{trigger:el,start:'top 84%'},opacity:0,y:28,duration:.9,ease:'power3.out'});
 });
 document.querySelectorAll('.ritual-step').forEach((el,i)=>{
   gsap.from(el,{scrollTrigger:{trigger:el,start:'top 88%'},opacity:0,y:20,duration:.7,ease:'power3.out',delay:i*.1});
 });
 
-/* CARRUSEL */
-const track=document.getElementById('track');
-const cards=Array.from(track.querySelectorAll('.c-card'));
-const dotsW=document.getElementById('dots');
-let cur=0;
-cards.forEach((_,i)=>{
-  const d=document.createElement('div');
-  d.className='c-dot-btn'+(i===0?' on':'');
-  d.addEventListener('click',()=>goTo(i));
-  dotsW.appendChild(d);
-});
-function goTo(idx){
-  cur=(idx+cards.length)%cards.length;
-  cards.forEach((c,i)=>c.classList.toggle('active',i===cur));
-  dotsW.querySelectorAll('.c-dot-btn').forEach((d,i)=>d.classList.toggle('on',i===cur));
-  const cw=cards[0].offsetWidth+20;
-  track.scrollTo({left:Math.max(0,cur*cw-(track.offsetWidth/2-cards[0].offsetWidth/2)),behavior:'smooth'});
-}
-document.getElementById('prev').addEventListener('click',()=>goTo(cur-1));
-document.getElementById('next').addEventListener('click',()=>goTo(cur+1));
-let isDown=false,sx,sl;
-track.addEventListener('mousedown',e=>{isDown=true;sx=e.pageX-track.offsetLeft;sl=track.scrollLeft;track.style.cursor='grabbing'});
-track.addEventListener('mouseleave',()=>{isDown=false;track.style.cursor='grab'});
-track.addEventListener('mouseup',()=>{isDown=false;track.style.cursor='grab'});
-track.addEventListener('mousemove',e=>{if(!isDown)return;e.preventDefault();track.scrollLeft=sl-(e.pageX-track.offsetLeft-sx)*1.4});
-track.addEventListener('scroll',()=>{
-  const idx=Math.round(track.scrollLeft/(cards[0].offsetWidth+20));
-  if(idx!==cur&&idx>=0&&idx<cards.length){
-    cur=idx;
-    cards.forEach((c,i)=>c.classList.toggle('active',i===cur));
-    dotsW.querySelectorAll('.c-dot-btn').forEach((d,i)=>d.classList.toggle('on',i===cur));
-  }
-},{passive:true});
+/* FILTROS */
+const cards=Array.from(document.querySelectorAll('.prod-grid .c-card'));
+const btns=document.querySelectorAll('.filter-btn');
+const countEl=document.getElementById('countNum');
 
-/* CHARTS */
-const r='rgba(201,117,138,',g='rgba(184,134,74,',p='rgba(168,80,106,',n='rgba(212,168,112,',s='rgba(196,160,176,',t='rgba(61,32,48,';
-
-new Chart(document.getElementById('cDoughnut'),{
-  type:'doughnut',
-  data:{
-    labels:['Maquillaje','Herramientas','Ojos','Labios','Accesorios'],
-    datasets:[{
-      data:[4,3,4,1,1],
-      backgroundColor:[r+'.82)',g+'.8)',p+'.78)',n+'.8)',s+'.75)'],
-      borderColor:'#FDF0F3',borderWidth:2,hoverOffset:6
-    }]
-  },
-  options:{
-    responsive:true,maintainAspectRatio:false,cutout:'62%',
-    plugins:{legend:{position:'bottom',labels:{color:'#8A5068',font:{size:11,family:'DM Sans'},padding:10,boxWidth:9,usePointStyle:true}}}
-  }
+btns.forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    btns.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const cat=btn.dataset.cat;
+    let visible=0;
+    cards.forEach(card=>{
+      const match=cat==='todos'||card.dataset.cat===cat;
+      card.style.display=match?'flex':'none';
+      if(match)visible++;
+    });
+    countEl.textContent=visible;
+    /* mini animación */
+    cards.filter(c=>c.style.display!=='none').forEach((c,i)=>{
+      c.style.opacity='0';c.style.transform='translateY(14px)';
+      setTimeout(()=>{c.style.transition='opacity .3s ease,transform .3s ease';c.style.opacity='1';c.style.transform='translateY(0)'},i*35);
+    });
+  });
 });
 
-new Chart(document.getElementById('cBar'),{
-  type:'bar',
-  data:{
-    labels:['Larga duración','Fácil uso','Resultado','Comodidad','Calidad'],
-    datasets:[{
-      label:'Valoración',
-      data:[92,88,95,85,90],
-      backgroundColor:[r+'.75)',g+'.75)',p+'.75)',n+'.75)',s+'.75)'],
-      borderRadius:8,borderSkipped:false,
-    }]
-  },
-  options:{
-    responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{display:false}},
-    scales:{
-      x:{ticks:{color:'#8A5068',font:{size:10,family:'DM Sans'}},grid:{display:false}},
-      y:{min:70,max:100,ticks:{color:'#C4A0B0',font:{size:10,family:'DM Sans'}},grid:{color:'rgba(201,117,138,.1)'}}
-    }
-  }
-});
+/* MODALES */
+function openModal(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden'}
+function closeModal(id){document.getElementById(id).classList.remove('open');document.body.style.overflow=''}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.querySelectorAll('.modal-overlay.open').forEach(m=>m.classList.remove('open'));document.body.style.overflow=''}});
 </script>
 </body>
 </html>
