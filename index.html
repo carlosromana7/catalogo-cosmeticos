@@ -68,11 +68,48 @@ body{background:var(--bg);color:var(--dark);font-family:var(--ff-b);font-weight:
 .sec-title{font-family:var(--ff-d);font-size:clamp(24px,4vw,36px);color:var(--dark);margin-bottom:8px}
 .sec-sub{font-size:13px;color:var(--mid)}
 
-/* ── FILTROS ── */
-.filter-bar{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:36px}
-.filter-btn{font-family:var(--ff-b);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:8px 18px;border-radius:999px;border:0.5px solid var(--border2);background:transparent;color:var(--mid);cursor:pointer;transition:all .22s;white-space:nowrap}
-.filter-btn:hover{border-color:var(--rose);color:var(--rose2);background:rgba(201,117,138,.06)}
-.filter-btn.active{background:var(--rose2);color:#fff;border-color:var(--rose2)}
+/* ── FILTROS TARJETAS ── */
+.filter-wrap{margin-bottom:48px}
+.filter-bar{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;max-width:900px;margin:0 auto}
+.filter-btn{
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  padding:20px 10px 18px;
+  border-radius:18px;border:1.5px solid transparent;
+  background:var(--fb-bg);
+  cursor:pointer;transition:transform .22s,box-shadow .22s,border-color .22s;
+}
+.filter-btn::before{
+  content:'';position:absolute;inset:0;border-radius:16px;
+  background:var(--fb-shine);opacity:0;transition:opacity .25s;
+}
+.filter-btn:hover{transform:translateY(-4px);box-shadow:0 12px 32px var(--fb-shadow)}
+.filter-btn:hover::before{opacity:1}
+.filter-btn.active{border-color:var(--fb-accent);box-shadow:0 8px 28px var(--fb-shadow);transform:translateY(-3px)}
+.filter-btn .fb-icon{font-size:26px;line-height:1;transition:transform .25s}
+.filter-btn:hover .fb-icon,.filter-btn.active .fb-icon{transform:scale(1.18)}
+.filter-btn .fb-label{font-family:var(--ff-d);font-size:11px;font-weight:500;letter-spacing:.06em;color:var(--fb-text);line-height:1.2;text-align:center}
+.filter-btn .fb-count{font-family:var(--ff-b);font-size:9px;letter-spacing:.1em;color:var(--fb-text);opacity:.6;margin-top:1px}
+/* Destellos de fondo al hacer active */
+.filter-btn.active::after{
+  content:'✦';position:absolute;top:6px;right:10px;
+  font-size:10px;color:var(--fb-accent);opacity:.7;
+}
+/* Colores por categoría — definidos inline via style */
+/* todos */
+[data-cat="todos"]{--fb-bg:#FDF0F3;--fb-text:#A8506A;--fb-accent:#C9758A;--fb-shadow:rgba(201,117,138,.18);--fb-shine:linear-gradient(135deg,rgba(255,255,255,.5),transparent)}
+/* maquillaje */
+[data-cat="maquillaje"]{--fb-bg:#F9E4EC;--fb-text:#A8506A;--fb-accent:#C9758A;--fb-shadow:rgba(201,117,138,.2);--fb-shine:linear-gradient(135deg,rgba(255,230,240,.6),transparent)}
+/* ojos */
+[data-cat="ojos"]{--fb-bg:#F0EBF8;--fb-text:#6B3FA0;--fb-accent:#9060C0;--fb-shadow:rgba(144,96,192,.2);--fb-shine:linear-gradient(135deg,rgba(230,215,255,.5),transparent)}
+/* labios */
+[data-cat="labios"]{--fb-bg:#FEE8E8;--fb-text:#A03030;--fb-accent:#C05050;--fb-shadow:rgba(192,80,80,.18);--fb-shine:linear-gradient(135deg,rgba(255,210,210,.5),transparent)}
+/* cuidado */
+[data-cat="cuidado"]{--fb-bg:#EAF4EC;--fb-text:#2D7A40;--fb-accent:#50A060;--fb-shadow:rgba(80,160,96,.18);--fb-shine:linear-gradient(135deg,rgba(200,240,210,.5),transparent)}
+/* accesorios */
+[data-cat="accesorios"]{--fb-bg:#FDF5E6;--fb-text:#8A6020;--fb-accent:#B8864A;--fb-shadow:rgba(184,134,74,.2);--fb-shine:linear-gradient(135deg,rgba(255,235,180,.5),transparent)}
+@media(max-width:700px){.filter-bar{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:400px){.filter-bar{grid-template-columns:repeat(2,1fr)}}
 
 /* ── GRILLA DE PRODUCTOS ── */
 .prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px;max-width:1200px;margin:0 auto}
@@ -245,14 +282,39 @@ body{background:var(--bg);color:var(--dark);font-family:var(--ff-b);font-weight:
   </div>
 
   <!-- FILTROS -->
-  <div class="filter-bar" id="filterBar">
-    <button class="filter-btn active" data-cat="todos">Todos</button>
-    <button class="filter-btn" data-cat="maquillaje">💄 Maquillaje</button>
-    <button class="filter-btn" data-cat="ojos">👁️ Ojos</button>
-    <button class="filter-btn" data-cat="labios">💋 Labios</button>
-    <button class="filter-btn" data-cat="cuidado">🌿 Cuidado</button>
-    <button class="filter-btn" data-cat="accesorios">🖌️ Herramientas</button>
-    <button class="filter-btn" data-cat="accesorios">✨ Accesorios</button>
+  <div class="filter-wrap">
+    <div class="filter-bar" id="filterBar">
+      <button class="filter-btn active" data-cat="todos">
+        <span class="fb-icon">✦</span>
+        <span class="fb-label">Todos</span>
+        <span class="fb-count" id="fc-todos">17 productos</span>
+      </button>
+      <button class="filter-btn" data-cat="maquillaje">
+        <span class="fb-icon">💄</span>
+        <span class="fb-label">Maquillaje</span>
+        <span class="fb-count" id="fc-maquillaje"></span>
+      </button>
+      <button class="filter-btn" data-cat="ojos">
+        <span class="fb-icon">👁️</span>
+        <span class="fb-label">Ojos</span>
+        <span class="fb-count" id="fc-ojos"></span>
+      </button>
+      <button class="filter-btn" data-cat="labios">
+        <span class="fb-icon">💋</span>
+        <span class="fb-label">Labios</span>
+        <span class="fb-count" id="fc-labios"></span>
+      </button>
+      <button class="filter-btn" data-cat="cuidado">
+        <span class="fb-icon">🌿</span>
+        <span class="fb-label">Cuidado</span>
+        <span class="fb-count" id="fc-cuidado"></span>
+      </button>
+      <button class="filter-btn" data-cat="accesorios">
+        <span class="fb-icon">✨</span>
+        <span class="fb-label">Accesorios</span>
+        <span class="fb-count" id="fc-accesorios"></span>
+      </button>
+    </div>
   </div>
 
   <p class="results-count" id="resultsCount"><span id="countNum">17</span> productos</p>
@@ -953,6 +1015,14 @@ const cards=Array.from(document.querySelectorAll('.prod-grid .c-card'));
 const btns=document.querySelectorAll('.filter-btn');
 const countEl=document.getElementById('countNum');
 
+/* contar por categoría y llenar subtítulos */
+const cats=['maquillaje','ojos','labios','cuidado','accesorios'];
+cats.forEach(cat=>{
+  const n=cards.filter(c=>c.dataset.cat===cat).length;
+  const el=document.getElementById('fc-'+cat);
+  if(el)el.textContent=n+' '+(n===1?'producto':'productos');
+});
+
 btns.forEach(btn=>{
   btn.addEventListener('click',()=>{
     btns.forEach(b=>b.classList.remove('active'));
@@ -965,12 +1035,34 @@ btns.forEach(btn=>{
       if(match)visible++;
     });
     countEl.textContent=visible;
-    /* mini animación */
+    /* stagger animación entrada */
     cards.filter(c=>c.style.display!=='none').forEach((c,i)=>{
-      c.style.opacity='0';c.style.transform='translateY(14px)';
-      setTimeout(()=>{c.style.transition='opacity .3s ease,transform .3s ease';c.style.opacity='1';c.style.transform='translateY(0)'},i*35);
+      c.style.transition='none';
+      c.style.opacity='0';c.style.transform='translateY(18px) scale(.97)';
+      setTimeout(()=>{
+        c.style.transition='opacity .35s ease,transform .35s ease';
+        c.style.opacity='1';c.style.transform='translateY(0) scale(1)';
+      },i*40);
     });
   });
+});
+
+/* scroll reveal para las tarjetas */
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting){
+      setTimeout(()=>{
+        e.target.style.transition='opacity .5s ease,transform .5s ease';
+        e.target.style.opacity='1';
+        e.target.style.transform='translateY(0) scale(1)';
+      },i*60);
+      observer.unobserve(e.target);
+    }
+  });
+},{threshold:.1});
+cards.forEach(c=>{
+  c.style.opacity='0';c.style.transform='translateY(24px) scale(.98)';
+  observer.observe(c);
 });
 
 /* MODALES */
